@@ -24,11 +24,26 @@ type logoutRequest struct {
 	CommonRequest
 }
 
+// logoutResponse - パース用ログアウトレスポンス
+type logoutResponse struct {
+	commonResponse
+	ResultCode string `json:"534"` // 結果コード
+	ResultText string `json:"535"` // 結果テキスト
+}
+
+func (r *logoutResponse) response() LogoutResponse {
+	return LogoutResponse{
+		CommonResponse: r.commonResponse.response(),
+		ResultCode:     r.ResultCode,
+		ResultText:     r.ResultText,
+	}
+}
+
 // LogoutResponse - ログアウトレスポンス
 type LogoutResponse struct {
 	CommonResponse
-	ResultCode string `json:"534"` // 結果コード
-	ResultText string `json:"535"` // 結果テキスト
+	ResultCode string // 結果コード
+	ResultText string // 結果テキスト
 }
 
 // Logout - ログアウト
@@ -42,10 +57,11 @@ func (c *client) Logout(ctx context.Context, session *Session, req LogoutRequest
 	session.lastRequestNo++
 	r := req.request(session.lastRequestNo, c.clock.Now())
 
-	var res LogoutResponse
+	var res logoutResponse
 	if err := c.get(ctx, session.RequestURL, r, &res); err != nil {
 		return nil, err
 	}
 
-	return &res, nil
+	Res := res.response()
+	return &Res, nil
 }

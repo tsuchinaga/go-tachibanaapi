@@ -31,13 +31,13 @@ type loginRequest struct {
 	Password string `json:"531"` // ログインパスワード
 }
 
-// LoginResponse - ログインレスポンス
-type LoginResponse struct {
-	CommonResponse
+// loginResponse - ログインレスポンス
+type loginResponse struct {
+	commonResponse
 	ResultCode            string              `json:"534"` // 結果コード
 	ResultText            string              `json:"535"` // 結果テキスト
 	AccountType           AccountType         `json:"744"` // 譲渡益課税区分
-	LastLoginDateTime     LoginDateTime       `json:"401"` // 最終ログイン日時
+	LastLoginDateTime     YmdHms              `json:"401"` // 最終ログイン日時
 	GeneralAccount        NumberBool          `json:"580"` // 総合口座開設区分
 	SafekeepingAccount    NumberBool          `json:"287"` // 保護預り口座開設区分
 	TransferAccount       NumberBool          `json:"232"` // 振替決済口座開設区分
@@ -58,6 +58,61 @@ type LoginResponse struct {
 	EventURL              string              `json:"688"` // 仮想URL(EVENT)
 }
 
+func (r *loginResponse) response() LoginResponse {
+	return LoginResponse{
+		CommonResponse:        r.commonResponse.response(),
+		ResultCode:            r.ResultCode,
+		ResultText:            r.ResultText,
+		AccountType:           r.AccountType,
+		LastLoginDateTime:     r.LastLoginDateTime.Time,
+		GeneralAccount:        r.GeneralAccount.Bool(),
+		SafekeepingAccount:    r.SafekeepingAccount.Bool(),
+		TransferAccount:       r.TransferAccount.Bool(),
+		ForeignAccount:        r.ForeignAccount.Bool(),
+		MRFAccount:            r.MRFAccount.Bool(),
+		StockSpecificAccount:  r.StockSpecificAccount,
+		MarginSpecificAccount: r.MarginSpecificAccount,
+		DividendAccount:       r.DividendAccount.Bool(),
+		SpecificAccount:       r.SpecificAccount.Bool(),
+		MarginAccount:         r.MarginAccount.Bool(),
+		FutureOptionAccount:   r.FutureOptionAccount.Bool(),
+		MMFAccount:            r.MMFAccount.Bool(),
+		ChinaForeignAccount:   r.ChinaForeignAccount.Bool(),
+		FXAccount:             r.FXAccount.Bool(),
+		NISAAccount:           r.NISAAccount.Bool(),
+		UnreadDocument:        r.UnreadDocument.Bool(),
+		RequestURL:            r.RequestURL,
+		EventURL:              r.EventURL,
+	}
+}
+
+// LoginResponse - ログインレスポンス
+type LoginResponse struct {
+	CommonResponse
+	ResultCode            string              // 結果コード
+	ResultText            string              // 結果テキスト
+	AccountType           AccountType         // 譲渡益課税区分
+	LastLoginDateTime     time.Time           // 最終ログイン日時
+	GeneralAccount        bool                // 総合口座開設区分
+	SafekeepingAccount    bool                // 保護預り口座開設区分
+	TransferAccount       bool                // 振替決済口座開設区分
+	ForeignAccount        bool                // 外国口座開設区分
+	MRFAccount            bool                // MRF口座開設区分
+	StockSpecificAccount  SpecificAccountType // 特定口座区分現物
+	MarginSpecificAccount SpecificAccountType // 特定口座区分信用
+	DividendAccount       bool                // 配当特定口座区分
+	SpecificAccount       bool                // 特定管理口座開設区分
+	MarginAccount         bool                // 信用取引口座開設区分
+	FutureOptionAccount   bool                // 先物OP口座開設区分
+	MMFAccount            bool                // MMF口座開設区分
+	ChinaForeignAccount   bool                // 中国F口座開設区分
+	FXAccount             bool                // 為替保証金口座開設区分
+	NISAAccount           bool                // 非課税口座開設区分
+	UnreadDocument        bool                // 金商法交付書面未読フラグ
+	RequestURL            string              // 仮想URL(REQUEST)
+	EventURL              string              // 仮想URL(EVENT)
+}
+
 // Session - ログインレスポンスからセッションを取り出す
 func (r *LoginResponse) Session() (*Session, error) {
 	if r.ErrorNo != ErrTypeNoProblem && r.FeatureType != FeatureTypeLoginResponse && r.ResultCode != "0" {
@@ -75,10 +130,11 @@ func (r *LoginResponse) Session() (*Session, error) {
 func (c *client) Login(ctx context.Context, req LoginRequest) (*LoginResponse, error) {
 	r := req.request(1, c.clock.Now())
 
-	var res LoginResponse
+	var res loginResponse
 	if err := c.get(ctx, c.auth, r, &res); err != nil {
 		return nil, err
 	}
 
-	return &res, nil
+	Res := res.response()
+	return &Res, nil
 }

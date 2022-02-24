@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"time"
 
 	"golang.org/x/text/encoding/japanese"
 
@@ -137,12 +138,34 @@ type CommonRequest struct {
 	FeatureType FeatureType `json:"192"`        // 機能ID
 }
 
-// CommonResponse - レスポンスの共通的な項目
-type CommonResponse struct {
+// commonResponse - パース用レスポンスの共通的な項目
+type commonResponse struct {
 	No           int64       `json:"175,string"` // 送信通番
 	SendDate     RequestTime `json:"177"`        // 送信日時
 	ReceiveDate  RequestTime `json:"176"`        // 受信日時
 	ErrorNo      ErrType     `json:"174"`        // エラー番号
 	ErrorMessage string      `json:"173"`        // エラー文言
 	FeatureType  FeatureType `json:"192"`        // 機能ID
+}
+
+// response - パース用レスポンスから使いやすい形のレスポンスに変換して返す
+func (r *commonResponse) response() CommonResponse {
+	return CommonResponse{
+		No:           r.No,
+		SendDate:     r.SendDate.Time,
+		ReceiveDate:  r.ReceiveDate.Time,
+		ErrorNo:      r.ErrorNo,
+		ErrorMessage: r.ErrorMessage,
+		FeatureType:  r.FeatureType,
+	}
+}
+
+// CommonResponse - レスポンスの共通的な項目
+type CommonResponse struct {
+	No           int64       // 送信通番
+	SendDate     time.Time   // 送信日時
+	ReceiveDate  time.Time   // 受信日時
+	ErrorNo      ErrType     // エラー番号
+	ErrorMessage string      // エラー文言
+	FeatureType  FeatureType // 機能ID
 }

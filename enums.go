@@ -71,6 +71,10 @@ const (
 	NumberBoolTrue        NumberBool = "1" // true
 )
 
+func (e NumberBool) Bool() bool {
+	return e == NumberBoolTrue
+}
+
 // AccountType - 口座種別
 type AccountType string
 
@@ -107,4 +111,67 @@ const (
 	ErrTypeServerAccess     ErrType = "-3"  // サーバへのアクセスエラー
 	ErrTypeSystemOffline    ErrType = "-12" // システム停止中
 	ErrTypeOffHours         ErrType = "-62" // 情報提供時間外
+)
+
+// Exchange - 市場
+type Exchange string
+
+const (
+	ExchangeUnspecified Exchange = ""   // 未指定
+	ExchangeToushou     Exchange = "00" // 東証
+)
+
+// Category - 売買区分
+type Category string
+
+const (
+	CategoryUnspecified Category = ""  // 未指定
+	CategorySell        Category = "1" // 売
+	CategoryBuy         Category = "3" // 買
+	CategoryDelivery    Category = "5" // 現渡
+	CategoryReceipt     Category = "7" // 現引
+)
+
+// Condition - 執行条件
+type Condition string
+
+const (
+	ConditionUnspecified Condition = ""  // 未指定
+	ConditionNoSelected  Condition = "0" // 指定なし
+	ConditionOpening     Condition = "2" // 寄付
+	ConditionClosing     Condition = "4" // 引け
+	ConditionFunari      Condition = "6" // 不成
+)
+
+// MarginTradeType - 現金信用区分
+type MarginTradeType string
+
+const (
+	TradeTypeUnspecified  MarginTradeType = ""  // 未指定
+	TradeTypeStock        MarginTradeType = "0" // 現物
+	TradeTypeSystemEntry  MarginTradeType = "2" // 新規(制度信用6ヶ月)
+	TradeTypeSystemExit   MarginTradeType = "4" // 返済(制度信用6ヶ月)
+	TradeTypeGeneralEntry MarginTradeType = "6" // 新規(一般信用6ヶ月)
+	TradeTypeGeneralExit  MarginTradeType = "8" // 返済(一般信用6ヶ月)
+)
+
+// StopOrderType - 逆指値注文種別
+type StopOrderType string
+
+const (
+	StopOrderTypeUnspecified   StopOrderType = ""  // 未指定
+	StopOrderTypeNormal        StopOrderType = "0" // 通常
+	StopOrderTypeStop          StopOrderType = "1" // 逆指値
+	StopOrderTypeNormalAndStop StopOrderType = "2" // 通常 + 逆指値
+)
+
+// ExitOrderType - 建日種類
+type ExitOrderType string
+
+const (
+	ExitOrderTypeUnspecified ExitOrderType = ""  // 未指定
+	ExitOrderTypeSpecified   ExitOrderType = "1" // 個別指定
+	ExitOrderTypeDayAsc      ExitOrderType = "2" // 建日順
+	ExitOrderTypeProfitDesc  ExitOrderType = "3" // 単価益順
+	ExitOrderTypeProfitAsc   ExitOrderType = "4" // 単価損順
 )

@@ -43,6 +43,52 @@ func Test_LogoutRequest_request(t *testing.T) {
 	}
 }
 
+func Test_logoutResponse_response(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name     string
+		response logoutResponse
+		want1    LogoutResponse
+	}{
+		{name: "変換できる",
+			response: logoutResponse{
+				commonResponse: commonResponse{
+					No:           2,
+					SendDate:     RequestTime{Time: time.Date(2022, 2, 24, 21, 2, 23, 365000000, time.Local)},
+					ReceiveDate:  RequestTime{Time: time.Date(2022, 2, 24, 21, 2, 23, 335000000, time.Local)},
+					ErrorNo:      ErrTypeNoProblem,
+					ErrorMessage: "",
+					FeatureType:  FeatureTypeLogoutResponse,
+				},
+				ResultCode: "0",
+				ResultText: "",
+			},
+			want1: LogoutResponse{
+				CommonResponse: CommonResponse{
+					No:           2,
+					SendDate:     time.Date(2022, 2, 24, 21, 2, 23, 365000000, time.Local),
+					ReceiveDate:  time.Date(2022, 2, 24, 21, 2, 23, 335000000, time.Local),
+					ErrorNo:      ErrTypeNoProblem,
+					ErrorMessage: "",
+					FeatureType:  FeatureTypeLogoutResponse,
+				},
+				ResultCode: "0",
+				ResultText: "",
+			}},
+	}
+
+	for _, test := range tests {
+		test := test
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			got1 := test.response.response()
+			if !reflect.DeepEqual(test.want1, got1) {
+				t.Errorf("%s error\nwant: %+v\ngot: %+v\n", t.Name(), test.want1, got1)
+			}
+		})
+	}
+}
+
 func Test_client_Logout(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
@@ -66,8 +112,8 @@ func Test_client_Logout(t *testing.T) {
 			want1: &LogoutResponse{
 				CommonResponse: CommonResponse{
 					No:           2,
-					SendDate:     RequestTime{Time: time.Date(2022, 2, 24, 21, 2, 23, 365000000, time.Local)},
-					ReceiveDate:  RequestTime{Time: time.Date(2022, 2, 24, 21, 2, 23, 335000000, time.Local)},
+					SendDate:     time.Date(2022, 2, 24, 21, 2, 23, 365000000, time.Local),
+					ReceiveDate:  time.Date(2022, 2, 24, 21, 2, 23, 335000000, time.Local),
 					ErrorNo:      ErrTypeNoProblem,
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeLogoutResponse,
@@ -95,8 +141,8 @@ func Test_client_Logout(t *testing.T) {
 			want1: &LogoutResponse{
 				CommonResponse: CommonResponse{
 					No:           2,
-					SendDate:     RequestTime{Time: time.Date(2022, 2, 24, 21, 1, 58, 453000000, time.Local)},
-					ReceiveDate:  RequestTime{Time: time.Date(2022, 2, 24, 21, 1, 58, 440000000, time.Local)},
+					SendDate:     time.Date(2022, 2, 24, 21, 1, 58, 453000000, time.Local),
+					ReceiveDate:  time.Date(2022, 2, 24, 21, 1, 58, 440000000, time.Local),
 					ErrorNo:      ErrTypeSessionInactive,
 					ErrorMessage: "セッションが切断しました。",
 					FeatureType:  FeatureTypeLogoutRequest,
