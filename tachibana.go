@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"time"
@@ -108,7 +107,6 @@ func (c *client) get(ctx context.Context, uri string, request interface{}, respo
 	if err != nil {
 		return err
 	}
-	log.Println(b, string(b))
 
 	if res.StatusCode == http.StatusOK {
 		if err := c.parseResponse(b, response); err != nil {

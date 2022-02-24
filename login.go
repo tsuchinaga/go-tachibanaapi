@@ -115,7 +115,7 @@ type LoginResponse struct {
 
 // Session - ログインレスポンスからセッションを取り出す
 func (r *LoginResponse) Session() (*Session, error) {
-	if r.ErrorNo != ErrTypeNoProblem && r.FeatureType != FeatureTypeLoginResponse && r.ResultCode != "0" {
+	if r.ErrorNo != ErrTypeNoProblem || r.FeatureType != FeatureTypeLoginResponse || r.ResultCode != "0" {
 		return nil, CanNotCreateSessionErr
 	}
 

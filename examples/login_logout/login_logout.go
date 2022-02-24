@@ -8,6 +8,8 @@ import (
 )
 
 func main() {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+
 	userId := "user-id"
 	password := "password"
 
@@ -28,7 +30,9 @@ func main() {
 		session, err = res.Session()
 		if err != nil {
 			log.Fatalln(err)
+			return
 		}
+		log.Printf("%+v\n", session)
 	}
 
 	// ログアウト
