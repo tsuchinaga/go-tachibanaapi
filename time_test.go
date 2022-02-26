@@ -87,9 +87,9 @@ func Test_YmdHms_MarshalJSON(t *testing.T) {
 		{name: "正常な日付をパースできる",
 			time: YmdHms{Time: time.Date(2022, 2, 10, 9, 30, 15, 123000000, time.Local)},
 			want: []byte(`"20220210093015"`)},
-		{name: "time.Timeのゼロ値はゼロ値になる",
+		{name: "time.Timeのゼロ値は空文字になる",
 			time: YmdHms{},
-			want: []byte(`"00010101000000"`)},
+			want: []byte(`""`)},
 	}
 
 	for _, test := range tests {
@@ -125,6 +125,10 @@ func Test_YmdHms_UnmarshalJSON(t *testing.T) {
 			src:      []byte(`""`),
 			want1:    YmdHms{},
 			hasError: false},
+		{name: "文字列の00000000000000はゼロ値にする",
+			src:      []byte(`"00000000000000"`),
+			want1:    YmdHms{},
+			hasError: false},
 		{name: "違う形式だとエラー",
 			src:      []byte(`"2022-02-24"`),
 			want1:    YmdHms{},
@@ -156,9 +160,9 @@ func Test_Ymd_MarshalJSON(t *testing.T) {
 		{name: "正常な日付をパースできる",
 			time: Ymd{Time: time.Date(2022, 2, 10, 9, 30, 15, 123000000, time.Local)},
 			want: []byte(`"20220210"`)},
-		{name: "time.Timeのゼロ値は0になる",
+		{name: "time.Timeのゼロ値は空文字になる",
 			time: Ymd{},
-			want: []byte(`"0"`)},
+			want: []byte(`""`)},
 	}
 
 	for _, test := range tests {

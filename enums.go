@@ -290,3 +290,20 @@ const (
 	CorrectCancelTypeCancelable  CorrectCancelType = "1" // 取消可能
 	CorrectCancelTypeInvalid     CorrectCancelType = "2" // 訂正・取消不可
 )
+
+// Channel - チャネル
+type Channel string
+
+const (
+	ChannelUnspecified Channel = ""  // 未指定
+	ChannelMeet        Channel = "0" // 対面
+	ChannelPC          Channel = "1" // PC
+	ChannelCallCenter  Channel = "2" // コールセンター
+	ChannelCallCenter2 Channel = "3" // コールセンター
+	ChannelCallCenter3 Channel = "4" // コールセンター
+	ChannelMobile      Channel = "5" // モバイル
+	ChannelRich        Channel = "6" // リッチ
+	ChannelSmartPhone  Channel = "7" // スマホ・タブレット
+	ChannelIPadApp     Channel = "8" // iPadアプリ
+	ChannelHost        Channel = "9" // HOST
+)

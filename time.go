@@ -30,7 +30,7 @@ type Ymd struct {
 
 func (t Ymd) MarshalJSON() ([]byte, error) {
 	if t.Time.IsZero() {
-		return []byte(`"0"`), nil
+		return []byte(`""`), nil
 	}
 	return []byte(t.Time.Format(`"20060102"`)), nil
 }
@@ -54,14 +54,18 @@ type YmdHms struct {
 }
 
 func (t YmdHms) MarshalJSON() ([]byte, error) {
+	if t.Time.IsZero() {
+		return []byte(`""`), nil
+	}
 	return []byte(t.Time.Format(`"20060102150405"`)), nil
 }
 
 func (t *YmdHms) UnmarshalJSON(b []byte) error {
-	if b == nil || string(b) == `""` || string(b) == "null" {
+	str := string(b)
+	if b == nil || str == `""` || str == "null" || str == `"00000000000000"` {
 		return nil
 	}
-	tt, err := time.Parse(`"20060102150405"`, string(b))
+	tt, err := time.Parse(`"20060102150405"`, str)
 	if err != nil {
 		return err
 	}
