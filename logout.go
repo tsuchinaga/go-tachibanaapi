@@ -11,7 +11,7 @@ type LogoutRequest struct{}
 // request - 送信できるログアウトリクエストを取得
 func (r *LogoutRequest) request(no int64, now time.Time) logoutRequest {
 	return logoutRequest{
-		CommonRequest: CommonRequest{
+		commonRequest: commonRequest{
 			No:          no,
 			SendDate:    RequestTime{Time: now},
 			FeatureType: FeatureTypeLogoutRequest,
@@ -21,7 +21,7 @@ func (r *LogoutRequest) request(no int64, now time.Time) logoutRequest {
 
 // logoutRequest - パース用ログアウトリクエスト
 type logoutRequest struct {
-	CommonRequest
+	commonRequest
 }
 
 // logoutResponse - パース用ログアウトレスポンス

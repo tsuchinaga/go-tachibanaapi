@@ -95,22 +95,22 @@ const (
 	SpecificAccountTypeWithholding SpecificAccountType = "2" // 特定源泉徴収あり
 )
 
-// ErrType - エラーNo
-type ErrType string
+// ErrorNo - エラーNo
+type ErrorNo string
 
 const (
-	ErrTypeUnspecified      ErrType = ""    // 未指定
-	ErrTypeNoProblem        ErrType = "0"   // 問題なし
-	ErrTypeNoData           ErrType = "1"   // データなし
-	ErrTypeSessionInactive  ErrType = "2"   // 無効なセッション
-	ErrTypeProgressedNumber ErrType = "6"   // 処理済みの送信通番
-	ErrTypeExceedLimitTime  ErrType = "8"   // 送信日時からみたタイムアウト
-	ErrTypeServiceOffline   ErrType = "9"   // サービス停止中
-	ErrTypeBadRequest       ErrType = "-1"  // 引数エラー
-	ErrTypeDatabaseAccess   ErrType = "-2"  // データベースへのアクセスエラー
-	ErrTypeServerAccess     ErrType = "-3"  // サーバへのアクセスエラー
-	ErrTypeSystemOffline    ErrType = "-12" // システム停止中
-	ErrTypeOffHours         ErrType = "-62" // 情報提供時間外
+	ErrorUnspecified      ErrorNo = ""    // 未指定
+	ErrorNoProblem        ErrorNo = "0"   // 問題なし
+	ErrorNoData           ErrorNo = "1"   // データなし
+	ErrorSessionInactive  ErrorNo = "2"   // 無効なセッション
+	ErrorProgressedNumber ErrorNo = "6"   // 処理済みの送信通番
+	ErrorExceedLimitTime  ErrorNo = "8"   // 送信日時からみたタイムアウト
+	ErrorServiceOffline   ErrorNo = "9"   // サービス停止中
+	ErrorBadRequest       ErrorNo = "-1"  // 引数エラー
+	ErrorDatabaseAccess   ErrorNo = "-2"  // データベースへのアクセスエラー
+	ErrorServerAccess     ErrorNo = "-3"  // サーバへのアクセスエラー
+	ErrorSystemOffline    ErrorNo = "-12" // システム停止中
+	ErrorOffHours         ErrorNo = "-62" // 情報提供時間外
 )
 
 // Exchange - 市場
@@ -121,38 +121,38 @@ const (
 	ExchangeToushou     Exchange = "00" // 東証
 )
 
-// Category - 売買区分
-type Category string
+// Side - 売買区分
+type Side string
 
 const (
-	CategoryUnspecified Category = ""  // 未指定
-	CategorySell        Category = "1" // 売
-	CategoryBuy         Category = "3" // 買
-	CategoryDelivery    Category = "5" // 現渡
-	CategoryReceipt     Category = "7" // 現引
+	SideUnspecified Side = ""  // 未指定
+	SideSell        Side = "1" // 売
+	SideBuy         Side = "3" // 買
+	SideDelivery    Side = "5" // 現渡
+	SideReceipt     Side = "7" // 現引
 )
 
-// Condition - 執行条件
-type Condition string
+// ExecutionTiming - 執行条件
+type ExecutionTiming string
 
 const (
-	ConditionUnspecified Condition = ""  // 未指定
-	ConditionNoSelected  Condition = "0" // 指定なし
-	ConditionOpening     Condition = "2" // 寄付
-	ConditionClosing     Condition = "4" // 引け
-	ConditionFunari      Condition = "6" // 不成
+	ExecutionTimingUnspecified ExecutionTiming = ""  // 未指定
+	ExecutionTimingNormal      ExecutionTiming = "0" // 指定なし
+	ExecutionTimingOpening     ExecutionTiming = "2" // 寄付
+	ExecutionTimingClosing     ExecutionTiming = "4" // 引け
+	ExecutionTimingFunari      ExecutionTiming = "6" // 不成
 )
 
-// MarginTradeType - 現金信用区分
-type MarginTradeType string
+// TradeType - 現金信用区分
+type TradeType string
 
 const (
-	TradeTypeUnspecified  MarginTradeType = ""  // 未指定
-	TradeTypeStock        MarginTradeType = "0" // 現物
-	TradeTypeSystemEntry  MarginTradeType = "2" // 新規(制度信用6ヶ月)
-	TradeTypeSystemExit   MarginTradeType = "4" // 返済(制度信用6ヶ月)
-	TradeTypeGeneralEntry MarginTradeType = "6" // 新規(一般信用6ヶ月)
-	TradeTypeGeneralExit  MarginTradeType = "8" // 返済(一般信用6ヶ月)
+	TradeTypeUnspecified  TradeType = ""  // 未指定
+	TradeTypeStock        TradeType = "0" // 現物
+	TradeTypeSystemEntry  TradeType = "2" // 新規(制度信用6ヶ月)
+	TradeTypeSystemExit   TradeType = "4" // 返済(制度信用6ヶ月)
+	TradeTypeGeneralEntry TradeType = "6" // 新規(一般信用6ヶ月)
+	TradeTypeGeneralExit  TradeType = "8" // 返済(一般信用6ヶ月)
 )
 
 // StopOrderType - 逆指値注文種別
@@ -170,8 +170,123 @@ type ExitOrderType string
 
 const (
 	ExitOrderTypeUnspecified ExitOrderType = ""  // 未指定
+	ExitOrderTypeUnused      ExitOrderType = " " // 未使用
 	ExitOrderTypeSpecified   ExitOrderType = "1" // 個別指定
 	ExitOrderTypeDayAsc      ExitOrderType = "2" // 建日順
 	ExitOrderTypeProfitDesc  ExitOrderType = "3" // 単価益順
 	ExitOrderTypeProfitAsc   ExitOrderType = "4" // 単価損順
+)
+
+// OrderInquiryStatus - 注文状態
+type OrderInquiryStatus string
+
+const (
+	OrderInquiryStatusUnspecified OrderInquiryStatus = ""  // 未指定
+	OrderInquiryStatusInOrder     OrderInquiryStatus = "1" // 未約定・注文中
+	OrderInquiryStatusDone        OrderInquiryStatus = "2" // 全部約定
+	OrderInquiryStatusPart        OrderInquiryStatus = "3" // 部分約定
+	OrderInquiryStatusEditable    OrderInquiryStatus = "4" // 訂正取消可能な注文
+	OrderInquiryStatusPartInOrder OrderInquiryStatus = "5" // 未約定 + 一部約定
+)
+
+// ExitTermType - 弁済区分
+type ExitTermType string
+
+const (
+	ExitTermTypeUnspecified          ExitTermType = ""   // 未指定
+	ExitTermTypeNoLimit              ExitTermType = "00" // 期限なし
+	ExitTermTypeSystemMargin6m       ExitTermType = "26" // 制度信用6ヶ月
+	ExitTermTypeSystemMarginNoLimit  ExitTermType = "29" // 制度信用無期限
+	ExitTermTypeGeneralMargin6m      ExitTermType = "36" // 一般信用6ヶ月
+	ExitTermTypeGeneralMarginNoLimit ExitTermType = "39" // 一般信用無期限
+)
+
+// ExecutionType - 注文値段区分
+type ExecutionType string
+
+const (
+	ExecutionTypeUnspecified ExecutionType = ""  // 未指定
+	ExecutionTypeUnused      ExecutionType = " " // 未使用
+	ExecutionTypeMarket      ExecutionType = "1" // 成行
+	ExecutionTypeLimit       ExecutionType = "2" // 指値
+	ExecutionTypeHigher      ExecutionType = "3" // 親注文より高い
+	ExecutionTypeLower       ExecutionType = "4" // 親注文より低い
+)
+
+// TriggerType - トリガータイプ
+type TriggerType string
+
+const (
+	TriggerTypeUnspecified   TriggerType = ""  // 未指定
+	TriggerTypeNoFired       TriggerType = "0" // 未発火
+	TriggerTypeAuto          TriggerType = "1" // 自動
+	TriggerTypeManualOrder   TriggerType = "2" // 手動発注
+	TriggerTypeManualExpired TriggerType = "3" // 手動失効
+)
+
+// PartContractType - 内出来区分
+type PartContractType string
+
+const (
+	PartContractTypeUnspecified PartContractType = ""  // 未指定
+	PartContractTypeUnused      PartContractType = " " // 未使用
+	PartContractTypePart        PartContractType = "2" // 分割約定
+)
+
+// OrderStatus - 状態コード
+type OrderStatus string
+
+const (
+	OrderStatusUnspecified     OrderStatus = ""   // 未指定
+	OrderStatusReceived        OrderStatus = "0"  // 受付未済
+	OrderStatusInOrder         OrderStatus = "1"  // 未約定
+	OrderStatusError           OrderStatus = "2"  // 受付エラー
+	OrderStatusInCorrect       OrderStatus = "3"  // 訂正中
+	OrderStatusCorrected       OrderStatus = "4"  // 訂正完了
+	OrderStatusCorrectFailed   OrderStatus = "5"  // 訂正失敗
+	OrderStatusInCancel        OrderStatus = "6"  // 取消中
+	OrderStatusCanceled        OrderStatus = "7"  // 取消完了
+	OrderStatusCancelFailed    OrderStatus = "8"  // 取消失敗
+	OrderStatusPart            OrderStatus = "9"  // 一部約定
+	OrderStatusDone            OrderStatus = "10" // 全部約定
+	OrderStatusPartExpired     OrderStatus = "11" // 一部失効
+	OrderStatusExpired         OrderStatus = "12" // 全部失効
+	OrderStatusWait            OrderStatus = "13" // 発注待ち
+	OrderStatusInvalid         OrderStatus = "14" // 無効
+	OrderStatusTrigger         OrderStatus = "15" // 切替注文・逆指注文(切替中)
+	OrderStatusTriggered       OrderStatus = "16" // 切替完了・逆指注文(未約定)
+	OrderStatusTriggerFailed   OrderStatus = "17" // 切替失敗・逆指注文(失敗)
+	OrderStatusCarryOverFailed OrderStatus = "19" // 繰越失効
+	OrderStatusInOrderStop     OrderStatus = "50" // 逆指値発注中
+)
+
+// ContractStatus - 約定ステータス
+type ContractStatus string
+
+const (
+	ContractStatusUnspecified ContractStatus = ""  // 未指定
+	ContractStatusInOrder     ContractStatus = "0" // 未約定
+	ContractStatusPart        ContractStatus = "1" // 部分約定
+	ContractStatusDone        ContractStatus = "2" // 全部約定
+	ContractStatusInContract  ContractStatus = "3" // 約定中
+)
+
+// CarryOverType - 繰越注文フラグ
+type CarryOverType string
+
+const (
+	CarryOverTypeUnspecified CarryOverType = ""  // 未指定
+	CarryOverTypeToday       CarryOverType = "0" // 当日
+	CarryOverTypeCarry       CarryOverType = "1" // 繰越注文
+	CarryOverTypeInvalid     CarryOverType = "2" // 無効
+)
+
+// CorrectCancelType - 訂正取消可否フラグ
+type CorrectCancelType string
+
+const (
+	CorrectCancelTypeUnspecified CorrectCancelType = ""  // 未指定
+	CorrectCancelTypeCorrectable CorrectCancelType = "0" // 訂正・取消可能
+	CorrectCancelTypeCancelable  CorrectCancelType = "1" // 取消可能
+	CorrectCancelTypeInvalid     CorrectCancelType = "2" // 訂正・取消不可
 )

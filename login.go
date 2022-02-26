@@ -14,7 +14,7 @@ type LoginRequest struct {
 // request - 送信できるログインリクエストを取得
 func (r *LoginRequest) request(no int64, now time.Time) loginRequest {
 	return loginRequest{
-		CommonRequest: CommonRequest{
+		commonRequest: commonRequest{
 			No:          no,
 			SendDate:    RequestTime{Time: now},
 			FeatureType: FeatureTypeLoginRequest,
@@ -26,7 +26,7 @@ func (r *LoginRequest) request(no int64, now time.Time) loginRequest {
 
 // loginRequest - パース用ログインリクエスト
 type loginRequest struct {
-	CommonRequest
+	commonRequest
 	UserId   string `json:"690"` // ログインユーザー
 	Password string `json:"531"` // ログインパスワード
 }
@@ -115,7 +115,7 @@ type LoginResponse struct {
 
 // Session - ログインレスポンスからセッションを取り出す
 func (r *LoginResponse) Session() (*Session, error) {
-	if r.ErrorNo != ErrTypeNoProblem || r.FeatureType != FeatureTypeLoginResponse || r.ResultCode != "0" {
+	if r.ErrorNo != ErrorNoProblem || r.FeatureType != FeatureTypeLoginResponse || r.ResultCode != "0" {
 		return nil, CanNotCreateSessionErr
 	}
 

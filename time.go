@@ -24,6 +24,31 @@ func (t *RequestTime) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+type Ymd struct {
+	time.Time
+}
+
+func (t Ymd) MarshalJSON() ([]byte, error) {
+	if t.Time.IsZero() {
+		return []byte(`"0"`), nil
+	}
+	return []byte(t.Time.Format(`"20060102"`)), nil
+}
+
+func (t *Ymd) UnmarshalJSON(b []byte) error {
+	str := string(b)
+	if b == nil || str == `""` || str == "null" || str == `"0"` || str == `"00000000"` {
+		return nil
+	}
+
+	tt, err := time.Parse(`"20060102"`, string(b))
+	if err != nil {
+		return err
+	}
+	*t = Ymd{Time: time.Date(tt.Year(), tt.Month(), tt.Day(), tt.Hour(), tt.Minute(), tt.Second(), tt.Nanosecond(), time.Local)}
+	return nil
+}
+
 type YmdHms struct {
 	time.Time
 }
@@ -41,28 +66,5 @@ func (t *YmdHms) UnmarshalJSON(b []byte) error {
 		return err
 	}
 	*t = YmdHms{Time: time.Date(tt.Year(), tt.Month(), tt.Day(), tt.Hour(), tt.Minute(), tt.Second(), tt.Nanosecond(), time.Local)}
-	return nil
-}
-
-type Ymd struct {
-	time.Time
-}
-
-func (t Ymd) MarshalJSON() ([]byte, error) {
-	if t.Time.IsZero() {
-		return []byte(`"0"`), nil
-	}
-	return []byte(t.Time.Format(`"20060102"`)), nil
-}
-
-func (t *Ymd) UnmarshalJSON(b []byte) error {
-	if b == nil || string(b) == `""` || string(b) == "null" {
-		return nil
-	}
-	tt, err := time.Parse(`"20060102"`, string(b))
-	if err != nil {
-		return err
-	}
-	*t = Ymd{Time: time.Date(tt.Year(), tt.Month(), tt.Day(), tt.Hour(), tt.Minute(), tt.Second(), tt.Nanosecond(), time.Local)}
 	return nil
 }

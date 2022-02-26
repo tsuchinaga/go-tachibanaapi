@@ -29,6 +29,7 @@ func NewClient(env Environment, ver ApiVersion) Client {
 type Client interface {
 	Login(ctx context.Context, req LoginRequest) (*LoginResponse, error)
 	Logout(ctx context.Context, session *Session, req LogoutRequest) (*LogoutResponse, error)
+	OrderList(ctx context.Context, session *Session, req OrderListRequest) (*OrderListResponse, error)
 }
 
 type client struct {
@@ -129,8 +130,8 @@ func (c *client) parseResponse(body []byte, v interface{}) error {
 	return nil
 }
 
-// CommonRequest - リクエストの共通的な項目
-type CommonRequest struct {
+// commonRequest - リクエストの共通的な項目
+type commonRequest struct {
 	No          int64       `json:"175,string"` // 送信通番
 	SendDate    RequestTime `json:"177"`        // 送信日時
 	FeatureType FeatureType `json:"192"`        // 機能ID
@@ -141,7 +142,7 @@ type commonResponse struct {
 	No           int64       `json:"175,string"` // 送信通番
 	SendDate     RequestTime `json:"177"`        // 送信日時
 	ReceiveDate  RequestTime `json:"176"`        // 受信日時
-	ErrorNo      ErrType     `json:"174"`        // エラー番号
+	ErrorNo      ErrorNo     `json:"174"`        // エラー番号
 	ErrorMessage string      `json:"173"`        // エラー文言
 	FeatureType  FeatureType `json:"192"`        // 機能ID
 }
@@ -163,7 +164,7 @@ type CommonResponse struct {
 	No           int64       // 送信通番
 	SendDate     time.Time   // 送信日時
 	ReceiveDate  time.Time   // 受信日時
-	ErrorNo      ErrType     // エラー番号
+	ErrorNo      ErrorNo     // エラー番号
 	ErrorMessage string      // エラー文言
 	FeatureType  FeatureType // 機能ID
 }
