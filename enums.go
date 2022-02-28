@@ -307,3 +307,21 @@ const (
 	ChannelIPadApp     Channel = "8" // iPadアプリ
 	ChannelHost        Channel = "9" // HOST
 )
+
+// PrevCloseRatioType - 騰落率フラグ
+type PrevCloseRatioType string
+
+const (
+	PrevCloseRatioTypeUnspecified PrevCloseRatioType = ""   // 未指定
+	PrevCloseRatioTypeOver5       PrevCloseRatioType = "01" // +5.01%以上
+	PrevCloseRatioTypeOver3       PrevCloseRatioType = "02" // +3.01%以上
+	PrevCloseRatioTypeOver2       PrevCloseRatioType = "03" // +2.01%以上
+	PrevCloseRatioTypeOver1       PrevCloseRatioType = "04" // +1.01%以上
+	PrevCloseRatioTypeOver0       PrevCloseRatioType = "05" // +0.01%以上
+	PrevCloseRatioTypeKeep        PrevCloseRatioType = "06" // 変化なし
+	PrevCloseRatioTypeUnder0      PrevCloseRatioType = "07" // -0.01%以上
+	PrevCloseRatioTypeUnder1      PrevCloseRatioType = "08" // -1.01%以上
+	PrevCloseRatioTypeUnder2      PrevCloseRatioType = "09" // -2.01%以上
+	PrevCloseRatioTypeUnder3      PrevCloseRatioType = "10" // -3.01%以上
+	PrevCloseRatioTypeUnder5      PrevCloseRatioType = "11" // -5.01%以上
+)
