@@ -33,6 +33,8 @@ type orderListDetailRequest struct {
 
 type orderListDetailResponse struct {
 	commonResponse
+	OrderNumber            string           `json:"490"`        // 注文番号
+	ExecutionDate          Ymd              `json:"227"`        // 営業日
 	ResultCode             string           `json:"534"`        // 結果コード
 	ResultText             string           `json:"535"`        // 結果テキスト
 	WarningCode            string           `json:"692"`        // 警告コード
@@ -120,6 +122,8 @@ func (r *orderListDetailResponse) response() OrderListDetailResponse {
 
 	return OrderListDetailResponse{
 		CommonResponse:         r.commonResponse.response(),
+		OrderNumber:            r.OrderNumber,
+		ExecutionDate:          r.ExecutionDate.Time,
 		ResultCode:             r.ResultCode,
 		ResultText:             r.ResultText,
 		WarningCode:            r.WarningCode,
@@ -186,7 +190,7 @@ type holdPosition struct {
 	WarningText   string  `json:"366"`        // 警告テキスト
 	SortOrder     int     `json:"360,string"` // 順位
 	ContractDate  Ymd     `json:"361"`        // 建日
-	EntryPrice    float64 `json:"362"`        // 建単価
+	EntryPrice    float64 `json:"362,string"` // 建単価
 	HoldQuantity  float64 `json:"356,string"` // 返済注文株数
 	ExitQuantity  float64 `json:"368,string"` // 約定株数
 	ExitPrice     float64 `json:"367,string"` // 約定単価
@@ -224,6 +228,8 @@ func (r *holdPosition) response() HoldPosition {
 // OrderListDetailResponse - 注文約定一覧(詳細)レスポンス
 type OrderListDetailResponse struct {
 	CommonResponse
+	OrderNumber            string           // 注文番号
+	ExecutionDate          time.Time        // 営業日
 	ResultCode             string           // 結果コード
 	ResultText             string           // 結果テキスト
 	WarningCode            string           // 警告コード
