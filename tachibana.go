@@ -135,19 +135,20 @@ func (c *client) parseResponse(body []byte, v interface{}) error {
 
 // commonRequest - リクエストの共通的な項目
 type commonRequest struct {
-	No          int64       `json:"175,string"` // 送信通番
-	SendDate    RequestTime `json:"177"`        // 送信日時
-	FeatureType FeatureType `json:"192"`        // 機能ID
+	No             int64          `json:"p_no,string"`      // 送信通番
+	SendDate       RequestTime    `json:"p_sd_date"`        // 送信日時
+	FeatureType    FeatureType    `json:"sCLMID"`           // 機能ID
+	ResponseFormat ResponseFormat `json:"sJsonOfmt,string"` // レスポンスフォーマット
 }
 
 // commonResponse - パース用レスポンスの共通的な項目
 type commonResponse struct {
-	No           int64       `json:"175,string"` // 送信通番
-	SendDate     RequestTime `json:"177"`        // 送信日時
-	ReceiveDate  RequestTime `json:"176"`        // 受信日時
-	ErrorNo      ErrorNo     `json:"174"`        // エラー番号
-	ErrorMessage string      `json:"173"`        // エラー文言
-	FeatureType  FeatureType `json:"192"`        // 機能ID
+	No           int64       `json:"p_no,string"` // 送信通番
+	SendDate     RequestTime `json:"p_sd_date"`   // 送信日時
+	ReceiveDate  RequestTime `json:"p_rv_date"`   // 受信日時
+	ErrorNo      ErrorNo     `json:"p_errno"`     // エラー番号
+	ErrorMessage string      `json:"p_err"`       // エラー文言
+	FeatureType  FeatureType `json:"sCLMID"`      // 機能ID
 }
 
 // response - パース用レスポンスから使いやすい形のレスポンスに変換して返す

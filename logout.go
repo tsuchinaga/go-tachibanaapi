@@ -12,9 +12,10 @@ type LogoutRequest struct{}
 func (r *LogoutRequest) request(no int64, now time.Time) logoutRequest {
 	return logoutRequest{
 		commonRequest: commonRequest{
-			No:          no,
-			SendDate:    RequestTime{Time: now},
-			FeatureType: FeatureTypeLogoutRequest,
+			No:             no,
+			SendDate:       RequestTime{Time: now},
+			FeatureType:    FeatureTypeLogoutRequest,
+			ResponseFormat: ResponseFormatReadable | ResponseFormatWrapped | ResponseFormatWordKey,
 		},
 	}
 }
@@ -27,8 +28,8 @@ type logoutRequest struct {
 // logoutResponse - パース用ログアウトレスポンス
 type logoutResponse struct {
 	commonResponse
-	ResultCode string `json:"534"` // 結果コード
-	ResultText string `json:"535"` // 結果テキスト
+	ResultCode string `json:"sResultCode"` // 結果コード
+	ResultText string `json:"sResultText"` // 結果テキスト
 }
 
 func (r *logoutResponse) response() LogoutResponse {

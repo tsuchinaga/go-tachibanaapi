@@ -19,6 +19,16 @@ const (
 	ApiVersionLatest                 = ApiVersionV4R2
 )
 
+// ResponseFormat - 応答データフォーマット指定
+type ResponseFormat int
+
+const (
+	ResponseFormatUnspecified ResponseFormat = 0 // 未指定・標準
+	ResponseFormatReadable    ResponseFormat = 1 // json文字列をタブや改行で成形された読みやすい形式
+	ResponseFormatWrapped     ResponseFormat = 2 // {}の前後にのみ改行
+	ResponseFormatWordKey     ResponseFormat = 4 // 引数項目番号ではなく引数項目での応答
+)
+
 // FeatureType - 機能種別
 type FeatureType string
 

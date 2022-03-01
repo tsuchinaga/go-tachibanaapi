@@ -16,9 +16,10 @@ type OrderListDetailRequest struct {
 func (r *OrderListDetailRequest) request(no int64, now time.Time) orderListDetailRequest {
 	return orderListDetailRequest{
 		commonRequest: commonRequest{
-			No:          no,
-			SendDate:    RequestTime{Time: now},
-			FeatureType: FeatureTypeOrderListDetail,
+			No:             no,
+			SendDate:       RequestTime{Time: now},
+			FeatureType:    FeatureTypeOrderListDetail,
+			ResponseFormat: ResponseFormatReadable | ResponseFormatWrapped | ResponseFormatWordKey,
 		},
 		OrderNumber:   r.OrderNumber,
 		ExecutionDate: Ymd{Time: r.ExecutionDate},
@@ -27,73 +28,73 @@ func (r *OrderListDetailRequest) request(no int64, now time.Time) orderListDetai
 
 type orderListDetailRequest struct {
 	commonRequest
-	OrderNumber   string `json:"490,omitempty"` // 注文番号
-	ExecutionDate Ymd    `json:"227,omitempty"` // 営業日
+	OrderNumber   string `json:"sOrderNumber,omitempty"` // 注文番号
+	ExecutionDate Ymd    `json:"sEigyouDay,omitempty"`   // 営業日
 }
 
 type orderListDetailResponse struct {
 	commonResponse
-	OrderNumber            string           `json:"490"`        // 注文番号
-	ExecutionDate          Ymd              `json:"227"`        // 営業日
-	ResultCode             string           `json:"534"`        // 結果コード
-	ResultText             string           `json:"535"`        // 結果テキスト
-	WarningCode            string           `json:"692"`        // 警告コード
-	WarningText            string           `json:"693"`        // 警告テキスト
-	SymbolCode             string           `json:"328"`        // 銘柄CODE
-	Exchange               Exchange         `json:"501"`        // 市場
-	Side                   Side             `json:"467"`        // 売買区分
-	TradeType              TradeType        `json:"255"`        // 現金信用区分
-	ExitTermType           ExitTermType     `json:"468"`        // 弁済区分
-	ExecutionTiming        ExecutionTiming  `json:"469"`        // 執行条件
-	ExecutionType          ExecutionType    `json:"495"`        // 注文値段区分
-	Price                  float64          `json:"494,string"` // 注文単価
-	OrderQuantity          float64          `json:"496,string"` // 注文株数
-	CurrentQuantity        float64          `json:"471,string"` // 有効株数
-	OrderStatus            OrderStatus      `json:"504"`        // 状態コード
-	OrderStatusText        string           `json:"503"`        // 状態
-	OrderDateTime          YmdHms           `json:"491"`        // 注文日付
-	ExpireDate             Ymd              `json:"492"`        // 有効期限
-	Channel                Channel          `json:"193"`        // チャネル
-	StockAccountType       AccountType      `json:"248"`        // 現物口座区分
-	MarginAccountType      AccountType      `json:"575"`        // 建玉口座区分
-	StopOrderType          StopOrderType    `json:"259"`        // 逆指値注文種別
-	StopTriggerPrice       float64          `json:"263,string"` // 逆指値条件
-	StopOrderExecutionType ExecutionType    `json:"258"`        // 逆指値値段区分
-	StopOrderPrice         float64          `json:"260,string"` // 逆指値値段
-	TriggerType            TriggerType      `json:"659"`        // トリガータイプ
-	TriggerDateTime        YmdHms           `json:"658"`        // トリガー日時
-	DeliveryDate           Ymd              `json:"662"`        // 受渡日
-	ContractPrice          float64          `json:"695,string"` // 約定単価
-	ContractQuantity       float64          `json:"696,string"` // 約定株数
-	TradingAmount          float64          `json:"182,string"` // 売買代金
-	PartContractType       PartContractType `json:"691"`        // 内出来区分
-	EstimationAmount       float64          `json:"235,string"` // 概算代金
-	Commission             float64          `json:"183,string"` // 手数料
-	CommissionTax          float64          `json:"558,string"` // 消費税
-	ExitOrderType          ExitOrderType    `json:"620"`        // 建日種類
-	ExchangeErrorCode      string           `json:"577"`        // 市場/取次ErrorCode
-	ExchangeOrderDateTime  YmdHms           `json:"466"`        // 市場注文受付時刻
-	Contracts              []contract       `json:"57"`         // 約定失効リスト
-	HoldPositions          []holdPosition   `json:"53"`         // 決済注文建株指定リスト
+	OrderNumber            string           `json:"sOrderNumber"`               // 注文番号
+	ExecutionDate          Ymd              `json:"sEigyouDay"`                 // 営業日
+	ResultCode             string           `json:"sResultCode"`                // 結果コード
+	ResultText             string           `json:"sResultText"`                // 結果テキスト
+	WarningCode            string           `json:"sWarningCode"`               // 警告コード
+	WarningText            string           `json:"sWarningText"`               // 警告テキスト
+	SymbolCode             string           `json:"sIssueCode"`                 // 銘柄CODE
+	Exchange               Exchange         `json:"sOrderSizyouC"`              // 市場
+	Side                   Side             `json:"sOrderBaibaiKubun"`          // 売買区分
+	TradeType              TradeType        `json:"sGenkinSinyouKubun"`         // 現金信用区分
+	ExitTermType           ExitTermType     `json:"sOrderBensaiKubun"`          // 弁済区分
+	ExecutionTiming        ExecutionTiming  `json:"sOrderCondition"`            // 執行条件
+	ExecutionType          ExecutionType    `json:"sOrderOrderPriceKubun"`      // 注文値段区分
+	Price                  float64          `json:"sOrderOrderPrice,string"`    // 注文単価
+	OrderQuantity          float64          `json:"sOrderOrderSuryou,string"`   // 注文株数
+	CurrentQuantity        float64          `json:"sOrderCurrentSuryou,string"` // 有効株数
+	OrderStatus            OrderStatus      `json:"sOrderStatusCode"`           // 状態コード
+	OrderStatusText        string           `json:"sOrderStatus"`               // 状態
+	OrderDateTime          YmdHms           `json:"sOrderOrderDateTime"`        // 注文日付
+	ExpireDate             Ymd              `json:"sOrderOrderExpireDay"`       // 有効期限
+	Channel                Channel          `json:"sChannel"`                   // チャネル
+	StockAccountType       AccountType      `json:"sGenbutuZyoutoekiKazeiC"`    // 現物口座区分
+	MarginAccountType      AccountType      `json:"sSinyouZyoutoekiKazeiC"`     // 建玉口座区分
+	StopOrderType          StopOrderType    `json:"sGyakusasiOrderType"`        // 逆指値注文種別
+	StopTriggerPrice       float64          `json:"sGyakusasiZyouken,string"`   // 逆指値条件
+	StopOrderExecutionType ExecutionType    `json:"sGyakusasiKubun"`            // 逆指値値段区分
+	StopOrderPrice         float64          `json:"sGyakusasiPrice,string"`     // 逆指値値段
+	TriggerType            TriggerType      `json:"sTriggerType"`               // トリガータイプ
+	TriggerDateTime        YmdHms           `json:"sTriggerTime"`               // トリガー日時
+	DeliveryDate           Ymd              `json:"sUkewatasiDay"`              // 受渡日
+	ContractPrice          float64          `json:"sYakuzyouPrice,string"`      // 約定単価
+	ContractQuantity       float64          `json:"sYakuzyouSuryou,string"`     // 約定株数
+	TradingAmount          float64          `json:"sBaiBaiDaikin,string"`       // 売買代金
+	PartContractType       PartContractType `json:"sUtidekiKubun"`              // 内出来区分
+	EstimationAmount       float64          `json:"sGaisanDaikin,string"`       // 概算代金
+	Commission             float64          `json:"sBaiBaiTesuryo,string"`      // 手数料
+	CommissionTax          float64          `json:"sShouhizei,string"`          // 消費税
+	ExitOrderType          ExitOrderType    `json:"sTatebiType"`                // 建日種類
+	ExchangeErrorCode      string           `json:"sSizyouErrorCode"`           // 市場/取次ErrorCode
+	ExchangeOrderDateTime  YmdHms           `json:"sOrderAcceptTime"`           // 市場注文受付時刻
+	Contracts              []contract       `json:"aYakuzyouSikkouList"`        // 約定失効リスト
+	HoldPositions          []holdPosition   `json:"aKessaiOrderTategyokuList"`  // 決済注文建株指定リスト
 }
 
 func (r *orderListDetailResponse) UnmarshalJSON(b []byte) error {
 	// 文字列でないところに空文字を返されることがあるので、置換しておく
 	replaced := b
 	replaces := map[string]string{
-		`"494":""`: `"494":"0"`,
-		`"496":""`: `"496":"0"`,
-		`"471":""`: `"471":"0"`,
-		`"263":""`: `"263":"0"`,
-		`"260":""`: `"260":"0"`,
-		`"695":""`: `"695":"0"`,
-		`"696":""`: `"696":"0"`,
-		`"182":""`: `"182":"0"`,
-		`"235":""`: `"235":"0"`,
-		`"183":""`: `"183":"0"`,
-		`"558":""`: `"558":"0"`,
-		`"57":""`:  `"57":[]`,
-		`"53":""`:  `"53":[]`,
+		`"sOrderOrderPrice":""`:          `"sOrderOrderPrice":"0"`,
+		`"sOrderOrderSuryou":""`:         `"sOrderOrderSuryou":"0"`,
+		`"sOrderCurrentSuryou":""`:       `"sOrderCurrentSuryou":"0"`,
+		`"sGyakusasiZyouken":""`:         `"sGyakusasiZyouken":"0"`,
+		`"sGyakusasiPrice":""`:           `"sGyakusasiPrice":"0"`,
+		`"sYakuzyouPrice":""`:            `"sYakuzyouPrice":"0"`,
+		`"sYakuzyouSuryou":""`:           `"sYakuzyouSuryou":"0"`,
+		`"sBaiBaiDaikin":""`:             `"sBaiBaiDaikin":"0"`,
+		`"sGaisanDaikin":""`:             `"sGaisanDaikin":"0"`,
+		`"sBaiBaiTesuryo":""`:            `"sBaiBaiTesuryo":"0"`,
+		`"sShouhizei":""`:                `"sShouhizei":"0"`,
+		`"aYakuzyouSikkouList":""`:       `"aYakuzyouSikkouList":[]`,
+		`"aKessaiOrderTategyokuList":""`: `"aKessaiOrderTategyokuList":[]`,
 	}
 	for o, n := range replaces {
 		replaced = bytes.Replace(replaced, []byte(o), []byte(n), -1)
@@ -168,11 +169,11 @@ func (r *orderListDetailResponse) response() OrderListDetailResponse {
 }
 
 type contract struct {
-	WarningCode string  `json:"697"`        // 警告コード
-	WarningText string  `json:"698"`        // 警告テキスト
-	Quantity    float64 `json:"696,string"` // 約定数量
-	Price       float64 `json:"695,string"` // 約定価格
-	DateTime    YmdHms  `json:"694"`        // 約定日時
+	WarningCode string  `json:"sYakuzyouWarningCode"`   // 警告コード
+	WarningText string  `json:"sYakuzyouWarningText"`   // 警告テキスト
+	Quantity    float64 `json:"sYakuzyouSuryou,string"` // 約定数量
+	Price       float64 `json:"sYakuzyouPrice,string"`  // 約定価格
+	DateTime    YmdHms  `json:"sYakuzyouDate"`          // 約定日時
 }
 
 func (r *contract) response() Contract {
@@ -186,22 +187,22 @@ func (r *contract) response() Contract {
 }
 
 type holdPosition struct {
-	WarningCode   string  `json:"365"`        // 警告コード
-	WarningText   string  `json:"366"`        // 警告テキスト
-	SortOrder     int     `json:"360,string"` // 順位
-	ContractDate  Ymd     `json:"361"`        // 建日
-	EntryPrice    float64 `json:"362,string"` // 建単価
-	HoldQuantity  float64 `json:"356,string"` // 返済注文株数
-	ExitQuantity  float64 `json:"368,string"` // 約定株数
-	ExitPrice     float64 `json:"367,string"` // 約定単価
-	Commission    float64 `json:"359,string"` // 建手数料
-	Interest      float64 `json:"369,string"` // 順日歩
-	Premiums      float64 `json:"352,string"` // 逆日歩
-	RewritingFee  float64 `json:"353,string"` // 書換料
-	ManagementFee float64 `json:"354,string"` // 管理費
-	LendingFee    float64 `json:"355,string"` // 貸株料
-	OtherFee      float64 `json:"358,string"` // その他
-	Profit        float64 `json:"357,string"` // 決済損益/受渡代金
+	WarningCode   string  `json:"sKessaiWarningCode"`           // 警告コード
+	WarningText   string  `json:"sKessaiWarningText"`           // 警告テキスト
+	SortOrder     int     `json:"sKessaiTatebiZyuni,string"`    // 順位
+	ContractDate  Ymd     `json:"sKessaiTategyokuDay"`          // 建日
+	EntryPrice    float64 `json:"sKessaiTategyokuPrice,string"` // 建単価
+	HoldQuantity  float64 `json:"sKessaiOrderSuryo,string"`     // 返済注文株数
+	ExitQuantity  float64 `json:"sKessaiYakuzyouSuryo,string"`  // 約定株数
+	ExitPrice     float64 `json:"sKessaiYakuzyouPrice,string"`  // 約定単価
+	Commission    float64 `json:"sKessaiTateTesuryou,string"`   // 建手数料
+	Interest      float64 `json:"sKessaiZyunHibu,string"`       // 順日歩
+	Premiums      float64 `json:"sKessaiGyakuhibu,string"`      // 逆日歩
+	RewritingFee  float64 `json:"sKessaiKakikaeryou,string"`    // 書換料
+	ManagementFee float64 `json:"sKessaiKanrihi,string"`        // 管理費
+	LendingFee    float64 `json:"sKessaiKasikaburyou,string"`   // 貸株料
+	OtherFee      float64 `json:"sKessaiSonota,string"`         // その他
+	Profit        float64 `json:"sKessaiSoneki,string"`         // 決済損益/受渡代金
 }
 
 func (r *holdPosition) response() HoldPosition {

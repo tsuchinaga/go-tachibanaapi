@@ -17,9 +17,10 @@ type OrderListRequest struct {
 func (r *OrderListRequest) request(no int64, now time.Time) orderListRequest {
 	return orderListRequest{
 		commonRequest: commonRequest{
-			No:          no,
-			SendDate:    RequestTime{Time: now},
-			FeatureType: FeatureTypeOrderList,
+			No:             no,
+			SendDate:       RequestTime{Time: now},
+			FeatureType:    FeatureTypeOrderList,
+			ResponseFormat: ResponseFormatReadable | ResponseFormatWrapped | ResponseFormatWordKey,
 		},
 		SymbolCode:    r.SymbolCode,
 		ExecutionDate: Ymd{Time: r.ExecutionDate},
@@ -29,26 +30,26 @@ func (r *OrderListRequest) request(no int64, now time.Time) orderListRequest {
 
 type orderListRequest struct {
 	commonRequest
-	SymbolCode    string             `json:"328,omitempty"` // 銘柄コード
-	ExecutionDate Ymd                `json:"559,omitempty"` // 注文執行予定日
-	OrderStatus   OrderInquiryStatus `json:"508,omitempty"` // 注文照会状態
+	SymbolCode    string             `json:"sIssueCode,omitempty"`          // 銘柄コード
+	ExecutionDate Ymd                `json:"sSikkouDay,omitempty"`          // 注文執行予定日
+	OrderStatus   OrderInquiryStatus `json:"sOrderSyoukaiStatus,omitempty"` // 注文照会状態
 }
 
 type orderListResponse struct {
 	commonResponse
-	SymbolCode         string             `json:"328"` // 銘柄コード
-	ExecutionDate      Ymd                `json:"559"` // 注文執行予定日
-	OrderInquiryStatus OrderInquiryStatus `json:"508"` // 注文照会状態
-	ResultCode         string             `json:"534"` // 結果コード
-	ResultText         string             `json:"535"` // 結果テキスト
-	WarningCode        string             `json:"692"` // 警告コード
-	WarningText        string             `json:"693"` // 警告テキスト
-	Orders             []order            `json:"55"`  // 注文リスト
+	SymbolCode         string             `json:"sIssueCode"`          // 銘柄コード
+	ExecutionDate      Ymd                `json:"sSikkouDay"`          // 注文執行予定日
+	OrderInquiryStatus OrderInquiryStatus `json:"sOrderSyoukaiStatus"` // 注文照会状態
+	ResultCode         string             `json:"sResultCode"`         // 結果コード
+	ResultText         string             `json:"sResultText"`         // 結果テキスト
+	WarningCode        string             `json:"sWarningCode"`        // 警告コード
+	WarningText        string             `json:"sWarningText"`        // 警告テキスト
+	Orders             []order            `json:"aOrderList"`          // 注文リスト
 }
 
 func (r *orderListResponse) UnmarshalJSON(b []byte) error {
 	// 注文一覧が返されない場合は空文字が返されるので、空文字なら空配列に置き換えてからパースする
-	replaced := bytes.Replace(b, []byte(`"55":""`), []byte(`"55":[]`), -1)
+	replaced := bytes.Replace(b, []byte(`"aOrderList":""`), []byte(`"aOrderList":[]`), -1)
 
 	type alias orderListResponse
 	ra := &struct {
@@ -80,38 +81,38 @@ func (r *orderListResponse) response() OrderListResponse {
 }
 
 type order struct {
-	WarningCode            string            `json:"521"`        // 警告コード
-	WarningText            string            `json:"522"`        // 警告テキスト
-	OrderNumber            string            `json:"493"`        // 注文番号
-	SymbolCode             string            `json:"485"`        // 銘柄コード
-	Exchange               Exchange          `json:"501"`        // 市場
-	AccountType            AccountType       `json:"528"`        // 譲渡益課税区分
-	TradeType              TradeType         `json:"255"`        // 現金信用区分
-	ExitTermType           ExitTermType      `json:"468"`        // 弁済区分
-	Side                   Side              `json:"467"`        // 売買区分
-	OrderQuantity          float64           `json:"496,string"` // 注文株数
-	CurrentQuantity        float64           `json:"471,string"` // 有効株数
-	Price                  float64           `json:"494,string"` // 注文単価
-	ExecutionTiming        ExecutionTiming   `json:"469"`        // 執行条件
-	ExecutionType          ExecutionType     `json:"495"`        // 注文値段区分
-	StopOrderType          StopOrderType     `json:"480"`        // 逆指値注文種別
-	StopTriggerPrice       float64           `json:"482,string"` // 逆指値条件
-	StopOrderExecutionType ExecutionType     `json:"479"`        // 逆指値値段区分
-	StopOrderPrice         float64           `json:"481,string"` // 逆指値値段
-	TriggerType            TriggerType       `json:"517"`        // トリガータイプ
-	ExitOrderType          ExitOrderType     `json:"510"`        // 建日種類
-	ContractQuantity       float64           `json:"526,string"` // 成立株数
-	ContractPrice          float64           `json:"524,string"` // 成立単価
-	PartContractType       PartContractType  `json:"520"`        // 内出来区分
-	ExecutionDate          Ymd               `json:"500"`        // 執行日
-	OrderStatus            OrderStatus       `json:"504"`        // 状態コード
-	OrderStatusText        string            `json:"503"`        // 状態
-	ContractStatus         ContractStatus    `json:"525"`        // 約定ステータス
-	OrderDateTime          YmdHms            `json:"491"`        // 注文日付
-	ExpireDate             Ymd               `json:"492"`        // 有効期限
-	CarryOverType          CarryOverType     `json:"489"`        // 繰越注文フラグ
-	CorrectCancelType      CorrectCancelType `json:"470"`        // 訂正取消可否フラグ
-	EstimationAmount       float64           `json:"235,string"` // 概算代金
+	WarningCode            string            `json:"sOrderWarningCode"`             // 警告コード
+	WarningText            string            `json:"sOrderWarningText"`             // 警告テキスト
+	OrderNumber            string            `json:"sOrderOrderNumber"`             // 注文番号
+	SymbolCode             string            `json:"sOrderIssueCode"`               // 銘柄コード
+	Exchange               Exchange          `json:"sOrderSizyouC"`                 // 市場
+	AccountType            AccountType       `json:"sOrderZyoutoekiKazeiC"`         // 譲渡益課税区分
+	TradeType              TradeType         `json:"sGenkinSinyouKubun"`            // 現金信用区分
+	ExitTermType           ExitTermType      `json:"sOrderBensaiKubun"`             // 弁済区分
+	Side                   Side              `json:"sOrderBaibaiKubun"`             // 売買区分
+	OrderQuantity          float64           `json:"sOrderOrderSuryou,string"`      // 注文株数
+	CurrentQuantity        float64           `json:"sOrderCurrentSuryou,string"`    // 有効株数
+	Price                  float64           `json:"sOrderOrderPrice,string"`       // 注文単価
+	ExecutionTiming        ExecutionTiming   `json:"sOrderCondition"`               // 執行条件
+	ExecutionType          ExecutionType     `json:"sOrderOrderPriceKubun"`         // 注文値段区分
+	StopOrderType          StopOrderType     `json:"sOrderGyakusasiOrderType"`      // 逆指値注文種別
+	StopTriggerPrice       float64           `json:"sOrderGyakusasiZyouken,string"` // 逆指値条件
+	StopOrderExecutionType ExecutionType     `json:"sOrderGyakusasiKubun"`          // 逆指値値段区分
+	StopOrderPrice         float64           `json:"sOrderGyakusasiPrice,string"`   // 逆指値値段
+	TriggerType            TriggerType       `json:"sOrderTriggerType"`             // トリガータイプ
+	ExitOrderType          ExitOrderType     `json:"sOrderTatebiType"`              // 建日種類
+	ContractQuantity       float64           `json:"sOrderYakuzyouSuryo,string"`    // 成立株数
+	ContractPrice          float64           `json:"sOrderYakuzyouPrice,string"`    // 成立単価
+	PartContractType       PartContractType  `json:"sOrderUtidekiKbn"`              // 内出来区分
+	ExecutionDate          Ymd               `json:"sOrderSikkouDay"`               // 執行日
+	OrderStatus            OrderStatus       `json:"sOrderStatusCode"`              // 状態コード
+	OrderStatusText        string            `json:"sOrderStatus"`                  // 状態
+	ContractStatus         ContractStatus    `json:"sOrderYakuzyouStatus"`          // 約定ステータス
+	OrderDateTime          YmdHms            `json:"sOrderOrderDateTime"`           // 注文日付
+	ExpireDate             Ymd               `json:"sOrderOrderExpireDay"`          // 有効期限
+	CarryOverType          CarryOverType     `json:"sOrderKurikosiOrderFlg"`        // 繰越注文フラグ
+	CorrectCancelType      CorrectCancelType `json:"sOrderCorrectCancelKahiFlg"`    // 訂正取消可否フラグ
+	EstimationAmount       float64           `json:"sGaisanDaikin,string"`          // 概算代金
 }
 
 func (r *order) response() Order {
