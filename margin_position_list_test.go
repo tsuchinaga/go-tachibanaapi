@@ -32,7 +32,7 @@ func Test_MarginPositionListRequest_request(t *testing.T) {
 					No:             123,
 					SendDate:       RequestTime{Time: time.Date(2022, 3, 1, 9, 40, 0, 0, time.Local)},
 					FeatureType:    FeatureTypeMarginPositionList,
-					ResponseFormat: ResponseFormatReadable | ResponseFormatWrapped | ResponseFormatWordKey,
+					ResponseFormat: ResponseFormatWordKey,
 				},
 				SymbolCode: "1475",
 			}},

@@ -34,7 +34,7 @@ func Test_OrderListRequest_request(t *testing.T) {
 					No:             123,
 					SendDate:       RequestTime{Time: time.Date(2022, 2, 28, 8, 5, 30, 123000000, time.Local)},
 					FeatureType:    FeatureTypeOrderList,
-					ResponseFormat: ResponseFormatReadable | ResponseFormatWrapped | ResponseFormatWordKey,
+					ResponseFormat: ResponseFormatWordKey,
 				},
 				SymbolCode:    "1475",
 				ExecutionDate: Ymd{Time: time.Date(2022, 2, 28, 0, 0, 0, 0, time.Local)},

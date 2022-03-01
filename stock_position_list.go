@@ -18,7 +18,7 @@ func (r *StockPositionListRequest) request(no int64, now time.Time) stockPositio
 			No:             no,
 			SendDate:       RequestTime{Time: now},
 			FeatureType:    FeatureTypeStockPositionList,
-			ResponseFormat: ResponseFormatReadable | ResponseFormatWrapped | ResponseFormatWordKey,
+			ResponseFormat: ResponseFormatWordKey,
 		},
 		SymbolCode: r.SymbolCode,
 	}

@@ -18,7 +18,7 @@ func (r *LoginRequest) request(no int64, now time.Time) loginRequest {
 			No:             no,
 			SendDate:       RequestTime{Time: now},
 			FeatureType:    FeatureTypeLoginRequest,
-			ResponseFormat: ResponseFormatReadable | ResponseFormatWrapped | ResponseFormatWordKey,
+			ResponseFormat: ResponseFormatWordKey,
 		},
 		UserId:   r.UserId,
 		Password: r.Password,

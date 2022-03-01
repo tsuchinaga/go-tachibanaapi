@@ -20,7 +20,7 @@ func (r *OrderListRequest) request(no int64, now time.Time) orderListRequest {
 			No:             no,
 			SendDate:       RequestTime{Time: now},
 			FeatureType:    FeatureTypeOrderList,
-			ResponseFormat: ResponseFormatReadable | ResponseFormatWrapped | ResponseFormatWordKey,
+			ResponseFormat: ResponseFormatWordKey,
 		},
 		SymbolCode:    r.SymbolCode,
 		ExecutionDate: Ymd{Time: r.ExecutionDate},

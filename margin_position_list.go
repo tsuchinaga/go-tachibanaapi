@@ -18,7 +18,7 @@ func (r *MarginPositionListRequest) request(no int64, now time.Time) marginPosit
 			No:             no,
 			SendDate:       RequestTime{Time: now},
 			FeatureType:    FeatureTypeMarginPositionList,
-			ResponseFormat: ResponseFormatReadable | ResponseFormatWrapped | ResponseFormatWordKey,
+			ResponseFormat: ResponseFormatWordKey,
 		},
 		SymbolCode: r.SymbolCode,
 	}

@@ -32,7 +32,7 @@ func Test_LoginRequest_request(t *testing.T) {
 					No:             1,
 					SendDate:       RequestTime{Time: time.Date(2022, 2, 10, 9, 0, 0, 0, time.Local)},
 					FeatureType:    FeatureTypeLoginRequest,
-					ResponseFormat: ResponseFormatReadable | ResponseFormatWrapped | ResponseFormatWordKey,
+					ResponseFormat: ResponseFormatWordKey,
 				},
 				UserId:   "user-id-001",
 				Password: "password-1234",

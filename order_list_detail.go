@@ -19,7 +19,7 @@ func (r *OrderListDetailRequest) request(no int64, now time.Time) orderListDetai
 			No:             no,
 			SendDate:       RequestTime{Time: now},
 			FeatureType:    FeatureTypeOrderListDetail,
-			ResponseFormat: ResponseFormatReadable | ResponseFormatWrapped | ResponseFormatWordKey,
+			ResponseFormat: ResponseFormatWordKey,
 		},
 		OrderNumber:   r.OrderNumber,
 		ExecutionDate: Ymd{Time: r.ExecutionDate},

@@ -33,7 +33,7 @@ func Test_orderListDetail_request(t *testing.T) {
 					No:             123,
 					SendDate:       RequestTime{Time: time.Date(2022, 2, 27, 10, 21, 15, 0, time.Local)},
 					FeatureType:    FeatureTypeOrderListDetail,
-					ResponseFormat: ResponseFormatReadable | ResponseFormatWrapped | ResponseFormatWordKey,
+					ResponseFormat: ResponseFormatWordKey,
 				},
 				OrderNumber:   "28002795",
 				ExecutionDate: Ymd{},
