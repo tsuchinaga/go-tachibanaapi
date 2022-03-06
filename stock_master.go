@@ -158,15 +158,15 @@ type stockMaster struct {
 	StopTradingType      StopTradingType `json:"sBaibaiTeisiC"`                 // 売買停止C
 	StartPublicationDate Ymd             `json:"sHakkouKaisiDay"`               // 発行開始日
 	LastPublicationDate  Ymd             `json:"sHakkouSaisyuDay"`              // 発行最終日
-	SettlementType       string          `json:"sKessanC"`                      // 決算C
+	SettlementType       SettlementType  `json:"sKessanC"`                      // 決算C
 	SettlementDate       Ymd             `json:"sKessanDay"`                    // 決算日
 	ListingDate          Ymd             `json:"sZyouzyouOutouDay"`             // 上場応答日
 	ExpireDate2Type      string          `json:"sNiruiKizituC"`                 // 二類期日C
 	LargeUnit            float64         `json:"sOogutiKabusu,string"`          // 大口株数
-	LargeAmount          string          `json:"sOogutiKingmaker,string"`       // 大口金額
+	LargeAmount          float64         `json:"sOogutiKingmaker,string"`       // 大口金額
 	OutputTicketType     string          `json:"sBadenpyouOutputYNC"`           // 場伝票出力有無C
 	DepositAmount        float64         `json:"sHosyoukinDaiyouKakeme,string"` // 保証金代用掛目
-	DepositValuation     string          `json:"sDaiyouHyoukaTanka"`            // 代用証券評価単価
+	DepositValuation     float64         `json:"sDaiyouHyoukaTanka,string"`     // 代用証券評価単価
 	OrganizationType     string          `json:"sKikoSankaC"`                   // 機構参加C
 	ProvisionalType      string          `json:"sKarikessaiC"`                  // 仮決済C
 	PrimaryExchange      Exchange        `json:"sYusenSizyou"`                  // 優先市場
@@ -247,15 +247,15 @@ type StockMaster struct {
 	StopTradingType      StopTradingType `json:"sBaibaiTeisiC"`                 // 売買停止C
 	StartPublicationDate time.Time       `json:"sHakkouKaisiDay"`               // 発行開始日
 	LastPublicationDate  time.Time       `json:"sHakkouSaisyuDay"`              // 発行最終日
-	SettlementType       string          `json:"sKessanC"`                      // 決算C
+	SettlementType       SettlementType  `json:"sKessanC"`                      // 決算C
 	SettlementDate       time.Time       `json:"sKessanDay"`                    // 決算日
 	ListingDate          time.Time       `json:"sZyouzyouOutouDay"`             // 上場応答日
 	ExpireDate2Type      string          `json:"sNiruiKizituC"`                 // 二類期日C
 	LargeUnit            float64         `json:"sOogutiKabusu,string"`          // 大口株数
-	LargeAmount          string          `json:"sOogutiKingmaker,string"`       // 大口金額
+	LargeAmount          float64         `json:"sOogutiKingmaker,string"`       // 大口金額
 	OutputTicketType     string          `json:"sBadenpyouOutputYNC"`           // 場伝票出力有無C
 	DepositAmount        float64         `json:"sHosyoukinDaiyouKakeme,string"` // 保証金代用掛目
-	DepositValuation     string          `json:"sDaiyouHyoukaTanka"`            // 代用証券評価単価
+	DepositValuation     float64         `json:"sDaiyouHyoukaTanka,string"`     // 代用証券評価単価
 	OrganizationType     string          `json:"sKikoSankaC"`                   // 機構参加C
 	ProvisionalType      string          `json:"sKarikessaiC"`                  // 仮決済C
 	PrimaryExchange      Exchange        `json:"sYusenSizyou"`                  // 優先市場
