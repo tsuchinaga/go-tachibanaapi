@@ -375,3 +375,34 @@ func Test_commonResponse_response(t *testing.T) {
 		})
 	}
 }
+
+func Test_client_host(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name  string
+		arg1  Environment
+		want1 string
+	}{
+		{name: "envが本番なら本番のホストが返される",
+			arg1:  EnvironmentProduction,
+			want1: "kabuka.e-shiten.jp"},
+		{name: "envがデモならデモのホストが返される",
+			arg1:  EnvironmentDemo,
+			want1: "demo-kabuka.e-shiten.jp"},
+		{name: "envが未指定なら本番のホストが返される",
+			arg1:  EnvironmentUnspecified,
+			want1: "kabuka.e-shiten.jp"},
+	}
+
+	for _, test := range tests {
+		test := test
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			client := &client{}
+			got1 := client.host(test.arg1)
+			if !reflect.DeepEqual(test.want1, got1) {
+				t.Errorf("%s error\nwant: %+v\ngot: %+v\n", t.Name(), test.want1, got1)
+			}
+		})
+	}
+}

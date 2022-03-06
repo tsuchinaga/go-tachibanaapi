@@ -114,8 +114,8 @@ func Test_YmdHms_UnmarshalJSON(t *testing.T) {
 		hasError bool
 	}{
 		{name: "正常系のパース",
-			src:      []byte(`"20220210093015.123000000"`),
-			want1:    YmdHms{Time: time.Date(2022, 2, 10, 9, 30, 15, 123000000, time.Local)},
+			src:      []byte(`"20220210093015"`),
+			want1:    YmdHms{Time: time.Date(2022, 2, 10, 9, 30, 15, 0, time.Local)},
 			hasError: false},
 		{name: "nullはゼロ値にする",
 			src:      []byte(`null`),
@@ -218,6 +218,152 @@ func Test_Ymd_UnmarshalJSON(t *testing.T) {
 			t.Parallel()
 
 			got := Ymd{}
+			err := json.Unmarshal(test.src, &got)
+			if !reflect.DeepEqual(test.want1, got) || (err != nil) != test.hasError {
+				t.Errorf("%s error\nwant: %v, %v\ngot: %v, %v\n", t.Name(), test.want1, test.hasError, got, err)
+			}
+		})
+	}
+}
+
+func Test_Ym_MarshalJSON(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name string
+		time Ym
+		want []byte
+	}{
+		{name: "正常な日付をパースできる",
+			time: Ym{Time: time.Date(2022, 2, 10, 9, 30, 15, 123000000, time.Local)},
+			want: []byte(`"202202"`)},
+		{name: "time.Timeのゼロ値は空文字になる",
+			time: Ym{},
+			want: []byte(`""`)},
+	}
+
+	for _, test := range tests {
+		test := test
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			got, err := json.Marshal(test.time)
+			if !reflect.DeepEqual(test.want, got) || err != nil {
+				t.Errorf("%s error\nwant: %s, %+v\ngot: %s\n", t.Name(), test.want, err, got)
+			}
+		})
+	}
+}
+
+func Test_Ym_UnmarshalJSON(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name     string
+		src      []byte
+		want1    Ym
+		hasError bool
+	}{
+		{name: "正常系のパース",
+			src:      []byte(`"202203"`),
+			want1:    Ym{Time: time.Date(2022, 3, 1, 0, 0, 0, 0, time.Local)},
+			hasError: false},
+		{name: "nullはゼロ値にする",
+			src:      []byte(`null`),
+			want1:    Ym{},
+			hasError: false},
+		{name: "空文字はゼロ値にする",
+			src:      []byte(`""`),
+			want1:    Ym{},
+			hasError: false},
+		{name: "文字列の0はゼロ値にする",
+			src:      []byte(`"0"`),
+			want1:    Ym{},
+			hasError: false},
+		{name: "文字列の000000はゼロ値にする",
+			src:      []byte(`"000000"`),
+			want1:    Ym{},
+			hasError: false},
+		{name: "違う形式だとエラー",
+			src:      []byte(`"2022-02-24"`),
+			want1:    Ym{},
+			hasError: true},
+	}
+
+	for _, test := range tests {
+		test := test
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+
+			got := Ym{}
+			err := json.Unmarshal(test.src, &got)
+			if !reflect.DeepEqual(test.want1, got) || (err != nil) != test.hasError {
+				t.Errorf("%s error\nwant: %v, %v\ngot: %v, %v\n", t.Name(), test.want1, test.hasError, got, err)
+			}
+		})
+	}
+}
+
+func Test_Hm_MarshalJSON(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name string
+		time Hm
+		want []byte
+	}{
+		{name: "正常な日付をパースできる",
+			time: Hm{Time: time.Date(2022, 2, 10, 9, 30, 15, 123000000, time.Local)},
+			want: []byte(`"09:30"`)},
+		{name: "time.Timeのゼロ値は空文字になる",
+			time: Hm{},
+			want: []byte(`""`)},
+	}
+
+	for _, test := range tests {
+		test := test
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			got, err := json.Marshal(test.time)
+			if !reflect.DeepEqual(test.want, got) || err != nil {
+				t.Errorf("%s error\nwant: %s, %+v\ngot: %s\n", t.Name(), test.want, err, got)
+			}
+		})
+	}
+}
+
+func Test_Hm_UnmarshalJSON(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name     string
+		src      []byte
+		want1    Hm
+		hasError bool
+	}{
+		{name: "正常系のパース",
+			src:      []byte(`"09:30"`),
+			want1:    Hm{Time: time.Date(0, 1, 1, 9, 30, 0, 0, time.Local)},
+			hasError: false},
+		{name: "nullはゼロ値にする",
+			src:      []byte(`null`),
+			want1:    Hm{},
+			hasError: false},
+		{name: "空文字はゼロ値にする",
+			src:      []byte(`""`),
+			want1:    Hm{},
+			hasError: false},
+		{name: "違う形式だとエラー",
+			src:      []byte(`"2022-02-24"`),
+			want1:    Hm{},
+			hasError: true},
+	}
+
+	for _, test := range tests {
+		test := test
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+
+			got := Hm{}
 			err := json.Unmarshal(test.src, &got)
 			if !reflect.DeepEqual(test.want1, got) || (err != nil) != test.hasError {
 				t.Errorf("%s error\nwant: %v, %v\ngot: %v, %v\n", t.Name(), test.want1, test.hasError, got, err)

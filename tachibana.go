@@ -33,6 +33,8 @@ type Client interface {
 	OrderListDetail(ctx context.Context, session *Session, req OrderListDetailRequest) (*OrderListDetailResponse, error)          // 注文一覧(詳細)
 	StockPositionList(ctx context.Context, session *Session, req StockPositionListRequest) (*StockPositionListResponse, error)    // 現物株リスト
 	MarginPositionList(ctx context.Context, session *Session, req MarginPositionListRequest) (*MarginPositionListResponse, error) // 信用建玉リスト
+	StockMaster(ctx context.Context, session *Session, req StockMasterRequest) (*StockMasterResponse, error)                      // 株式銘柄マスタ
+	MarketPrice(ctx context.Context, session *Session, req MarketPriceRequest) (*MarketPriceResponse, error)                      // 時価関連情報
 }
 
 type client struct {
@@ -64,13 +66,17 @@ func (c *client) decode(str string) (string, error) {
 	return str, nil
 }
 
-// authURL - ログインURLを返す
-func (c *client) authURL(env Environment, ver ApiVersion) string {
+// host - ホスト
+func (c *client) host(env Environment) string {
 	host := "kabuka.e-shiten.jp"
 	if env == EnvironmentDemo {
 		host = "demo-kabuka.e-shiten.jp"
 	}
+	return host
+}
 
+// authURL - ログインURLを返す
+func (c *client) authURL(env Environment, ver ApiVersion) string {
 	path := "e_api_"
 	switch ver {
 	case ApiVersionV4R1, ApiVersionV4R2:
@@ -78,7 +84,7 @@ func (c *client) authURL(env Environment, ver ApiVersion) string {
 	default:
 		path += string(ApiVersionLatest) // latest
 	}
-	return fmt.Sprintf("https://%s/%s/auth/", host, path)
+	return fmt.Sprintf("https://%s/%s/auth/", c.host(env), path)
 }
 
 // get - GETリクエスト
@@ -132,6 +138,9 @@ func (c *client) parseResponse(body []byte, v interface{}) error {
 	}
 	return nil
 }
+
+// commonResponseFormat - 共通レスポンスフォーマット
+var commonResponseFormat ResponseFormat = ResponseFormatWrapped | ResponseFormatWordKey
 
 // commonRequest - リクエストの共通的な項目
 type commonRequest struct {
