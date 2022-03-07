@@ -374,6 +374,7 @@ type CurrentPriceType string
 
 const (
 	CurrentPriceTypeUnspecified CurrentPriceType = ""     // 未指定
+	CurrentPriceTypeNoChange    CurrentPriceType = "0000" // 事象なし
 	CurrentPriceTypeStopHigh    CurrentPriceType = "0071" // ストップ高
 	CurrentPriceTypeStopLow     CurrentPriceType = "0072" // ストップ安
 )
