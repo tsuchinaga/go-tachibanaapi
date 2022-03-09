@@ -29,6 +29,7 @@ func NewClient(env Environment, ver ApiVersion) Client {
 type Client interface {
 	Login(ctx context.Context, req LoginRequest) (*LoginResponse, error)                                                          // ログイン
 	Logout(ctx context.Context, session *Session, req LogoutRequest) (*LogoutResponse, error)                                     // ログアウト
+	NewOrder(ctx context.Context, session *Session, req NewOrderRequest) (*NewOrderResponse, error)                               // 新規注文
 	OrderList(ctx context.Context, session *Session, req OrderListRequest) (*OrderListResponse, error)                            // 注文一覧
 	OrderListDetail(ctx context.Context, session *Session, req OrderListDetailRequest) (*OrderListDetailResponse, error)          // 注文一覧(詳細)
 	StockPositionList(ctx context.Context, session *Session, req StockPositionListRequest) (*StockPositionListResponse, error)    // 現物株リスト

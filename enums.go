@@ -92,6 +92,7 @@ type AccountType string
 
 const (
 	AccountTypeUnspecified AccountType = ""  // 未指定
+	AccountTypeUnused      AccountType = "*" // 信用の場合のみ現引、現渡以外の取引
 	AccountTypeSpecific    AccountType = "1" // 特定
 	AccountTypeGeneral     AccountType = "3" // 一般
 	AccountTypeNISA        AccountType = "5" // NISA
@@ -171,22 +172,23 @@ const (
 type StopOrderType string
 
 const (
-	StopOrderTypeUnspecified   StopOrderType = ""  // 未指定
-	StopOrderTypeNormal        StopOrderType = "0" // 通常
-	StopOrderTypeStop          StopOrderType = "1" // 逆指値
-	StopOrderTypeNormalAndStop StopOrderType = "2" // 通常 + 逆指値
+	StopOrderTypeUnspecified StopOrderType = ""  // 未指定
+	StopOrderTypeNormal      StopOrderType = "0" // 通常
+	StopOrderTypeStop        StopOrderType = "1" // 逆指値
+	StopOrderTypeOCO         StopOrderType = "2" // 通常 + 逆指値
 )
 
 // ExitOrderType - 建日種類
 type ExitOrderType string
 
 const (
-	ExitOrderTypeUnspecified ExitOrderType = ""  // 未指定
-	ExitOrderTypeUnused      ExitOrderType = " " // 未使用
-	ExitOrderTypeSpecified   ExitOrderType = "1" // 個別指定
-	ExitOrderTypeDayAsc      ExitOrderType = "2" // 建日順
-	ExitOrderTypeProfitDesc  ExitOrderType = "3" // 単価益順
-	ExitOrderTypeProfitAsc   ExitOrderType = "4" // 単価損順
+	ExitOrderTypeUnspecified    ExitOrderType = ""  // 未指定
+	ExitOrderTypeNoSelected     ExitOrderType = "*" // 指定なし(現物または新規)
+	ExitOrderTypeUnused         ExitOrderType = " " // 未使用
+	ExitOrderTypePositionNumber ExitOrderType = "1" // 個別指定
+	ExitOrderTypeDayAsc         ExitOrderType = "2" // 建日順
+	ExitOrderTypeProfitDesc     ExitOrderType = "3" // 単価益順
+	ExitOrderTypeProfitAsc      ExitOrderType = "4" // 単価損順
 )
 
 // OrderInquiryStatus - 注文状態

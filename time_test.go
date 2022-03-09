@@ -163,6 +163,12 @@ func Test_Ymd_MarshalJSON(t *testing.T) {
 		{name: "time.Timeのゼロ値は空文字になる",
 			time: Ymd{},
 			want: []byte(`""`)},
+		{name: "isTodayがtrueなら0になる",
+			time: Ymd{
+				Time:    time.Date(2022, 1, 1, 0, 0, 0, 0, time.Local),
+				isToday: true,
+			},
+			want: []byte(`"0"`)},
 	}
 
 	for _, test := range tests {

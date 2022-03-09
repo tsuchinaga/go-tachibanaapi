@@ -51,9 +51,13 @@ func (t *Ym) UnmarshalJSON(b []byte) error {
 
 type Ymd struct {
 	time.Time
+	isToday bool
 }
 
 func (t Ymd) MarshalJSON() ([]byte, error) {
+	if t.isToday {
+		return []byte(`"0"`), nil
+	}
 	if t.Time.IsZero() {
 		return []byte(`""`), nil
 	}
