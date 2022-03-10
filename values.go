@@ -1,6 +1,12 @@
 package tachibana
 
-import "sync"
+import (
+	"math"
+	"sync"
+)
+
+// NoChangeFloat - float64で変更しないことを指定
+var NoChangeFloat float64 = math.Inf(-1)
 
 // Session - リクエストセッション
 type Session struct {

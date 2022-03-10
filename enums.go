@@ -150,6 +150,7 @@ type ExecutionTiming string
 
 const (
 	ExecutionTimingUnspecified ExecutionTiming = ""  // 未指定
+	ExecutionTimingNoChange    ExecutionTiming = "*" // 変更なし
 	ExecutionTimingNormal      ExecutionTiming = "0" // 指定なし
 	ExecutionTimingOpening     ExecutionTiming = "2" // 寄付
 	ExecutionTimingClosing     ExecutionTiming = "4" // 引け

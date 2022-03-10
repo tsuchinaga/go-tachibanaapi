@@ -51,10 +51,14 @@ func (t *Ym) UnmarshalJSON(b []byte) error {
 
 type Ymd struct {
 	time.Time
-	isToday bool
+	isNoChange bool
+	isToday    bool
 }
 
 func (t Ymd) MarshalJSON() ([]byte, error) {
+	if t.isNoChange {
+		return []byte(`"*"`), nil
+	}
 	if t.isToday {
 		return []byte(`"0"`), nil
 	}
