@@ -36,6 +36,7 @@ type Client interface {
 	OrderListDetail(ctx context.Context, session *Session, req OrderListDetailRequest) (*OrderListDetailResponse, error)          // 注文一覧(詳細)
 	StockPositionList(ctx context.Context, session *Session, req StockPositionListRequest) (*StockPositionListResponse, error)    // 現物株リスト
 	MarginPositionList(ctx context.Context, session *Session, req MarginPositionListRequest) (*MarginPositionListResponse, error) // 信用建玉リスト
+	StockWallet(ctx context.Context, session *Session, req StockWalletRequest) (*StockWalletResponse, error)                      // 買余力
 	StockMaster(ctx context.Context, session *Session, req StockMasterRequest) (*StockMasterResponse, error)                      // 株式銘柄マスタ
 	MarketPrice(ctx context.Context, session *Session, req MarketPriceRequest) (*MarketPriceResponse, error)                      // 時価関連情報
 }

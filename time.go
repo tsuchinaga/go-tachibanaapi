@@ -106,6 +106,30 @@ func (t *YmdHms) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+type YmdHm struct {
+	time.Time
+}
+
+func (t YmdHm) MarshalJSON() ([]byte, error) {
+	if t.Time.IsZero() {
+		return []byte(`""`), nil
+	}
+	return []byte(t.Time.Format(`"200601021504"`)), nil
+}
+
+func (t *YmdHm) UnmarshalJSON(b []byte) error {
+	str := string(b)
+	if b == nil || str == `""` || str == "null" || str == `"000000000000"` {
+		return nil
+	}
+	tt, err := time.Parse(`"200601021504"`, str)
+	if err != nil {
+		return err
+	}
+	*t = YmdHm{Time: time.Date(tt.Year(), tt.Month(), tt.Day(), tt.Hour(), tt.Minute(), 0, 0, time.Local)}
+	return nil
+}
+
 type Hm struct {
 	time.Time
 }
