@@ -22,7 +22,7 @@ func Test_StockPositionListRequest_request(t *testing.T) {
 		want1   stockPositionListRequest
 	}{
 		{name: "変換できる",
-			request: StockPositionListRequest{SymbolCode: "1475"},
+			request: StockPositionListRequest{IssueCode: "1475"},
 			arg1:    123,
 			arg2:    time.Date(2022, 3, 1, 9, 0, 0, 0, time.Local),
 			want1: stockPositionListRequest{
@@ -30,9 +30,9 @@ func Test_StockPositionListRequest_request(t *testing.T) {
 					No:             123,
 					SendDate:       RequestTime{Time: time.Date(2022, 3, 1, 9, 0, 0, 0, time.Local)},
 					FeatureType:    FeatureTypeStockPositionList,
-					ResponseFormat: ResponseFormatWordKey,
+					ResponseFormat: commonResponseFormat,
 				},
-				SymbolCode: "1475",
+				IssueCode: "1475",
 			}},
 	}
 
@@ -108,7 +108,7 @@ func Test_stockPositionListResponse_UnmarshalJSON(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeStockPositionList,
 				},
-				SymbolCode:     "",
+				IssueCode:      "",
 				ResultCode:     "0",
 				ResultText:     "",
 				WarningCode:    "0",
@@ -124,7 +124,7 @@ func Test_stockPositionListResponse_UnmarshalJSON(t *testing.T) {
 				Positions: []stockPosition{{
 					WarningCode:        "0",
 					WarningText:        "",
-					SymbolCode:         "1475",
+					IssueCode:          "1475",
 					AccountType:        AccountTypeSpecific,
 					OwnedQuantity:      1,
 					UnHoldQuantity:     0,
@@ -172,7 +172,7 @@ func Test_stockPositionListResponse_UnmarshalJSON(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeStockPositionList,
 				},
-				SymbolCode:     "*",
+				IssueCode:      "*",
 				ResultCode:     "0",
 				ResultText:     "",
 				WarningCode:    "0",
@@ -219,7 +219,7 @@ func Test_stockPositionListResponse_response(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeStockPositionList,
 				},
-				SymbolCode:     "",
+				IssueCode:      "",
 				ResultCode:     "0",
 				ResultText:     "",
 				WarningCode:    "0",
@@ -235,7 +235,7 @@ func Test_stockPositionListResponse_response(t *testing.T) {
 				Positions: []stockPosition{{
 					WarningCode:        "0",
 					WarningText:        "",
-					SymbolCode:         "1475",
+					IssueCode:          "1475",
 					AccountType:        AccountTypeSpecific,
 					OwnedQuantity:      1,
 					UnHoldQuantity:     1,
@@ -259,7 +259,7 @@ func Test_stockPositionListResponse_response(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeStockPositionList,
 				},
-				SymbolCode:     "",
+				IssueCode:      "",
 				ResultCode:     "0",
 				ResultText:     "",
 				WarningCode:    "0",
@@ -275,7 +275,7 @@ func Test_stockPositionListResponse_response(t *testing.T) {
 				Positions: []StockPosition{{
 					WarningCode:        "0",
 					WarningText:        "",
-					SymbolCode:         "1475",
+					IssueCode:          "1475",
 					AccountType:        AccountTypeSpecific,
 					OwnedQuantity:      1,
 					UnHoldQuantity:     1,
@@ -315,7 +315,7 @@ func Test_stockPosition_response(t *testing.T) {
 			response: stockPosition{
 				WarningCode:        "0",
 				WarningText:        "",
-				SymbolCode:         "1475",
+				IssueCode:          "1475",
 				AccountType:        AccountTypeSpecific,
 				OwnedQuantity:      1,
 				UnHoldQuantity:     1,
@@ -332,7 +332,7 @@ func Test_stockPosition_response(t *testing.T) {
 			want1: StockPosition{
 				WarningCode:        "0",
 				WarningText:        "",
-				SymbolCode:         "1475",
+				IssueCode:          "1475",
 				AccountType:        AccountTypeSpecific,
 				OwnedQuantity:      1,
 				UnHoldQuantity:     1,
@@ -389,7 +389,7 @@ func Test_client_StockPositionList(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeStockPositionList,
 				},
-				SymbolCode:     "",
+				IssueCode:      "",
 				ResultCode:     "0",
 				ResultText:     "",
 				WarningCode:    "0",
@@ -405,7 +405,7 @@ func Test_client_StockPositionList(t *testing.T) {
 				Positions: []StockPosition{{
 					WarningCode:        "0",
 					WarningText:        "",
-					SymbolCode:         "1475",
+					IssueCode:          "1475",
 					AccountType:        AccountTypeSpecific,
 					OwnedQuantity:      1,
 					UnHoldQuantity:     0,
@@ -447,7 +447,7 @@ func Test_client_StockPositionList(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeStockPositionList,
 				},
-				SymbolCode:     "*",
+				IssueCode:      "*",
 				ResultCode:     "0",
 				ResultText:     "",
 				WarningCode:    "0",
@@ -521,7 +521,7 @@ func Test_client_StockPositionList_Execute(t *testing.T) {
 	}
 
 	got3, got4 := client.StockPositionList(context.Background(), session, StockPositionListRequest{
-		SymbolCode: "",
+		IssueCode: "",
 	})
 	log.Printf("%+v, %+v\n", got3, got4)
 }

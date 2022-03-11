@@ -9,8 +9,8 @@ import (
 
 // StockWalletRequest - 買余力リクエスト
 type StockWalletRequest struct {
-	SymbolCode string   // 銘柄コード
-	Exchange   Exchange // 市場
+	IssueCode string   // 銘柄コード
+	Exchange  Exchange // 市場
 }
 
 func (r *StockWalletRequest) request(no int64, now time.Time) stockWalletRequest {
@@ -21,20 +21,20 @@ func (r *StockWalletRequest) request(no int64, now time.Time) stockWalletRequest
 			FeatureType:    FeatureTypeStockWallet,
 			ResponseFormat: commonResponseFormat,
 		},
-		SymbolCode: r.SymbolCode,
-		Exchange:   r.Exchange,
+		IssueCode: r.IssueCode,
+		Exchange:  r.Exchange,
 	}
 }
 
 type stockWalletRequest struct {
 	commonRequest
-	SymbolCode string   `json:"sIssueCode"` // 銘柄コード
-	Exchange   Exchange `json:"sSizyouC"`   // 市場
+	IssueCode string   `json:"sIssueCode"` // 銘柄コード
+	Exchange  Exchange `json:"sSizyouC"`   // 市場
 }
 
 type stockWalletResponse struct {
 	commonResponse
-	SymbolCode     string     `json:"sIssueCode"`                          // 銘柄コード
+	IssueCode      string     `json:"sIssueCode"`                          // 銘柄コード
 	Exchange       Exchange   `json:"sSizyouC"`                            // 市場
 	ResultCode     string     `json:"sResultCode"`                         // 結果コード
 	ResultText     string     `json:"sResultText"`                         // 結果テキスト
@@ -70,7 +70,7 @@ func (r *stockWalletResponse) UnmarshalJSON(b []byte) error {
 func (r *stockWalletResponse) response() StockWalletResponse {
 	return StockWalletResponse{
 		CommonResponse: r.commonResponse.response(),
-		SymbolCode:     r.SymbolCode,
+		IssueCode:      r.IssueCode,
 		Exchange:       r.Exchange,
 		ResultCode:     r.ResultCode,
 		ResultText:     r.ResultText,
@@ -86,7 +86,7 @@ func (r *stockWalletResponse) response() StockWalletResponse {
 // StockWalletResponse - 買余力レスポンス
 type StockWalletResponse struct {
 	CommonResponse
-	SymbolCode     string    // 銘柄コード
+	IssueCode      string    // 銘柄コード
 	Exchange       Exchange  // 市場
 	ResultCode     string    // 結果コード
 	ResultText     string    // 結果テキスト

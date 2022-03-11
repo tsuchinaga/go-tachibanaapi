@@ -40,7 +40,7 @@ func Test_client_StockWallet(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeStockWallet,
 				},
-				SymbolCode:     "1475",
+				IssueCode:      "1475",
 				Exchange:       ExchangeToushou,
 				ResultCode:     "0",
 				ResultText:     "",
@@ -68,7 +68,7 @@ func Test_client_StockWallet(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeStockWallet,
 				},
-				SymbolCode:     "",
+				IssueCode:      "",
 				Exchange:       ExchangeToushou,
 				ResultCode:     "0",
 				ResultText:     "",
@@ -96,7 +96,7 @@ func Test_client_StockWallet(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeStockWallet,
 				},
-				SymbolCode:     "",
+				IssueCode:      "",
 				Exchange:       "",
 				ResultCode:     "991003",
 				ResultText:     "銘柄コードに誤りがあります。",
@@ -179,8 +179,8 @@ func Test_client_StockWallet_Execute(t *testing.T) {
 	}
 
 	got3, got4 := client.StockWallet(context.Background(), session, StockWalletRequest{
-		SymbolCode: "1475",
-		Exchange:   ExchangeToushou,
+		IssueCode: "1475",
+		Exchange:  ExchangeToushou,
 	})
 	log.Printf("%+v, %+v\n", got3, got4)
 	if got3.ResultCode != "0" {

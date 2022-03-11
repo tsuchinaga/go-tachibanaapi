@@ -9,8 +9,8 @@ import (
 
 // OrderListDetailRequest - 注文約定一覧(詳細)リクエスト
 type OrderListDetailRequest struct {
-	OrderNumber   string    // 注文番号
-	ExecutionDate time.Time // 営業日
+	OrderNumber  string    // 注文番号
+	ExecutionDay time.Time // 営業日
 }
 
 func (r *OrderListDetailRequest) request(no int64, now time.Time) orderListDetailRequest {
@@ -19,28 +19,28 @@ func (r *OrderListDetailRequest) request(no int64, now time.Time) orderListDetai
 			No:             no,
 			SendDate:       RequestTime{Time: now},
 			FeatureType:    FeatureTypeOrderListDetail,
-			ResponseFormat: ResponseFormatWordKey,
+			ResponseFormat: commonResponseFormat,
 		},
-		OrderNumber:   r.OrderNumber,
-		ExecutionDate: Ymd{Time: r.ExecutionDate},
+		OrderNumber:  r.OrderNumber,
+		ExecutionDay: Ymd{Time: r.ExecutionDay},
 	}
 }
 
 type orderListDetailRequest struct {
 	commonRequest
-	OrderNumber   string `json:"sOrderNumber,omitempty"` // 注文番号
-	ExecutionDate Ymd    `json:"sEigyouDay,omitempty"`   // 営業日
+	OrderNumber  string `json:"sOrderNumber,omitempty"` // 注文番号
+	ExecutionDay Ymd    `json:"sEigyouDay,omitempty"`   // 営業日
 }
 
 type orderListDetailResponse struct {
 	commonResponse
 	OrderNumber            string           `json:"sOrderNumber"`               // 注文番号
-	ExecutionDate          Ymd              `json:"sEigyouDay"`                 // 営業日
+	ExecutionDay           Ymd              `json:"sEigyouDay"`                 // 営業日
 	ResultCode             string           `json:"sResultCode"`                // 結果コード
 	ResultText             string           `json:"sResultText"`                // 結果テキスト
 	WarningCode            string           `json:"sWarningCode"`               // 警告コード
 	WarningText            string           `json:"sWarningText"`               // 警告テキスト
-	SymbolCode             string           `json:"sIssueCode"`                 // 銘柄CODE
+	IssueCode              string           `json:"sIssueCode"`                 // 銘柄CODE
 	Exchange               Exchange         `json:"sOrderSizyouC"`              // 市場
 	Side                   Side             `json:"sOrderBaibaiKubun"`          // 売買区分
 	TradeType              TradeType        `json:"sGenkinSinyouKubun"`         // 現金信用区分
@@ -124,12 +124,12 @@ func (r *orderListDetailResponse) response() OrderListDetailResponse {
 	return OrderListDetailResponse{
 		CommonResponse:         r.commonResponse.response(),
 		OrderNumber:            r.OrderNumber,
-		ExecutionDate:          r.ExecutionDate.Time,
+		ExecutionDate:          r.ExecutionDay.Time,
 		ResultCode:             r.ResultCode,
 		ResultText:             r.ResultText,
 		WarningCode:            r.WarningCode,
 		WarningText:            r.WarningText,
-		SymbolCode:             r.SymbolCode,
+		IssueCode:              r.IssueCode,
 		Exchange:               r.Exchange,
 		Side:                   r.Side,
 		TradeType:              r.TradeType,
@@ -235,7 +235,7 @@ type OrderListDetailResponse struct {
 	ResultText             string           // 結果テキスト
 	WarningCode            string           // 警告コード
 	WarningText            string           // 警告テキスト
-	SymbolCode             string           // 銘柄CODE
+	IssueCode              string           // 銘柄CODE
 	Exchange               Exchange         // 市場
 	Side                   Side             // 売買区分
 	TradeType              TradeType        // 現金信用区分

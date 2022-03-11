@@ -9,7 +9,7 @@ import (
 
 // StockPositionListRequest - 現物保有銘柄一覧リクエスト
 type StockPositionListRequest struct {
-	SymbolCode string // 銘柄コード
+	IssueCode string // 銘柄コード
 }
 
 func (r *StockPositionListRequest) request(no int64, now time.Time) stockPositionListRequest {
@@ -18,20 +18,20 @@ func (r *StockPositionListRequest) request(no int64, now time.Time) stockPositio
 			No:             no,
 			SendDate:       RequestTime{Time: now},
 			FeatureType:    FeatureTypeStockPositionList,
-			ResponseFormat: ResponseFormatWordKey,
+			ResponseFormat: commonResponseFormat,
 		},
-		SymbolCode: r.SymbolCode,
+		IssueCode: r.IssueCode,
 	}
 }
 
 type stockPositionListRequest struct {
 	commonRequest
-	SymbolCode string `json:"sIssueCode,omitempty"` // 銘柄コード
+	IssueCode string `json:"sIssueCode,omitempty"` // 銘柄コード
 }
 
 type stockPositionListResponse struct {
 	commonResponse
-	SymbolCode     string          `json:"sIssueCode,omitempty"`                    // 銘柄コード
+	IssueCode      string          `json:"sIssueCode,omitempty"`                    // 銘柄コード
 	ResultCode     string          `json:"sResultCode"`                             // 結果コード
 	ResultText     string          `json:"sResultText"`                             // 結果テキスト
 	WarningCode    string          `json:"sWarningCode"`                            // 警告コード
@@ -75,7 +75,7 @@ func (r *stockPositionListResponse) response() StockPositionListResponse {
 
 	return StockPositionListResponse{
 		CommonResponse: r.commonResponse.response(),
-		SymbolCode:     r.SymbolCode,
+		IssueCode:      r.IssueCode,
 		ResultCode:     r.ResultCode,
 		ResultText:     r.ResultText,
 		WarningCode:    r.WarningCode,
@@ -95,7 +95,7 @@ func (r *stockPositionListResponse) response() StockPositionListResponse {
 type stockPosition struct {
 	WarningCode        string             `json:"sUriOrderWarningCode"`                   // 警告コード
 	WarningText        string             `json:"sUriOrderWarningText"`                   // 警告テキスト
-	SymbolCode         string             `json:"sUriOrderIssueCode"`                     // 銘柄コード
+	IssueCode          string             `json:"sUriOrderIssueCode"`                     // 銘柄コード
 	AccountType        AccountType        `json:"sUriOrderZyoutoekiKazeiC"`               // 口座
 	OwnedQuantity      float64            `json:"sUriOrderZanKabuSuryou,string"`          // 残高株数
 	UnHoldQuantity     float64            `json:"sUriOrderUritukeKanouSuryou,string"`     // 売付可能株数
@@ -115,7 +115,7 @@ func (r *stockPosition) response() StockPosition {
 	return StockPosition{
 		WarningCode:        r.WarningCode,
 		WarningText:        r.WarningText,
-		SymbolCode:         r.SymbolCode,
+		IssueCode:          r.IssueCode,
 		AccountType:        r.AccountType,
 		OwnedQuantity:      r.OwnedQuantity,
 		UnHoldQuantity:     r.UnHoldQuantity,
@@ -135,7 +135,7 @@ func (r *stockPosition) response() StockPosition {
 // StockPositionListResponse - 現物保有銘柄一覧レスポンス
 type StockPositionListResponse struct {
 	CommonResponse
-	SymbolCode     string          // 銘柄コード
+	IssueCode      string          // 銘柄コード
 	ResultCode     string          // 結果コード
 	ResultText     string          // 結果テキスト
 	WarningCode    string          // 警告コード
@@ -155,7 +155,7 @@ type StockPositionListResponse struct {
 type StockPosition struct {
 	WarningCode        string             // 警告コード
 	WarningText        string             // 警告テキスト
-	SymbolCode         string             // 銘柄コード
+	IssueCode          string             // 銘柄コード
 	AccountType        AccountType        // 口座
 	OwnedQuantity      float64            // 残高株数
 	UnHoldQuantity     float64            // 売付可能株数

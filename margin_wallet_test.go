@@ -40,7 +40,7 @@ func Test_client_MarginWallet(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeMarginWallet,
 				},
-				SymbolCode:     "1475",
+				IssueCode:      "1475",
 				Exchange:       ExchangeToushou,
 				ResultCode:     "0",
 				ResultText:     "",
@@ -68,7 +68,7 @@ func Test_client_MarginWallet(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeMarginWallet,
 				},
-				SymbolCode:     "",
+				IssueCode:      "",
 				Exchange:       ExchangeToushou,
 				ResultCode:     "0",
 				ResultText:     "",
@@ -96,7 +96,7 @@ func Test_client_MarginWallet(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeMarginWallet,
 				},
-				SymbolCode:     "",
+				IssueCode:      "",
 				Exchange:       "",
 				ResultCode:     "991003",
 				ResultText:     "銘柄コードに誤りがあります。",
@@ -179,8 +179,8 @@ func Test_client_MarginWallet_Execute(t *testing.T) {
 	}
 
 	got3, got4 := client.MarginWallet(context.Background(), session, MarginWalletRequest{
-		SymbolCode: "*",
-		Exchange:   ExchangeToushou,
+		IssueCode: "*",
+		Exchange:  ExchangeToushou,
 	})
 	log.Printf("%+v, %+v\n", got3, got4)
 	if got3.ResultCode != "0" {

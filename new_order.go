@@ -12,7 +12,7 @@ import (
 type NewOrderRequest struct {
 	StockAccountType  AccountType     // 譲渡益課税区分
 	MarginAccountType AccountType     // 建玉譲渡益課税区分
-	SymbolCode        string          // 銘柄コード
+	IssueCode         string          // 銘柄コード
 	Exchange          Exchange        // 市場
 	Side              Side            // 売買区分
 	ExecutionTiming   ExecutionTiming // 執行条件
@@ -54,7 +54,7 @@ func (r NewOrderRequest) request(no int64, now time.Time) newOrderRequest {
 		},
 		StockAccountType:  r.StockAccountType,
 		MarginAccountType: r.MarginAccountType,
-		SymbolCode:        r.SymbolCode,
+		IssueCode:         r.IssueCode,
 		Exchange:          r.Exchange,
 		Side:              r.Side,
 		ExecutionTiming:   r.ExecutionTiming,
@@ -75,7 +75,7 @@ type newOrderRequest struct {
 	commonRequest
 	StockAccountType  AccountType     `json:"sZyoutoekiKazeiC"`          // 譲渡益課税区分
 	MarginAccountType AccountType     `json:"sTategyokuZyoutoekiKazeiC"` // 建玉譲渡益課税区分
-	SymbolCode        string          `json:"sIssueCode"`                // 銘柄コード
+	IssueCode         string          `json:"sIssueCode"`                // 銘柄コード
 	Exchange          Exchange        `json:"sSizyouC"`                  // 市場
 	Side              Side            `json:"sBaibaiKubun"`              // 売買区分
 	ExecutionTiming   ExecutionTiming `json:"sCondition"`                // 執行条件
@@ -104,7 +104,7 @@ type newOrderResponse struct {
 	WarningCode    string  `json:"sWarningCode"`                  // 警告コード
 	WarningText    string  `json:"sWarningText"`                  // 警告テキスト
 	OrderNumber    string  `json:"sOrderNumber"`                  // 注文番号
-	BusinessDay    Ymd     `json:"sEigyouDay"`                    // 営業日
+	ExecutionDay   Ymd     `json:"sEigyouDay"`                    // 営業日
 	DeliveryAmount float64 `json:"sOrderUkewatasiKingaku,string"` // 注文受渡金額
 	Commission     float64 `json:"sOrderTesuryou,string"`         // 注文手数料
 	CommissionTax  float64 `json:"sOrderSyouhizei,string"`        // 注文消費税
@@ -144,7 +144,7 @@ func (r *newOrderResponse) response() NewOrderResponse {
 		WarningCode:    r.WarningCode,
 		WarningText:    r.WarningText,
 		OrderNumber:    r.OrderNumber,
-		BusinessDay:    r.BusinessDay.Time,
+		ExecutionDay:   r.ExecutionDay.Time,
 		DeliveryAmount: r.DeliveryAmount,
 		Commission:     r.Commission,
 		CommissionTax:  r.CommissionTax,
@@ -161,7 +161,7 @@ type NewOrderResponse struct {
 	WarningCode    string    // 警告コード
 	WarningText    string    // 警告テキスト
 	OrderNumber    string    // 注文番号
-	BusinessDay    time.Time // 営業日
+	ExecutionDay   time.Time // 営業日
 	DeliveryAmount float64   // 注文受渡金額
 	Commission     float64   // 注文手数料
 	CommissionTax  float64   // 注文消費税

@@ -9,7 +9,7 @@ import (
 
 // MarginPositionListRequest - 信用建玉一覧リクエスト
 type MarginPositionListRequest struct {
-	SymbolCode string // 銘柄コード
+	IssueCode string // 銘柄コード
 }
 
 func (r *MarginPositionListRequest) request(no int64, now time.Time) marginPositionListRequest {
@@ -18,20 +18,20 @@ func (r *MarginPositionListRequest) request(no int64, now time.Time) marginPosit
 			No:             no,
 			SendDate:       RequestTime{Time: now},
 			FeatureType:    FeatureTypeMarginPositionList,
-			ResponseFormat: ResponseFormatWordKey,
+			ResponseFormat: commonResponseFormat,
 		},
-		SymbolCode: r.SymbolCode,
+		IssueCode: r.IssueCode,
 	}
 }
 
 type marginPositionListRequest struct {
 	commonRequest
-	SymbolCode string `json:"sIssueCode,omitempty"` // 銘柄コード
+	IssueCode string `json:"sIssueCode,omitempty"` // 銘柄コード
 }
 
 type marginPositionListResponse struct {
 	commonResponse
-	SymbolCode            string           `json:"sIssueCode"`                        // 銘柄コード
+	IssueCode             string           `json:"sIssueCode"`                        // 銘柄コード
 	ResultCode            string           `json:"sResultCode"`                       // 結果コード
 	ResultText            string           `json:"sResultText"`                       // 結果テキスト
 	WarningCode           string           `json:"sWarningCode"`                      // 警告コード
@@ -75,7 +75,7 @@ func (r *marginPositionListResponse) response() MarginPositionListResponse {
 
 	return MarginPositionListResponse{
 		CommonResponse:        r.commonResponse.response(),
-		SymbolCode:            r.SymbolCode,
+		IssueCode:             r.IssueCode,
 		ResultCode:            r.ResultCode,
 		ResultText:            r.ResultText,
 		WarningCode:           r.WarningCode,
@@ -95,8 +95,8 @@ func (r *marginPositionListResponse) response() MarginPositionListResponse {
 type marginPosition struct {
 	WarningCode        string             `json:"sOrderWarningCode"`                   // 警告コード
 	WarningText        string             `json:"sOrderWarningText"`                   // 警告テキスト
-	PositionCode       string             `json:"sOrderTategyokuNumber"`               // 建玉番号
-	SymbolCode         string             `json:"sOrderIssueCode"`                     // 銘柄コード
+	PositionNumber     string             `json:"sOrderTategyokuNumber"`               // 建玉番号
+	IssueCode          string             `json:"sOrderIssueCode"`                     // 銘柄コード
 	Exchange           Exchange           `json:"sOrderSizyouC"`                       // 市場
 	Side               Side               `json:"sOrderBaibaiKubun"`                   // 売買区分
 	ExitTermType       ExitTermType       `json:"sOrderBensaiKubun"`                   // 弁済区分
@@ -131,8 +131,8 @@ func (r *marginPosition) response() MarginPosition {
 	return MarginPosition{
 		WarningCode:        r.WarningCode,
 		WarningText:        r.WarningText,
-		PositionCode:       r.PositionCode,
-		SymbolCode:         r.SymbolCode,
+		PositionNumber:     r.PositionNumber,
+		IssueCode:          r.IssueCode,
 		Exchange:           r.Exchange,
 		Side:               r.Side,
 		ExitTermType:       r.ExitTermType,
@@ -167,7 +167,7 @@ func (r *marginPosition) response() MarginPosition {
 // MarginPositionListResponse - 信用建玉一覧レスポンス
 type MarginPositionListResponse struct {
 	CommonResponse
-	SymbolCode            string           // 銘柄コード
+	IssueCode             string           // 銘柄コード
 	ResultCode            string           // 結果コード
 	ResultText            string           // 結果テキスト
 	WarningCode           string           // 警告コード
@@ -187,8 +187,8 @@ type MarginPositionListResponse struct {
 type MarginPosition struct {
 	WarningCode        string             // 警告コード
 	WarningText        string             // 警告テキスト
-	PositionCode       string             // 建玉番号
-	SymbolCode         string             // 銘柄コード
+	PositionNumber     string             // 建玉番号
+	IssueCode          string             // 銘柄コード
 	Exchange           Exchange           // 市場
 	Side               Side               // 売買区分
 	ExitTermType       ExitTermType       // 弁済区分

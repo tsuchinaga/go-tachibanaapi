@@ -11,7 +11,7 @@ import (
 // CorrectOrderRequest - 訂正注文リクエスト
 type CorrectOrderRequest struct {
 	OrderNumber        string          `json:"sOrderNumber"` // 注文番号
-	BusinessDay        time.Time       `json:"sEigyouDay"`   // 営業日
+	ExecutionDay       time.Time       `json:"sEigyouDay"`   // 営業日
 	ExecutionTiming    ExecutionTiming `json:"sCondition"`   // 執行条件
 	OrderPrice         float64         `json:"sOrderPrice"`  // 注文値段
 	OrderQuantity      float64         `json:"sOrderSuryou"` // 注文数量
@@ -52,7 +52,7 @@ func (r *CorrectOrderRequest) request(no int64, now time.Time) correctOrderReque
 			ResponseFormat: commonResponseFormat,
 		},
 		OrderNumber:     r.OrderNumber,
-		BusinessDay:     Ymd{Time: r.BusinessDay},
+		ExecutionDay:    Ymd{Time: r.ExecutionDay},
 		ExecutionTiming: r.ExecutionTiming,
 		OrderPrice:      orderPrice,
 		OrderQuantity:   orderQuantity,
@@ -70,7 +70,7 @@ func (r *CorrectOrderRequest) request(no int64, now time.Time) correctOrderReque
 type correctOrderRequest struct {
 	commonRequest
 	OrderNumber     string          `json:"sOrderNumber"`      // 注文番号
-	BusinessDay     Ymd             `json:"sEigyouDay"`        // 営業日
+	ExecutionDay    Ymd             `json:"sEigyouDay"`        // 営業日
 	ExecutionTiming ExecutionTiming `json:"sCondition"`        // 執行条件
 	OrderPrice      string          `json:"sOrderPrice"`       // 注文値段
 	OrderQuantity   string          `json:"sOrderSuryou"`      // 注文数量
@@ -85,7 +85,7 @@ type correctOrderResponse struct {
 	ResultCode     string  `json:"sResultCode"`                   // 結果コード
 	ResultText     string  `json:"sResultText"`                   // 結果テキスト
 	OrderNumber    string  `json:"sOrderNumber"`                  // 注文番号
-	BusinessDay    Ymd     `json:"sEigyouDay"`                    // 営業日
+	ExecutionDay   Ymd     `json:"sEigyouDay"`                    // 営業日
 	DeliveryAmount float64 `json:"sOrderUkewatasiKingaku,string"` // 注文受渡金額
 	Commission     float64 `json:"sOrderTesuryou,string"`         // 注文手数料
 	CommissionTax  float64 `json:"sOrderSyouhizei,string"`        // 注文消費税
@@ -120,7 +120,7 @@ func (r *correctOrderResponse) response() CorrectOrderResponse {
 		ResultCode:     r.ResultCode,
 		ResultText:     r.ResultText,
 		OrderNumber:    r.OrderNumber,
-		BusinessDay:    r.BusinessDay.Time,
+		ExecutionDay:   r.ExecutionDay.Time,
 		DeliveryAmount: r.DeliveryAmount,
 		Commission:     r.Commission,
 		CommissionTax:  r.CommissionTax,
@@ -134,7 +134,7 @@ type CorrectOrderResponse struct {
 	ResultCode     string    // 結果コード
 	ResultText     string    // 結果テキスト
 	OrderNumber    string    // 注文番号
-	BusinessDay    time.Time // 営業日
+	ExecutionDay   time.Time // 営業日
 	DeliveryAmount float64   // 注文受渡金額
 	Commission     float64   // 注文手数料
 	CommissionTax  float64   // 注文消費税

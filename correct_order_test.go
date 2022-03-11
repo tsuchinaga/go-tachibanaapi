@@ -23,7 +23,7 @@ func Test_CorrectOrderRequest_request(t *testing.T) {
 		{name: "変更なしを指定した項目が変換できる",
 			request: CorrectOrderRequest{
 				OrderNumber:        "11002847",
-				BusinessDay:        time.Date(2022, 3, 11, 0, 0, 0, 0, time.Local),
+				ExecutionDay:       time.Date(2022, 3, 11, 0, 0, 0, 0, time.Local),
 				ExecutionTiming:    ExecutionTimingNoChange,
 				OrderPrice:         NoChangeFloat,
 				OrderQuantity:      NoChangeFloat,
@@ -44,7 +44,7 @@ func Test_CorrectOrderRequest_request(t *testing.T) {
 					ResponseFormat: commonResponseFormat,
 				},
 				OrderNumber:     "11002847",
-				BusinessDay:     Ymd{Time: time.Date(2022, 3, 11, 0, 0, 0, 0, time.Local)},
+				ExecutionDay:    Ymd{Time: time.Date(2022, 3, 11, 0, 0, 0, 0, time.Local)},
 				ExecutionTiming: "*",
 				OrderPrice:      "*",
 				OrderQuantity:   "*",
@@ -56,7 +56,7 @@ func Test_CorrectOrderRequest_request(t *testing.T) {
 		{name: "変更値を指定した項目が変換できる",
 			request: CorrectOrderRequest{
 				OrderNumber:        "11002847",
-				BusinessDay:        time.Date(2022, 3, 11, 0, 0, 0, 0, time.Local),
+				ExecutionDay:       time.Date(2022, 3, 11, 0, 0, 0, 0, time.Local),
 				ExecutionTiming:    ExecutionTimingFunari,
 				OrderPrice:         2001,
 				OrderQuantity:      2,
@@ -77,7 +77,7 @@ func Test_CorrectOrderRequest_request(t *testing.T) {
 					ResponseFormat: commonResponseFormat,
 				},
 				OrderNumber:     "11002847",
-				BusinessDay:     Ymd{Time: time.Date(2022, 3, 11, 0, 0, 0, 0, time.Local)},
+				ExecutionDay:    Ymd{Time: time.Date(2022, 3, 11, 0, 0, 0, 0, time.Local)},
 				ExecutionTiming: ExecutionTimingFunari,
 				OrderPrice:      "2001",
 				OrderQuantity:   "2",
@@ -132,7 +132,7 @@ func Test_client_CorrectOrder(t *testing.T) {
 				ResultCode:     "0",
 				ResultText:     "",
 				OrderNumber:    "11002847",
-				BusinessDay:    time.Date(2022, 3, 11, 0, 0, 0, 0, time.Local),
+				ExecutionDay:   time.Date(2022, 3, 11, 0, 0, 0, 0, time.Local),
 				DeliveryAmount: 2078,
 				Commission:     70,
 				CommissionTax:  7,
@@ -158,7 +158,7 @@ func Test_client_CorrectOrder(t *testing.T) {
 				ResultCode:     "12116",
 				ResultText:     "変更項目がありません",
 				OrderNumber:    "",
-				BusinessDay:    time.Time{},
+				ExecutionDay:   time.Time{},
 				DeliveryAmount: 0,
 				Commission:     0,
 				CommissionTax:  0,
@@ -184,7 +184,7 @@ func Test_client_CorrectOrder(t *testing.T) {
 				ResultCode:     "12014",
 				ResultText:     "逆指値条件に誤りがあります",
 				OrderNumber:    "",
-				BusinessDay:    time.Time{},
+				ExecutionDay:   time.Time{},
 				DeliveryAmount: 0,
 				Commission:     0,
 				CommissionTax:  0,
@@ -265,7 +265,7 @@ func Test_client_CorrectOrder_Execute_NoChange(t *testing.T) {
 	got3, got4 := client.NewOrder(context.Background(), session, NewOrderRequest{
 		StockAccountType:  AccountTypeSpecific,
 		MarginAccountType: AccountTypeUnused,
-		SymbolCode:        "1475",
+		IssueCode:         "1475",
 		Exchange:          ExchangeToushou,
 		Side:              SideBuy,
 		ExecutionTiming:   ExecutionTimingNormal,
@@ -288,7 +288,7 @@ func Test_client_CorrectOrder_Execute_NoChange(t *testing.T) {
 
 	got5, got6 := client.CorrectOrder(context.Background(), session, CorrectOrderRequest{
 		OrderNumber:        got3.OrderNumber,
-		BusinessDay:        got3.BusinessDay,
+		ExecutionDay:       got3.ExecutionDay,
 		ExecutionTiming:    ExecutionTimingNoChange,
 		OrderPrice:         NoChangeFloat,
 		OrderQuantity:      NoChangeFloat,
@@ -333,7 +333,7 @@ func Test_client_CorrectOrder_Execute_Change(t *testing.T) {
 	got3, got4 := client.NewOrder(context.Background(), session, NewOrderRequest{
 		StockAccountType:  AccountTypeSpecific,
 		MarginAccountType: AccountTypeUnused,
-		SymbolCode:        "1475",
+		IssueCode:         "1475",
 		Exchange:          ExchangeToushou,
 		Side:              SideBuy,
 		ExecutionTiming:   ExecutionTimingNormal,
@@ -356,7 +356,7 @@ func Test_client_CorrectOrder_Execute_Change(t *testing.T) {
 
 	got5, got6 := client.CorrectOrder(context.Background(), session, CorrectOrderRequest{
 		OrderNumber:        got3.OrderNumber,
-		BusinessDay:        got3.BusinessDay,
+		ExecutionDay:       got3.ExecutionDay,
 		ExecutionTiming:    ExecutionTimingNoChange,
 		OrderPrice:         2001,
 		OrderQuantity:      NoChangeFloat,

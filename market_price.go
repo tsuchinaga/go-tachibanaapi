@@ -160,13 +160,13 @@ const (
 
 // MarketPriceRequest - 時価関連情報リクエスト
 type MarketPriceRequest struct {
-	SymbolCodes []string            // 取得したい銘柄コード
-	Columns     []MarketPriceColumn // 取得したい情報
+	IssueCodes []string            // 取得したい銘柄コード
+	Columns    []MarketPriceColumn // 取得したい情報
 }
 
 func (r *MarketPriceRequest) request(no int64, now time.Time) marketPriceRequest {
-	if r.SymbolCodes == nil {
-		r.SymbolCodes = []string{}
+	if r.IssueCodes == nil {
+		r.IssueCodes = []string{}
 	}
 
 	if r.Columns == nil || len(r.Columns) == 0 {
@@ -184,15 +184,15 @@ func (r *MarketPriceRequest) request(no int64, now time.Time) marketPriceRequest
 			FeatureType:    FeatureTypeMarketPrice,
 			ResponseFormat: commonResponseFormat,
 		},
-		SymbolCodes: strings.Join(r.SymbolCodes, ","),
-		Columns:     strings.Join(columns, ","),
+		IssueCodes: strings.Join(r.IssueCodes, ","),
+		Columns:    strings.Join(columns, ","),
 	}
 }
 
 type marketPriceRequest struct {
 	commonRequest
-	SymbolCodes string `json:"sTargetIssueCode,omitempty"` // 取得したい銘柄コード
-	Columns     string `json:"sTargetColumn,omitempty"`    // 取得したい情報
+	IssueCodes string `json:"sTargetIssueCode,omitempty"` // 取得したい銘柄コード
+	Columns    string `json:"sTargetColumn,omitempty"`    // 取得したい情報
 }
 
 type marketPriceResponse struct {
@@ -223,7 +223,7 @@ func (r *marketPriceResponse) UnmarshalJSON(b []byte) error {
 func (r *marketPriceResponse) response() MarketPriceResponse {
 	marketPrices := make([]MarketPrice, 0)
 	for _, price := range r.MarketPrices {
-		if price.SymbolCode == "" {
+		if price.IssueCode == "" {
 			continue
 		}
 		marketPrices = append(marketPrices, price.response())
@@ -237,7 +237,7 @@ func (r *marketPriceResponse) response() MarketPriceResponse {
 
 type marketPrice struct {
 	commonResponse
-	SymbolCode        string              `json:"sIssueCode"`    // 銘柄コード
+	IssueCode         string              `json:"sIssueCode"`    // 銘柄コード
 	Section           string              `json:"xLISS"`         // 所属
 	CurrentPrice      float64             `json:"pDPP,string"`   // 現在値
 	CurrentPriceTime  Hm                  `json:"tDPP:T"`        // 現在値時刻
@@ -389,7 +389,7 @@ func (r *marketPrice) UnmarshalJSON(b []byte) error {
 
 func (r *marketPrice) response() MarketPrice {
 	return MarketPrice{
-		SymbolCode:        r.SymbolCode,
+		IssueCode:         r.IssueCode,
 		Section:           r.Section,
 		CurrentPrice:      r.CurrentPrice,
 		CurrentPriceTime:  r.CurrentPriceTime.Time,
@@ -471,7 +471,7 @@ type MarketPriceResponse struct {
 
 // MarketPrice - 時価関連情報
 type MarketPrice struct {
-	SymbolCode        string              // 銘柄コード
+	IssueCode         string              // 銘柄コード
 	Section           string              // 所属
 	CurrentPrice      float64             // 現在値
 	CurrentPriceTime  time.Time           // 現在値時刻

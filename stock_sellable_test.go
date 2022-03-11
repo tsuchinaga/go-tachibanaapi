@@ -40,7 +40,7 @@ func Test_client_StockSellable(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeStockSellable,
 				},
-				SymbolCode:       "1475",
+				IssueCode:        "1475",
 				ResultCode:       "0",
 				ResultText:       "",
 				WarningCode:      "0",
@@ -67,7 +67,7 @@ func Test_client_StockSellable(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeStockSellable,
 				},
-				SymbolCode:       "",
+				IssueCode:        "",
 				ResultCode:       "991003",
 				ResultText:       "銘柄コードに誤りがあります。",
 				WarningCode:      "",
@@ -149,7 +149,7 @@ func Test_client_StockSellable_Execute(t *testing.T) {
 	}
 
 	got3, got4 := client.StockSellable(context.Background(), session, StockSellableRequest{
-		SymbolCode: "1475",
+		IssueCode: "1475",
 	})
 	log.Printf("%+v, %+v\n", got3, got4)
 	if got3.ResultCode != "0" {

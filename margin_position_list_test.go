@@ -23,7 +23,7 @@ func Test_MarginPositionListRequest_request(t *testing.T) {
 	}{
 		{name: "変換できる",
 			request: MarginPositionListRequest{
-				SymbolCode: "1475",
+				IssueCode: "1475",
 			},
 			arg1: 123,
 			arg2: time.Date(2022, 3, 1, 9, 40, 0, 0, time.Local),
@@ -32,9 +32,9 @@ func Test_MarginPositionListRequest_request(t *testing.T) {
 					No:             123,
 					SendDate:       RequestTime{Time: time.Date(2022, 3, 1, 9, 40, 0, 0, time.Local)},
 					FeatureType:    FeatureTypeMarginPositionList,
-					ResponseFormat: ResponseFormatWordKey,
+					ResponseFormat: commonResponseFormat,
 				},
-				SymbolCode: "1475",
+				IssueCode: "1475",
 			}},
 	}
 
@@ -126,7 +126,7 @@ func Test_marginPositionListResponse_UnmarshalJSON(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeMarginPositionList,
 				},
-				SymbolCode:            "",
+				IssueCode:             "",
 				ResultCode:            "0",
 				ResultText:            "",
 				WarningCode:           "0",
@@ -142,8 +142,8 @@ func Test_marginPositionListResponse_UnmarshalJSON(t *testing.T) {
 				Positions: []marginPosition{{
 					WarningCode:        "0",
 					WarningText:        "",
-					PositionCode:       "202203010010437",
-					SymbolCode:         "1475",
+					PositionNumber:     "202203010010437",
+					IssueCode:          "1475",
 					Exchange:           ExchangeToushou,
 					Side:               SideBuy,
 					ExitTermType:       ExitTermTypeSystemMargin6m,
@@ -206,7 +206,7 @@ func Test_marginPositionListResponse_UnmarshalJSON(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeMarginPositionList,
 				},
-				SymbolCode:            "*",
+				IssueCode:             "*",
 				ResultCode:            "0",
 				ResultText:            "",
 				WarningCode:           "0",
@@ -253,7 +253,7 @@ func Test_marginPositionListResponse_response(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeMarginPositionList,
 				},
-				SymbolCode:            "",
+				IssueCode:             "",
 				ResultCode:            "0",
 				ResultText:            "",
 				WarningCode:           "0",
@@ -269,8 +269,8 @@ func Test_marginPositionListResponse_response(t *testing.T) {
 				Positions: []marginPosition{{
 					WarningCode:        "0",
 					WarningText:        "",
-					PositionCode:       "202202280006156",
-					SymbolCode:         "1475",
+					PositionNumber:     "202202280006156",
+					IssueCode:          "1475",
 					Exchange:           ExchangeToushou,
 					Side:               SideBuy,
 					ExitTermType:       ExitTermTypeSystemMargin6m,
@@ -310,7 +310,7 @@ func Test_marginPositionListResponse_response(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeMarginPositionList,
 				},
-				SymbolCode:            "",
+				IssueCode:             "",
 				ResultCode:            "0",
 				ResultText:            "",
 				WarningCode:           "0",
@@ -326,8 +326,8 @@ func Test_marginPositionListResponse_response(t *testing.T) {
 				Positions: []MarginPosition{{
 					WarningCode:        "0",
 					WarningText:        "",
-					PositionCode:       "202202280006156",
-					SymbolCode:         "1475",
+					PositionNumber:     "202202280006156",
+					IssueCode:          "1475",
 					Exchange:           ExchangeToushou,
 					Side:               SideBuy,
 					ExitTermType:       ExitTermTypeSystemMargin6m,
@@ -383,8 +383,8 @@ func Test_marginPosition_response(t *testing.T) {
 			response: marginPosition{
 				WarningCode:        "0",
 				WarningText:        "",
-				PositionCode:       "202202280006156",
-				SymbolCode:         "1475",
+				PositionNumber:     "202202280006156",
+				IssueCode:          "1475",
 				Exchange:           ExchangeToushou,
 				Side:               SideBuy,
 				ExitTermType:       ExitTermTypeSystemMargin6m,
@@ -417,8 +417,8 @@ func Test_marginPosition_response(t *testing.T) {
 			want1: MarginPosition{
 				WarningCode:        "0",
 				WarningText:        "",
-				PositionCode:       "202202280006156",
-				SymbolCode:         "1475",
+				PositionNumber:     "202202280006156",
+				IssueCode:          "1475",
 				Exchange:           ExchangeToushou,
 				Side:               SideBuy,
 				ExitTermType:       ExitTermTypeSystemMargin6m,
@@ -491,7 +491,7 @@ func Test_client_MarginPositionList(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeMarginPositionList,
 				},
-				SymbolCode:            "",
+				IssueCode:             "",
 				ResultCode:            "0",
 				ResultText:            "",
 				WarningCode:           "0",
@@ -507,8 +507,8 @@ func Test_client_MarginPositionList(t *testing.T) {
 				Positions: []MarginPosition{{
 					WarningCode:        "0",
 					WarningText:        "",
-					PositionCode:       "202203010010437",
-					SymbolCode:         "1475",
+					PositionNumber:     "202203010010437",
+					IssueCode:          "1475",
 					Exchange:           ExchangeToushou,
 					Side:               SideBuy,
 					ExitTermType:       ExitTermTypeSystemMargin6m,
@@ -565,7 +565,7 @@ func Test_client_MarginPositionList(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeMarginPositionList,
 				},
-				SymbolCode:            "*",
+				IssueCode:             "*",
 				ResultCode:            "0",
 				ResultText:            "",
 				WarningCode:           "0",
@@ -639,7 +639,7 @@ func Test_client_MarginPositionList_Execute(t *testing.T) {
 	}
 
 	got3, got4 := client.MarginPositionList(context.Background(), session, MarginPositionListRequest{
-		SymbolCode: "",
+		IssueCode: "",
 	})
 	log.Printf("%+v, %+v\n", got3, got4)
 }

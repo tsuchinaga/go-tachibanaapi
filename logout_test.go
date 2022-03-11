@@ -28,7 +28,7 @@ func Test_LogoutRequest_request(t *testing.T) {
 				No:             2,
 				SendDate:       RequestTime{Time: time.Date(2022, 2, 24, 10, 0, 0, 0, time.Local)},
 				FeatureType:    FeatureTypeLogoutRequest,
-				ResponseFormat: ResponseFormatWordKey,
+				ResponseFormat: commonResponseFormat,
 			}}},
 	}
 

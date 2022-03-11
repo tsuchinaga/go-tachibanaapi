@@ -9,7 +9,7 @@ import (
 
 // StockSellableRequest - 売却可能数量リクエスト
 type StockSellableRequest struct {
-	SymbolCode string // 銘柄コード
+	IssueCode string // 銘柄コード
 }
 
 func (r *StockSellableRequest) request(no int64, now time.Time) stockSellableRequest {
@@ -20,18 +20,18 @@ func (r *StockSellableRequest) request(no int64, now time.Time) stockSellableReq
 			FeatureType:    FeatureTypeStockSellable,
 			ResponseFormat: commonResponseFormat,
 		},
-		SymbolCode: r.SymbolCode,
+		IssueCode: r.IssueCode,
 	}
 }
 
 type stockSellableRequest struct {
 	commonRequest
-	SymbolCode string `json:"sIssueCode"` // 銘柄コード
+	IssueCode string `json:"sIssueCode"` // 銘柄コード
 }
 
 type stockSellableResponse struct {
 	commonResponse
-	SymbolCode       string  `json:"sIssueCode"`                           // 銘柄コード
+	IssueCode        string  `json:"sIssueCode"`                           // 銘柄コード
 	ResultCode       string  `json:"sResultCode"`                          // 結果コード
 	ResultText       string  `json:"sResultText"`                          // 結果テキスト
 	WarningCode      string  `json:"sWarningCode"`                         // 警告コード
@@ -67,7 +67,7 @@ func (r *stockSellableResponse) UnmarshalJSON(b []byte) error {
 func (r *stockSellableResponse) response() StockSellableResponse {
 	return StockSellableResponse{
 		CommonResponse:   r.commonResponse.response(),
-		SymbolCode:       r.SymbolCode,
+		IssueCode:        r.IssueCode,
 		ResultCode:       r.ResultCode,
 		ResultText:       r.ResultText,
 		WarningCode:      r.WarningCode,
@@ -82,7 +82,7 @@ func (r *stockSellableResponse) response() StockSellableResponse {
 // StockSellableResponse - 売却可能数量レスポンス
 type StockSellableResponse struct {
 	CommonResponse
-	SymbolCode       string    // 銘柄コード
+	IssueCode        string    // 銘柄コード
 	ResultCode       string    // 結果コード
 	ResultText       string    // 結果テキスト
 	WarningCode      string    // 警告コード

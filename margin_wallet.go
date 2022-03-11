@@ -9,8 +9,8 @@ import (
 
 // MarginWalletRequest - 建余力&本日維持率リクエスト
 type MarginWalletRequest struct {
-	SymbolCode string   // 銘柄コード
-	Exchange   Exchange // 市場
+	IssueCode string   // 銘柄コード
+	Exchange  Exchange // 市場
 }
 
 func (r *MarginWalletRequest) request(no int64, now time.Time) marginWalletRequest {
@@ -21,20 +21,20 @@ func (r *MarginWalletRequest) request(no int64, now time.Time) marginWalletReque
 			FeatureType:    FeatureTypeMarginWallet,
 			ResponseFormat: commonResponseFormat,
 		},
-		SymbolCode: r.SymbolCode,
-		Exchange:   r.Exchange,
+		IssueCode: r.IssueCode,
+		Exchange:  r.Exchange,
 	}
 }
 
 type marginWalletRequest struct {
 	commonRequest
-	SymbolCode string   `json:"sIssueCode"` // 銘柄コード
-	Exchange   Exchange `json:"sSizyouC"`   // 市場
+	IssueCode string   `json:"sIssueCode"` // 銘柄コード
+	Exchange  Exchange `json:"sSizyouC"`   // 市場
 }
 
 type marginWalletResponse struct {
 	commonResponse
-	SymbolCode     string     `json:"sIssueCode"`                     // 銘柄コード
+	IssueCode      string     `json:"sIssueCode"`                     // 銘柄コード
 	Exchange       Exchange   `json:"sSizyouC"`                       // 市場
 	ResultCode     string     `json:"sResultCode"`                    // 結果コード
 	ResultText     string     `json:"sResultText"`                    // 結果テキスト
@@ -70,7 +70,7 @@ func (r *marginWalletResponse) UnmarshalJSON(b []byte) error {
 func (r *marginWalletResponse) response() MarginWalletResponse {
 	return MarginWalletResponse{
 		CommonResponse: r.commonResponse.response(),
-		SymbolCode:     r.SymbolCode,
+		IssueCode:      r.IssueCode,
 		Exchange:       r.Exchange,
 		ResultCode:     r.ResultCode,
 		ResultText:     r.ResultText,
@@ -86,7 +86,7 @@ func (r *marginWalletResponse) response() MarginWalletResponse {
 // MarginWalletResponse - 建余力&本日維持率レスポンス
 type MarginWalletResponse struct {
 	CommonResponse
-	SymbolCode     string    // 銘柄コード
+	IssueCode      string    // 銘柄コード
 	Exchange       Exchange  // 市場
 	ResultCode     string    // 結果コード
 	ResultText     string    // 結果テキスト

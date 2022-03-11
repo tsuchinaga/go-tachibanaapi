@@ -22,8 +22,8 @@ func Test_MarketPriceRequest_request(t *testing.T) {
 	}{
 		{name: "銘柄が指定がnilなら空配列に変えてから処理する",
 			request: MarketPriceRequest{
-				SymbolCodes: nil,
-				Columns:     AllMarketPriceColumns,
+				IssueCodes: nil,
+				Columns:    AllMarketPriceColumns,
 			},
 			arg1: 1234,
 			arg2: time.Date(2022, 3, 7, 12, 58, 0, 0, time.Local),
@@ -34,13 +34,13 @@ func Test_MarketPriceRequest_request(t *testing.T) {
 					FeatureType:    FeatureTypeMarketPrice,
 					ResponseFormat: commonResponseFormat,
 				},
-				SymbolCodes: "",
-				Columns:     "xLISS,pDPP,tDPP:T,pDPG,pDYWP,pDYRP,pDOP,tDOP:T,pDHP,tDHP:T,pDLP,tDLP:T,pDV,pQAS,pQAP,pAV,pQBS,pQBP,pBV,xDVES,xDCFS,pDHF,pDLF,pDJ,pAAV,pABV,pQOV,pGAV10,pGAP10,pGAV9,pGAP9,pGAV8,pGAP8,pGAV7,pGAP7,pGAV6,pGAP6,pGAV5,pGAP5,pGAV4,pGAP4,pGAV3,pGAP3,pGAV2,pGAP2,pGAV1,pGAP1,pGBV1,pGBP1,pGBV2,pGBP2,pGBV3,pGBP3,pGBV4,pGBP4,pGBV5,pGBP5,pGBV6,pGBP6,pGBV7,pGBP7,pGBV8,pGBP8,pGBV9,pGBP9,pGBV10,pGBP10,pQUV,pVWAP,pPRP",
+				IssueCodes: "",
+				Columns:    "xLISS,pDPP,tDPP:T,pDPG,pDYWP,pDYRP,pDOP,tDOP:T,pDHP,tDHP:T,pDLP,tDLP:T,pDV,pQAS,pQAP,pAV,pQBS,pQBP,pBV,xDVES,xDCFS,pDHF,pDLF,pDJ,pAAV,pABV,pQOV,pGAV10,pGAP10,pGAV9,pGAP9,pGAV8,pGAP8,pGAV7,pGAP7,pGAV6,pGAP6,pGAV5,pGAP5,pGAV4,pGAP4,pGAV3,pGAP3,pGAV2,pGAP2,pGAV1,pGAP1,pGBV1,pGBP1,pGBV2,pGBP2,pGBV3,pGBP3,pGBV4,pGBP4,pGBV5,pGBP5,pGBV6,pGBP6,pGBV7,pGBP7,pGBV8,pGBP8,pGBV9,pGBP9,pGBV10,pGBP10,pQUV,pVWAP,pPRP",
 			}},
 		{name: "カラムが指定されていれば、指定されたカラムを登録する",
 			request: MarketPriceRequest{
-				SymbolCodes: []string{"1475", "1476"},
-				Columns:     []MarketPriceColumn{MarketPriceColumnCurrentPrice, MarketPriceColumnCurrentPriceTime},
+				IssueCodes: []string{"1475", "1476"},
+				Columns:    []MarketPriceColumn{MarketPriceColumnCurrentPrice, MarketPriceColumnCurrentPriceTime},
 			},
 			arg1: 1234,
 			arg2: time.Date(2022, 3, 7, 12, 58, 0, 0, time.Local),
@@ -51,8 +51,8 @@ func Test_MarketPriceRequest_request(t *testing.T) {
 					FeatureType:    FeatureTypeMarketPrice,
 					ResponseFormat: commonResponseFormat,
 				},
-				SymbolCodes: "1475,1476",
-				Columns:     "pDPP,tDPP:T",
+				IssueCodes: "1475,1476",
+				Columns:    "pDPP,tDPP:T",
 			}},
 	}
 
@@ -99,7 +99,7 @@ func Test_client_MarketPrice(t *testing.T) {
 				},
 				MarketPrices: []MarketPrice{
 					{
-						SymbolCode:        "1475",
+						IssueCode:         "1475",
 						Section:           "",
 						CurrentPrice:      1827,
 						CurrentPriceTime:  time.Date(0, 1, 1, 12, 32, 0, 0, time.Local),
@@ -171,7 +171,7 @@ func Test_client_MarketPrice(t *testing.T) {
 						VWAP:              1825.3663,
 						PRP:               1881,
 					}, {
-						SymbolCode:        "1476",
+						IssueCode:         "1476",
 						Section:           "",
 						CurrentPrice:      1950,
 						CurrentPriceTime:  time.Date(0, 1, 1, 12, 30, 0, 0, time.Local),
@@ -281,7 +281,7 @@ func Test_client_MarketPrice(t *testing.T) {
 					ErrorMessage: "",
 					FeatureType:  FeatureTypeMarketPrice,
 				},
-				MarketPrices: []MarketPrice{{SymbolCode: "*"}},
+				MarketPrices: []MarketPrice{{IssueCode: "*"}},
 			},
 			want2: nil},
 		{name: "項目を制限して取得した場合のレスポンスをパースして返せる",
@@ -301,8 +301,8 @@ func Test_client_MarketPrice(t *testing.T) {
 					FeatureType:  FeatureTypeMarketPrice,
 				},
 				MarketPrices: []MarketPrice{
-					{SymbolCode: "1475", CurrentPrice: 1826, CurrentPriceTime: time.Date(0, 1, 1, 12, 30, 0, 0, time.Local)},
-					{SymbolCode: "1476", CurrentPrice: 1950, CurrentPriceTime: time.Date(0, 1, 1, 12, 30, 0, 0, time.Local)},
+					{IssueCode: "1475", CurrentPrice: 1826, CurrentPriceTime: time.Date(0, 1, 1, 12, 30, 0, 0, time.Local)},
+					{IssueCode: "1476", CurrentPrice: 1950, CurrentPriceTime: time.Date(0, 1, 1, 12, 30, 0, 0, time.Local)},
 				},
 			},
 			want2: nil},
@@ -371,8 +371,8 @@ func Test_client_MarketPrice_Execute(t *testing.T) {
 	}
 
 	got3, got4 := client.MarketPrice(context.Background(), session, MarketPriceRequest{
-		SymbolCodes: []string{"1475", "1476"},
-		Columns:     []MarketPriceColumn{},
+		IssueCodes: []string{"1475", "1476"},
+		Columns:    []MarketPriceColumn{},
 	})
 	log.Printf("%+v, %+v\n", got3, got4)
 }

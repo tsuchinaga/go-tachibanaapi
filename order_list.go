@@ -9,7 +9,7 @@ import (
 
 // OrderListRequest - 注文一覧リクエスト
 type OrderListRequest struct {
-	SymbolCode         string             // 銘柄コード
+	IssueCode          string             // 銘柄コード
 	ExecutionDate      time.Time          // 注文執行予定日
 	OrderInquiryStatus OrderInquiryStatus // 注文照会状態
 }
@@ -20,9 +20,9 @@ func (r *OrderListRequest) request(no int64, now time.Time) orderListRequest {
 			No:             no,
 			SendDate:       RequestTime{Time: now},
 			FeatureType:    FeatureTypeOrderList,
-			ResponseFormat: ResponseFormatWordKey,
+			ResponseFormat: commonResponseFormat,
 		},
-		SymbolCode:    r.SymbolCode,
+		IssueCode:     r.IssueCode,
 		ExecutionDate: Ymd{Time: r.ExecutionDate},
 		OrderStatus:   r.OrderInquiryStatus,
 	}
@@ -30,14 +30,14 @@ func (r *OrderListRequest) request(no int64, now time.Time) orderListRequest {
 
 type orderListRequest struct {
 	commonRequest
-	SymbolCode    string             `json:"sIssueCode,omitempty"`          // 銘柄コード
+	IssueCode     string             `json:"sIssueCode,omitempty"`          // 銘柄コード
 	ExecutionDate Ymd                `json:"sSikkouDay,omitempty"`          // 注文執行予定日
 	OrderStatus   OrderInquiryStatus `json:"sOrderSyoukaiStatus,omitempty"` // 注文照会状態
 }
 
 type orderListResponse struct {
 	commonResponse
-	SymbolCode         string             `json:"sIssueCode"`          // 銘柄コード
+	IssueCode          string             `json:"sIssueCode"`          // 銘柄コード
 	ExecutionDate      Ymd                `json:"sSikkouDay"`          // 注文執行予定日
 	OrderInquiryStatus OrderInquiryStatus `json:"sOrderSyoukaiStatus"` // 注文照会状態
 	ResultCode         string             `json:"sResultCode"`         // 結果コード
@@ -69,7 +69,7 @@ func (r *orderListResponse) response() OrderListResponse {
 
 	return OrderListResponse{
 		CommonResponse:     r.commonResponse.response(),
-		SymbolCode:         r.SymbolCode,
+		IssueCode:          r.IssueCode,
 		ExecutionDate:      r.ExecutionDate.Time,
 		OrderInquiryStatus: r.OrderInquiryStatus,
 		ResultCode:         r.ResultCode,
@@ -84,7 +84,7 @@ type order struct {
 	WarningCode            string            `json:"sOrderWarningCode"`             // 警告コード
 	WarningText            string            `json:"sOrderWarningText"`             // 警告テキスト
 	OrderNumber            string            `json:"sOrderOrderNumber"`             // 注文番号
-	SymbolCode             string            `json:"sOrderIssueCode"`               // 銘柄コード
+	IssueCode              string            `json:"sOrderIssueCode"`               // 銘柄コード
 	Exchange               Exchange          `json:"sOrderSizyouC"`                 // 市場
 	AccountType            AccountType       `json:"sOrderZyoutoekiKazeiC"`         // 譲渡益課税区分
 	TradeType              TradeType         `json:"sGenkinSinyouKubun"`            // 現金信用区分
@@ -120,7 +120,7 @@ func (r *order) response() Order {
 		WarningCode:            r.WarningCode,
 		WarningText:            r.WarningText,
 		OrderNumber:            r.OrderNumber,
-		SymbolCode:             r.SymbolCode,
+		IssueCode:              r.IssueCode,
 		Exchange:               r.Exchange,
 		AccountType:            r.AccountType,
 		TradeType:              r.TradeType,
@@ -155,7 +155,7 @@ func (r *order) response() Order {
 // OrderListResponse - 注文一覧レスポンス
 type OrderListResponse struct {
 	CommonResponse
-	SymbolCode         string             // 銘柄コード
+	IssueCode          string             // 銘柄コード
 	ExecutionDate      time.Time          // 注文執行予定日
 	OrderInquiryStatus OrderInquiryStatus // 注文照会状態
 	ResultCode         string             // 結果コード
@@ -170,7 +170,7 @@ type Order struct {
 	WarningCode            string            // 警告コード
 	WarningText            string            // 警告テキスト
 	OrderNumber            string            // 注文番号
-	SymbolCode             string            // 銘柄コード
+	IssueCode              string            // 銘柄コード
 	Exchange               Exchange          // 市場
 	AccountType            AccountType       // 譲渡益課税区分
 	TradeType              TradeType         // 現金信用区分
