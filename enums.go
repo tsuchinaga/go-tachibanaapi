@@ -45,7 +45,7 @@ const (
 	FeatureTypeMarginPositionList          FeatureType = "CLMShinyouTategyokuList"         // 信用建玉一覧
 	FeatureTypeStockWallet                 FeatureType = "CLMZanKaiKanougaku"              // 買余力
 	FeatureTypeMarginWallet                FeatureType = "CLMZanShinkiKanoIjiritu"         // 建余力&本日維持率
-	FeatureTypeSellable                    FeatureType = "CLMZanUriKanousuu"               // 売却可能数量 TODO これが何か調べる
+	FeatureTypeStockSellable               FeatureType = "CLMZanUriKanousuu"               // 売却可能数量
 	FeatureTypeOrderList                   FeatureType = "CLMOrderList"                    // 注文一覧
 	FeatureTypeOrderListDetail             FeatureType = "CLMOrderListDetail"              // 注文約定一覧(詳細)
 	FeatureTypeSummary                     FeatureType = "CLMZanKaiSummary"                // 可能額サマリー TODO これが何か調べる

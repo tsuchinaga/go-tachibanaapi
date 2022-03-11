@@ -1,0 +1,114 @@
+package tachibana
+
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"time"
+)
+
+// StockSellableRequest - 売却可能数量リクエスト
+type StockSellableRequest struct {
+	SymbolCode string // 銘柄コード
+}
+
+func (r *StockSellableRequest) request(no int64, now time.Time) stockSellableRequest {
+	return stockSellableRequest{
+		commonRequest: commonRequest{
+			No:             no,
+			SendDate:       RequestTime{Time: now},
+			FeatureType:    FeatureTypeStockSellable,
+			ResponseFormat: commonResponseFormat,
+		},
+		SymbolCode: r.SymbolCode,
+	}
+}
+
+type stockSellableRequest struct {
+	commonRequest
+	SymbolCode string `json:"sIssueCode"` // 銘柄コード
+}
+
+type stockSellableResponse struct {
+	commonResponse
+	SymbolCode       string  `json:"sIssueCode"`                           // 銘柄コード
+	ResultCode       string  `json:"sResultCode"`                          // 結果コード
+	ResultText       string  `json:"sResultText"`                          // 結果テキスト
+	WarningCode      string  `json:"sWarningCode"`                         // 警告コード
+	WarningText      string  `json:"sWarningText"`                         // 警告テキスト
+	UpdateDateTime   YmdHm   `json:"sSummaryUpdate"`                       // 更新日時
+	GeneralQuantity  float64 `json:"sZanKabuSuryouUriKanouIppan,string"`   // 売付可能株数(一般)
+	SpecificQuantity float64 `json:"sZanKabuSuryouUriKanouTokutei,string"` // 売付可能株数(特定)
+	NisaQuantity     float64 `json:"sZanKabuSuryouUriKanouNisa,string"`    // 売付可能株数(NISA)
+}
+
+func (r *stockSellableResponse) UnmarshalJSON(b []byte) error {
+	// 文字列でないところに空文字を返されることがあるので、置換しておく
+	replaced := b
+	replaces := map[string]string{
+		`"sZanKabuSuryouUriKanouIppan":""`:   `"sZanKabuSuryouUriKanouIppan":"0"`,
+		`"sZanKabuSuryouUriKanouTokutei":""`: `"sZanKabuSuryouUriKanouTokutei":"0"`,
+		`"sZanKabuSuryouUriKanouNisa":""`:    `"sZanKabuSuryouUriKanouNisa":"0"`,
+	}
+	for o, n := range replaces {
+		replaced = bytes.Replace(replaced, []byte(o), []byte(n), -1)
+	}
+
+	type alias stockSellableResponse
+	ra := &struct {
+		*alias
+	}{
+		alias: (*alias)(r),
+	}
+
+	return json.Unmarshal(replaced, ra)
+}
+
+func (r *stockSellableResponse) response() StockSellableResponse {
+	return StockSellableResponse{
+		CommonResponse:   r.commonResponse.response(),
+		SymbolCode:       r.SymbolCode,
+		ResultCode:       r.ResultCode,
+		ResultText:       r.ResultText,
+		WarningCode:      r.WarningCode,
+		WarningText:      r.WarningText,
+		UpdateDateTime:   r.UpdateDateTime.Time,
+		GeneralQuantity:  r.GeneralQuantity,
+		SpecificQuantity: r.SpecificQuantity,
+		NisaQuantity:     r.NisaQuantity,
+	}
+}
+
+// StockSellableResponse - 売却可能数量レスポンス
+type StockSellableResponse struct {
+	CommonResponse
+	SymbolCode       string    // 銘柄コード
+	ResultCode       string    // 結果コード
+	ResultText       string    // 結果テキスト
+	WarningCode      string    // 警告コード
+	WarningText      string    // 警告テキスト
+	UpdateDateTime   time.Time // 更新日時
+	GeneralQuantity  float64   // 売付可能株数(一般)
+	SpecificQuantity float64   // 売付可能株数(特定)
+	NisaQuantity     float64   // 売付可能株数(NISA)
+}
+
+// StockSellable - 売却可能数量
+func (c *client) StockSellable(ctx context.Context, session *Session, req StockSellableRequest) (*StockSellableResponse, error) {
+	if session == nil {
+		return nil, NilArgumentErr
+	}
+	session.mtx.Lock()
+	defer session.mtx.Unlock()
+
+	session.lastRequestNo++
+	r := req.request(session.lastRequestNo, c.clock.Now())
+
+	var res stockSellableResponse
+	if err := c.get(ctx, session.RequestURL, r, &res); err != nil {
+		return nil, err
+	}
+
+	Res := res.response()
+	return &Res, nil
+}
