@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"time"
@@ -35,11 +36,11 @@ type Client interface {
 	StockWallet(ctx context.Context, session *Session, req StockWalletRequest) (*StockWalletResponse, error)                      // 買余力
 	MarginWallet(ctx context.Context, session *Session, req MarginWalletRequest) (*MarginWalletResponse, error)                   // 建余力&本日維持率
 	StockSellable(ctx context.Context, session *Session, req StockSellableRequest) (*StockSellableResponse, error)                // 売却可能数量
-	StockMaster(ctx context.Context, session *Session, req StockMasterRequest) (*StockMasterResponse, error)                      // 株式銘柄マスタ
 	OrderList(ctx context.Context, session *Session, req OrderListRequest) (*OrderListResponse, error)                            // 注文一覧
 	OrderListDetail(ctx context.Context, session *Session, req OrderListDetailRequest) (*OrderListDetailResponse, error)          // 注文一覧(詳細)
 	StockPositionList(ctx context.Context, session *Session, req StockPositionListRequest) (*StockPositionListResponse, error)    // 現物株リスト
 	MarginPositionList(ctx context.Context, session *Session, req MarginPositionListRequest) (*MarginPositionListResponse, error) // 信用建玉リスト
+	StockMaster(ctx context.Context, session *Session, req StockMasterRequest) (*StockMasterResponse, error)                      // 株式銘柄マスタ
 	MarketPrice(ctx context.Context, session *Session, req MarketPriceRequest) (*MarketPriceResponse, error)                      // 時価関連情報
 }
 
@@ -99,6 +100,8 @@ func (c *client) get(ctx context.Context, uri string, request interface{}, respo
 	if err != nil {
 		return err
 	}
+	log.Println(string(rb))
+
 	query, err := c.encode(string(rb))
 	if err != nil {
 		return err
@@ -135,9 +138,63 @@ func (c *client) get(ctx context.Context, uri string, request interface{}, respo
 	return nil
 }
 
+//// stream - chunked response リクエスト
+//func (c *client) stream(ctx context.Context, uri string, request interface{}, ch chan []byte) error {
+//	rb, err := json.Marshal(request)
+//	if err != nil {
+//		return err
+//	}
+//	query, err := c.encode(string(rb))
+//	if err != nil {
+//		return err
+//	}
+//
+//	u, _ := url.Parse(uri)
+//	u.RawQuery = query
+//
+//	// TCPソケットオープン
+//	dialer := &net.Dialer{
+//		Timeout:   10 * time.Second,
+//		KeepAlive: 10 * time.Second,
+//	}
+//	conn, err := tls.DialWithDialer(dialer, "tcp", fmt.Sprintf("%s:443", c.host(c.env)), nil)
+//	if err != nil {
+//		return nil
+//	}
+//	defer conn.Close()
+//
+//	// コネクションを通してリクエストの送信
+//	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), nil)
+//	err = req.Write(conn)
+//	if err != nil {
+//		return err
+//	}
+//
+//	// レスポンスの確認
+//	reader := bufio.NewReader(conn)
+//	res, err := http.ReadResponse(reader, req)
+//	if err != nil {
+//		return err
+//	}
+//	if res.TransferEncoding[0] != "chunked" {
+//		return errors.New("response is not chunked")
+//	}
+//
+//	// レスポンスをチャネルに流していく
+//	scanner := bufio.NewScanner(httputil.NewChunkedReader(reader))
+//	for scanner.Scan() {
+//		ch <- scanner.Bytes()
+//	}
+//
+//	close(ch)
+//	return nil
+//}
+
 // parseResponse - レスポンスをパースする
 func (c *client) parseResponse(body []byte, v interface{}) error {
 	d, _ := c.decode(string(body)) // エラーが発生しないのでチェックせず捨てる
+	log.Println(body)
+	log.Println(d)
 
 	if err := json.Unmarshal([]byte(d), v); err != nil {
 		return err
