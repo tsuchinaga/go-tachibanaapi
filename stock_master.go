@@ -2,54 +2,12 @@ package tachibana
 
 import (
 	"context"
-	"fmt"
 	"strings"
 	"time"
 )
 
 // StockMasterColumn - 株式銘柄マスタカラム
 type StockMasterColumn string
-
-// AllStockMasterColumns - 株式銘柄マスタの全カラム
-var AllStockMasterColumns = []StockMasterColumn{
-	StockMasterColumnCode,
-	StockMasterColumnName,
-	StockMasterColumnShortName,
-	StockMasterColumnKana,
-	StockMasterColumnAlphabet,
-	StockMasterColumnSpecificTarget,
-	StockMasterColumnTaxFree,
-	StockMasterColumnSharedStocks,
-	StockMasterColumnExRight,
-	StockMasterColumnLastRightDay,
-	StockMasterColumnListingType,
-	StockMasterColumnReleaseTradingDate,
-	StockMasterColumnTradingDate,
-	StockMasterColumnTradingUnit,
-	StockMasterColumnNextTradingUnit,
-	StockMasterColumnStopTradingType,
-	StockMasterColumnStartPublicationDate,
-	StockMasterColumnLastPublicationDate,
-	StockMasterColumnSettlementType,
-	StockMasterColumnSettlementDate,
-	StockMasterColumnListingDate,
-	StockMasterColumnExpireDate2Type,
-	StockMasterColumnLargeUnit,
-	StockMasterColumnLargeAmount,
-	StockMasterColumnOutputTicketType,
-	StockMasterColumnDepositAmount,
-	StockMasterColumnDepositValuation,
-	StockMasterColumnOrganizationType,
-	StockMasterColumnProvisionalType,
-	StockMasterColumnPrimaryExchange,
-	StockMasterColumnIndefinitePeriodType,
-	StockMasterColumnIndustryCode,
-	StockMasterColumnIndustryName,
-	StockMasterColumnSORTargetType,
-	StockMasterColumnCreateDateTime,
-	StockMasterColumnUpdateDateTime,
-	StockMasterColumnUpdateNumber,
-}
 
 const (
 	StockMasterColumnCode                 StockMasterColumn = "sIssueCode"             // 銘柄コード
@@ -97,9 +55,6 @@ type StockMasterRequest struct {
 }
 
 func (r *StockMasterRequest) request(no int64, now time.Time) stockMasterRequest {
-	if len(r.Columns) == 0 {
-		r.Columns = AllStockMasterColumns
-	}
 	columns := make([]string, len(r.Columns))
 	for i, column := range r.Columns {
 		columns[i] = string(column)
@@ -112,7 +67,7 @@ func (r *StockMasterRequest) request(no int64, now time.Time) stockMasterRequest
 			FeatureType:    FeatureTypeMasterData,
 			ResponseFormat: commonResponseFormat,
 		},
-		TargetFeature: fmt.Sprintf(`"%s"`, FeatureTypeStockMaster),
+		TargetFeature: string(FeatureTypeStockMaster),
 		Columns:       strings.Join(columns, ","),
 	}
 }

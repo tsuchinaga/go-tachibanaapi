@@ -55,7 +55,7 @@ const (
 	FeatureTypeDepositRate                 FeatureType = "CLMZanRealHosyoukinRitu"         // リアル保証金率
 	FeatureTypeEventDownload               FeatureType = "CLMEventDownload"                // マスタ情報ダウンロード
 	FeatureTypeEventSystemStatus           FeatureType = "CLMSystemStatus"                 // システムステータス
-	FeatureTypeEventDate                   FeatureType = "CLMDateZyouhou"                  // 日付情報
+	FeatureTypeBusinessDay                 FeatureType = "CLMDateZyouhou"                  // 日付情報
 	FeatureTypeEventTickGroup              FeatureType = "CLMYobine"                       // 呼値
 	FeatureTypeEventOperationStatus        FeatureType = "CLMUnyouStatus"                  // 運用ステータス別状態
 	FeatureTypeEventStockOperationStatus   FeatureType = "CLMUnyouStatusKabu"              // 運用ステータス(株式)

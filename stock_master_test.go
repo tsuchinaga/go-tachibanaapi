@@ -3,7 +3,6 @@ package tachibana
 import (
 	"context"
 	"errors"
-	"fmt"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -34,8 +33,8 @@ func Test_StockMasterRequest_request(t *testing.T) {
 					FeatureType:    FeatureTypeMasterData,
 					ResponseFormat: commonResponseFormat,
 				},
-				TargetFeature: fmt.Sprintf(`"%s"`, FeatureTypeStockMaster),
-				Columns:       "sIssueCode,sIssueName,sIssueNameRyaku,sIssueNameKana,sIssueNameEizi,sTokuteiF,sHikazeiC,sZyouzyouHakkouKabusu,sKenriotiFlag,sKenritukiSaisyuDay,sZyouzyouNyusatuC,sNyusatuKaizyoDay,sNyusatuDay,sBaibaiTani,sBaibaiTaniYoku,sBaibaiTeisiC,sHakkouKaisiDay,sHakkouSaisyuDay,sKessanC,sKessanDay,sZyouzyouOutouDay,sNiruiKizituC,sOogutiKabusu,sOogutiKingmaker,sBadenpyouOutputYNC,sHosyoukinDaiyouKakeme,sDaiyouHyoukaTanka,sKikoSankaC,sKarikessaiC,sYusenSizyou,sMukigenC,sGyousyuCode,sGyousyuName,sSorC,sCreateDate,sUpdateDate,sUpdateNumber",
+				TargetFeature: string(FeatureTypeStockMaster),
+				Columns:       "",
 			}},
 		{name: "カラム指定がなければ全指定になる",
 			request: StockMasterRequest{
@@ -50,8 +49,8 @@ func Test_StockMasterRequest_request(t *testing.T) {
 					FeatureType:    FeatureTypeMasterData,
 					ResponseFormat: commonResponseFormat,
 				},
-				TargetFeature: fmt.Sprintf(`"%s"`, FeatureTypeStockMaster),
-				Columns:       "sIssueCode,sIssueName,sIssueNameRyaku,sIssueNameKana,sIssueNameEizi,sTokuteiF,sHikazeiC,sZyouzyouHakkouKabusu,sKenriotiFlag,sKenritukiSaisyuDay,sZyouzyouNyusatuC,sNyusatuKaizyoDay,sNyusatuDay,sBaibaiTani,sBaibaiTaniYoku,sBaibaiTeisiC,sHakkouKaisiDay,sHakkouSaisyuDay,sKessanC,sKessanDay,sZyouzyouOutouDay,sNiruiKizituC,sOogutiKabusu,sOogutiKingmaker,sBadenpyouOutputYNC,sHosyoukinDaiyouKakeme,sDaiyouHyoukaTanka,sKikoSankaC,sKarikessaiC,sYusenSizyou,sMukigenC,sGyousyuCode,sGyousyuName,sSorC,sCreateDate,sUpdateDate,sUpdateNumber",
+				TargetFeature: string(FeatureTypeStockMaster),
+				Columns:       "",
 			}},
 		{name: "変換できる",
 			request: StockMasterRequest{
@@ -66,7 +65,7 @@ func Test_StockMasterRequest_request(t *testing.T) {
 					FeatureType:    FeatureTypeMasterData,
 					ResponseFormat: commonResponseFormat,
 				},
-				TargetFeature: fmt.Sprintf(`"%s"`, FeatureTypeStockMaster),
+				TargetFeature: string(FeatureTypeStockMaster),
 				Columns:       "sIssueCode,sIssueName",
 			}},
 	}
