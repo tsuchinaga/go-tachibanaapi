@@ -9,3 +9,12 @@
 ## 注意
 
 動作検証中です。
+
+[github.com/tsuchinaga/go-tachibanaapi](https://github.com/tsuchinaga/go-tachibanaapi) にミラーリングしていますが、オリジナルは [gitlab.com/tsuchinaga/go-tachibanaapi](https://gitlab.com/tsuchinaga/go-tachibanaapi) にあります。
+
+
+## サンプル
+
+一連の流れとしてのテストは [./examples](./examples) にあります
+
+それぞれの機能の使い方は *_test.go にあります
