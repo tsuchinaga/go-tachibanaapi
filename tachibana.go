@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"time"
@@ -100,7 +99,6 @@ func (c *client) get(ctx context.Context, uri string, request interface{}, respo
 	if err != nil {
 		return err
 	}
-	log.Println(string(rb))
 
 	query, err := c.encode(string(rb))
 	if err != nil {
@@ -193,8 +191,6 @@ func (c *client) get(ctx context.Context, uri string, request interface{}, respo
 // parseResponse - レスポンスをパースする
 func (c *client) parseResponse(body []byte, v interface{}) error {
 	d, _ := c.decode(string(body)) // エラーが発生しないのでチェックせず捨てる
-	log.Println(body)
-	log.Println(d)
 
 	if err := json.Unmarshal([]byte(d), v); err != nil {
 		return err
