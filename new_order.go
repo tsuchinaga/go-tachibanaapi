@@ -104,7 +104,7 @@ type newOrderResponse struct {
 	WarningCode    string  `json:"sWarningCode"`                  // 警告コード
 	WarningText    string  `json:"sWarningText"`                  // 警告テキスト
 	OrderNumber    string  `json:"sOrderNumber"`                  // 注文番号
-	ExecutionDay   Ymd     `json:"sEigyouDay"`                    // 営業日
+	ExecutionDate  Ymd     `json:"sEigyouDay"`                    // 営業日
 	DeliveryAmount float64 `json:"sOrderUkewatasiKingaku,string"` // 注文受渡金額
 	Commission     float64 `json:"sOrderTesuryou,string"`         // 注文手数料
 	CommissionTax  float64 `json:"sOrderSyouhizei,string"`        // 注文消費税
@@ -144,7 +144,7 @@ func (r *newOrderResponse) response() NewOrderResponse {
 		WarningCode:    r.WarningCode,
 		WarningText:    r.WarningText,
 		OrderNumber:    r.OrderNumber,
-		ExecutionDay:   r.ExecutionDay.Time,
+		ExecutionDate:  r.ExecutionDate.Time,
 		DeliveryAmount: r.DeliveryAmount,
 		Commission:     r.Commission,
 		CommissionTax:  r.CommissionTax,
@@ -161,7 +161,7 @@ type NewOrderResponse struct {
 	WarningCode    string    // 警告コード
 	WarningText    string    // 警告テキスト
 	OrderNumber    string    // 注文番号
-	ExecutionDay   time.Time // 営業日
+	ExecutionDate  time.Time // 営業日
 	DeliveryAmount float64   // 注文受渡金額
 	Commission     float64   // 注文手数料
 	CommissionTax  float64   // 注文消費税

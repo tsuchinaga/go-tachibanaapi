@@ -9,8 +9,8 @@ import (
 
 // OrderListDetailRequest - 注文約定一覧(詳細)リクエスト
 type OrderListDetailRequest struct {
-	OrderNumber  string    // 注文番号
-	ExecutionDay time.Time // 営業日
+	OrderNumber   string    // 注文番号
+	ExecutionDate time.Time // 営業日
 }
 
 func (r *OrderListDetailRequest) request(no int64, now time.Time) orderListDetailRequest {
@@ -21,21 +21,21 @@ func (r *OrderListDetailRequest) request(no int64, now time.Time) orderListDetai
 			FeatureType:    FeatureTypeOrderListDetail,
 			ResponseFormat: commonResponseFormat,
 		},
-		OrderNumber:  r.OrderNumber,
-		ExecutionDay: Ymd{Time: r.ExecutionDay},
+		OrderNumber:   r.OrderNumber,
+		ExecutionDate: Ymd{Time: r.ExecutionDate},
 	}
 }
 
 type orderListDetailRequest struct {
 	commonRequest
-	OrderNumber  string `json:"sOrderNumber,omitempty"` // 注文番号
-	ExecutionDay Ymd    `json:"sEigyouDay,omitempty"`   // 営業日
+	OrderNumber   string `json:"sOrderNumber,omitempty"` // 注文番号
+	ExecutionDate Ymd    `json:"sEigyouDay,omitempty"`   // 営業日
 }
 
 type orderListDetailResponse struct {
 	commonResponse
 	OrderNumber            string           `json:"sOrderNumber"`               // 注文番号
-	ExecutionDay           Ymd              `json:"sEigyouDay"`                 // 営業日
+	ExecutionDate          Ymd              `json:"sEigyouDay"`                 // 営業日
 	ResultCode             string           `json:"sResultCode"`                // 結果コード
 	ResultText             string           `json:"sResultText"`                // 結果テキスト
 	WarningCode            string           `json:"sWarningCode"`               // 警告コード
@@ -124,7 +124,7 @@ func (r *orderListDetailResponse) response() OrderListDetailResponse {
 	return OrderListDetailResponse{
 		CommonResponse:         r.commonResponse.response(),
 		OrderNumber:            r.OrderNumber,
-		ExecutionDate:          r.ExecutionDay.Time,
+		ExecutionDate:          r.ExecutionDate.Time,
 		ResultCode:             r.ResultCode,
 		ResultText:             r.ResultText,
 		WarningCode:            r.WarningCode,

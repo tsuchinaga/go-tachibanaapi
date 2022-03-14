@@ -43,7 +43,7 @@ func Test_client_CancelOrder(t *testing.T) {
 				ResultCode:     "0",
 				ResultText:     "",
 				OrderNumber:    "10004237",
-				ExecutionDay:   time.Date(2022, 3, 10, 0, 0, 0, 0, time.Local),
+				ExecutionDate:  time.Date(2022, 3, 10, 0, 0, 0, 0, time.Local),
 				DeliveryAmount: 0,
 				OrderDateTime:  time.Date(2022, 3, 10, 8, 43, 58, 0, time.Local),
 			},
@@ -67,7 +67,7 @@ func Test_client_CancelOrder(t *testing.T) {
 				ResultCode:     "13001",
 				ResultText:     "注文番号に誤りがあります",
 				OrderNumber:    "",
-				ExecutionDay:   time.Time{},
+				ExecutionDate:  time.Time{},
 				DeliveryAmount: 0,
 				OrderDateTime:  time.Time{},
 			},
@@ -169,7 +169,7 @@ func Test_client_CancelOrder_Execute(t *testing.T) {
 
 	got5, got6 := client.CancelOrder(context.Background(), session, CancelOrderRequest{
 		OrderNumber:    got3.OrderNumber,
-		ExecutionDay:   got3.ExecutionDay,
+		ExecutionDate:  got3.ExecutionDate,
 		SecondPassword: secondPassword,
 	})
 	log.Printf("%+v, %+v\n", got5, got6)

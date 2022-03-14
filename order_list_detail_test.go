@@ -23,8 +23,8 @@ func Test_orderListDetail_request(t *testing.T) {
 	}{
 		{name: "変換できる",
 			request: OrderListDetailRequest{
-				OrderNumber:  "28002795",
-				ExecutionDay: time.Time{},
+				OrderNumber:   "28002795",
+				ExecutionDate: time.Time{},
 			},
 			arg1: 123,
 			arg2: time.Date(2022, 2, 27, 10, 21, 15, 0, time.Local),
@@ -35,8 +35,8 @@ func Test_orderListDetail_request(t *testing.T) {
 					FeatureType:    FeatureTypeOrderListDetail,
 					ResponseFormat: commonResponseFormat,
 				},
-				OrderNumber:  "28002795",
-				ExecutionDay: Ymd{},
+				OrderNumber:   "28002795",
+				ExecutionDate: Ymd{},
 			}},
 	}
 
@@ -151,7 +151,7 @@ func Test_orderListDetailResponse_UnmarshalJSON(t *testing.T) {
 					FeatureType:  FeatureTypeOrderListDetail,
 				},
 				OrderNumber:            "28010833",
-				ExecutionDay:           Ymd{Time: time.Date(2022, 2, 28, 0, 0, 0, 0, time.Local)},
+				ExecutionDate:          Ymd{Time: time.Date(2022, 2, 28, 0, 0, 0, 0, time.Local)},
 				ResultCode:             "0",
 				ResultText:             "",
 				WarningCode:            "0",
@@ -279,7 +279,7 @@ func Test_orderListDetailResponse_UnmarshalJSON(t *testing.T) {
 					FeatureType:  FeatureTypeOrderListDetail,
 				},
 				OrderNumber:            "",
-				ExecutionDay:           Ymd{},
+				ExecutionDate:          Ymd{},
 				ResultCode:             "991002",
 				ResultText:             "只今、一時的にこの業務はご利用できません。",
 				WarningCode:            "",
@@ -355,7 +355,7 @@ func Test_orderListDetailResponse_response(t *testing.T) {
 					FeatureType:  FeatureTypeOrderListDetail,
 				},
 				OrderNumber:            "28010833",
-				ExecutionDay:           Ymd{Time: time.Date(2022, 2, 28, 0, 0, 0, 0, time.Local)},
+				ExecutionDate:          Ymd{Time: time.Date(2022, 2, 28, 0, 0, 0, 0, time.Local)},
 				ResultCode:             "0",
 				ResultText:             "",
 				WarningCode:            "0",
@@ -789,8 +789,8 @@ func Test_client_OrderListDetail_Execute(t *testing.T) {
 	}
 
 	got3, got4 := client.OrderListDetail(context.Background(), session, OrderListDetailRequest{
-		OrderNumber:  "28010833",
-		ExecutionDay: time.Date(2022, 2, 28, 0, 0, 0, 0, time.Local),
+		OrderNumber:   "28010833",
+		ExecutionDate: time.Date(2022, 2, 28, 0, 0, 0, 0, time.Local),
 	})
 	log.Printf("%+v, %+v\n", got3, got4)
 }

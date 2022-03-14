@@ -10,7 +10,7 @@ import (
 // CancelOrderRequest - 取消注文リクエスト
 type CancelOrderRequest struct {
 	OrderNumber    string    // 注文番号
-	ExecutionDay   time.Time // 営業日
+	ExecutionDate  time.Time // 営業日
 	SecondPassword string    // 第二パスワード
 }
 
@@ -23,7 +23,7 @@ func (r *CancelOrderRequest) request(no int64, now time.Time) cancelOrderRequest
 			ResponseFormat: commonResponseFormat,
 		},
 		OrderNumber:    r.OrderNumber,
-		ExecutionDay:   Ymd{Time: r.ExecutionDay},
+		ExecutionDate:  Ymd{Time: r.ExecutionDate},
 		SecondPassword: r.SecondPassword,
 	}
 }
@@ -31,7 +31,7 @@ func (r *CancelOrderRequest) request(no int64, now time.Time) cancelOrderRequest
 type cancelOrderRequest struct {
 	commonRequest
 	OrderNumber    string `json:"sOrderNumber"`    // 注文番号
-	ExecutionDay   Ymd    `json:"sEigyouDay"`      // 営業日
+	ExecutionDate  Ymd    `json:"sEigyouDay"`      // 営業日
 	SecondPassword string `json:"sSecondPassword"` // 第二パスワード
 }
 
@@ -40,7 +40,7 @@ type cancelOrderResponse struct {
 	ResultCode     string  `json:"sResultCode"`                   // 結果コード
 	ResultText     string  `json:"sResultText"`                   // 結果テキスト
 	OrderNumber    string  `json:"sOrderNumber"`                  // 注文番号
-	ExecutionDay   Ymd     `json:"sEigyouDay"`                    // 営業日
+	ExecutionDate  Ymd     `json:"sEigyouDay"`                    // 営業日
 	DeliveryAmount float64 `json:"sOrderUkewatasiKingaku,string"` // 注文受渡金額
 	OrderDateTime  YmdHms  `json:"sOrderDate"`                    // 注文日時
 }
@@ -71,7 +71,7 @@ func (r *cancelOrderResponse) response() CancelOrderResponse {
 		ResultCode:     r.ResultCode,
 		ResultText:     r.ResultText,
 		OrderNumber:    r.OrderNumber,
-		ExecutionDay:   r.ExecutionDay.Time,
+		ExecutionDate:  r.ExecutionDate.Time,
 		DeliveryAmount: r.DeliveryAmount,
 		OrderDateTime:  r.OrderDateTime.Time,
 	}
@@ -83,7 +83,7 @@ type CancelOrderResponse struct {
 	ResultCode     string    // 結果コード
 	ResultText     string    // 結果テキスト
 	OrderNumber    string    // 注文番号
-	ExecutionDay   time.Time // 営業日
+	ExecutionDate  time.Time // 営業日
 	DeliveryAmount float64   // 注文受渡金額
 	OrderDateTime  time.Time // 注文日時
 }

@@ -74,14 +74,14 @@ func main() {
 		}
 
 		orderNumber = res.OrderNumber
-		executionDate = res.ExecutionDay
+		executionDate = res.ExecutionDate
 	}
 
 	// 取消注文
 	{
 		res, err := client.CancelOrder(context.Background(), session, tachibana.CancelOrderRequest{
 			OrderNumber:    orderNumber,
-			ExecutionDay:   executionDate,
+			ExecutionDate:  executionDate,
 			SecondPassword: secondPassword,
 		})
 
