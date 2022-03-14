@@ -6,11 +6,6 @@ variables:
 stages:
   - test
 
-build-project:
-  stage: test
-  script:
-    - go build -v ./...
-
 test-project:
   stage: test
   script:
