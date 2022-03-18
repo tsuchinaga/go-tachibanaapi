@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"time"
 )
 
@@ -182,9 +183,13 @@ func (c *client) StockPositionList(ctx context.Context, session *Session, req St
 	session.lastRequestNo++
 	r := req.request(session.lastRequestNo, c.clock.Now())
 
-	var res stockPositionListResponse
-	if err := c.get(ctx, session.RequestURL, r, &res); err != nil {
+	b, err := c.requester.get(ctx, session.RequestURL, r)
+	if err != nil {
 		return nil, err
+	}
+	var res stockPositionListResponse
+	if err := json.Unmarshal(b, &res); err != nil {
+		return nil, fmt.Errorf("%s: %w", err, UnmarshalFailedErr)
 	}
 
 	Res := res.response()

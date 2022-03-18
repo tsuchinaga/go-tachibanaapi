@@ -2,6 +2,8 @@ package tachibana
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"time"
 )
 
@@ -137,9 +139,13 @@ func (r *LoginResponse) Session() (*Session, error) {
 func (c *client) Login(ctx context.Context, req LoginRequest) (*LoginResponse, error) {
 	r := req.request(1, c.clock.Now())
 
-	var res loginResponse
-	if err := c.get(ctx, c.auth, r, &res); err != nil {
+	b, err := c.requester.get(ctx, c.auth, r)
+	if err != nil {
 		return nil, err
+	}
+	var res loginResponse
+	if err := json.Unmarshal(b, &res); err != nil {
+		return nil, fmt.Errorf("%s: %w", err, UnmarshalFailedErr)
 	}
 
 	Res := res.response()

@@ -4,8 +4,6 @@ import (
 	"context"
 	"errors"
 	"log"
-	"net/http"
-	"net/http/httptest"
 	"reflect"
 	"testing"
 	"time"
@@ -93,23 +91,21 @@ func Test_logoutResponse_response(t *testing.T) {
 func Test_client_Logout(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
-		name   string
-		clock  *testClock
-		status int
-		body   []byte
-		arg1   context.Context
-		arg2   *Session
-		arg3   LogoutRequest
-		want1  *LogoutResponse
-		want2  error
+		name      string
+		clock     *testClock
+		requester *testRequester
+		arg1      context.Context
+		arg2      *Session
+		arg3      LogoutRequest
+		want1     *LogoutResponse
+		want2     error
 	}{
 		{name: "正常レスポンスをパースして返せる",
-			clock:  &testClock{Now1: time.Date(2022, 2, 24, 21, 2, 23, 365000000, time.Local)},
-			status: http.StatusOK,
-			body:   []byte{123, 10, 9, 34, 112, 95, 115, 100, 95, 100, 97, 116, 101, 34, 58, 34, 50, 48, 50, 50, 46, 48, 51, 46, 48, 49, 45, 49, 52, 58, 48, 50, 58, 53, 55, 46, 56, 51, 51, 34, 44, 10, 9, 34, 112, 95, 110, 111, 34, 58, 34, 50, 34, 44, 10, 9, 34, 112, 95, 114, 118, 95, 100, 97, 116, 101, 34, 58, 34, 50, 48, 50, 50, 46, 48, 51, 46, 48, 49, 45, 49, 52, 58, 48, 50, 58, 53, 55, 46, 55, 57, 53, 34, 44, 10, 9, 34, 112, 95, 101, 114, 114, 110, 111, 34, 58, 34, 48, 34, 44, 10, 9, 34, 112, 95, 101, 114, 114, 34, 58, 34, 34, 44, 10, 9, 34, 115, 67, 76, 77, 73, 68, 34, 58, 34, 67, 76, 77, 65, 117, 116, 104, 76, 111, 103, 111, 117, 116, 65, 99, 107, 34, 44, 10, 9, 34, 115, 82, 101, 115, 117, 108, 116, 67, 111, 100, 101, 34, 58, 34, 48, 34, 44, 10, 9, 34, 115, 82, 101, 115, 117, 108, 116, 84, 101, 120, 116, 34, 58, 34, 34, 10, 125, 10, 10},
-			arg1:   context.Background(),
-			arg2:   &Session{lastRequestNo: 1, RequestURL: "", EventURL: ""},
-			arg3:   LogoutRequest{},
+			clock:     &testClock{Now1: time.Date(2022, 2, 24, 21, 2, 23, 365000000, time.Local)},
+			requester: &testRequester{get1: []byte{123, 10, 9, 34, 112, 95, 115, 100, 95, 100, 97, 116, 101, 34, 58, 34, 50, 48, 50, 50, 46, 48, 51, 46, 48, 49, 45, 49, 52, 58, 48, 50, 58, 53, 55, 46, 56, 51, 51, 34, 44, 10, 9, 34, 112, 95, 110, 111, 34, 58, 34, 50, 34, 44, 10, 9, 34, 112, 95, 114, 118, 95, 100, 97, 116, 101, 34, 58, 34, 50, 48, 50, 50, 46, 48, 51, 46, 48, 49, 45, 49, 52, 58, 48, 50, 58, 53, 55, 46, 55, 57, 53, 34, 44, 10, 9, 34, 112, 95, 101, 114, 114, 110, 111, 34, 58, 34, 48, 34, 44, 10, 9, 34, 112, 95, 101, 114, 114, 34, 58, 34, 34, 44, 10, 9, 34, 115, 67, 76, 77, 73, 68, 34, 58, 34, 67, 76, 77, 65, 117, 116, 104, 76, 111, 103, 111, 117, 116, 65, 99, 107, 34, 44, 10, 9, 34, 115, 82, 101, 115, 117, 108, 116, 67, 111, 100, 101, 34, 58, 34, 48, 34, 44, 10, 9, 34, 115, 82, 101, 115, 117, 108, 116, 84, 101, 120, 116, 34, 58, 34, 34, 10, 125, 10, 10}},
+			arg1:      context.Background(),
+			arg2:      &Session{lastRequestNo: 1, RequestURL: "", EventURL: ""},
+			arg3:      LogoutRequest{},
 			want1: &LogoutResponse{
 				CommonResponse: CommonResponse{
 					No:           2,
@@ -123,22 +119,12 @@ func Test_client_Logout(t *testing.T) {
 				ResultText: "",
 			},
 			want2: nil},
-		{name: "sessionがnilならエラー",
-			clock:  &testClock{Now1: time.Date(2022, 2, 24, 21, 2, 23, 365000000, time.Local)},
-			status: http.StatusOK,
-			body:   []byte{},
-			arg1:   context.Background(),
-			arg2:   nil,
-			arg3:   LogoutRequest{},
-			want1:  nil,
-			want2:  NilArgumentErr},
 		{name: "失敗をパースして返せる",
-			clock:  &testClock{Now1: time.Date(2022, 2, 24, 21, 1, 58, 453000000, time.Local)},
-			status: http.StatusOK,
-			body:   []byte{123, 10, 9, 34, 112, 95, 110, 111, 34, 58, 34, 50, 34, 44, 10, 9, 34, 112, 95, 115, 100, 95, 100, 97, 116, 101, 34, 58, 34, 50, 48, 50, 50, 46, 48, 51, 46, 48, 49, 45, 49, 52, 58, 48, 51, 58, 51, 51, 46, 49, 48, 56, 34, 44, 10, 9, 34, 112, 95, 114, 118, 95, 100, 97, 116, 101, 34, 58, 34, 50, 48, 50, 50, 46, 48, 51, 46, 48, 49, 45, 49, 52, 58, 48, 51, 58, 51, 51, 46, 48, 57, 54, 34, 44, 10, 9, 34, 112, 95, 101, 114, 114, 110, 111, 34, 58, 34, 50, 34, 44, 10, 9, 34, 112, 95, 101, 114, 114, 34, 58, 34, 131, 90, 131, 98, 131, 86, 131, 135, 131, 147, 130, 170, 144, 216, 146, 102, 130, 181, 130, 220, 130, 181, 130, 189, 129, 66, 34, 44, 10, 9, 34, 115, 67, 76, 77, 73, 68, 34, 58, 34, 67, 76, 77, 65, 117, 116, 104, 76, 111, 103, 111, 117, 116, 82, 101, 113, 117, 101, 115, 116, 34, 10, 125, 10, 10},
-			arg1:   context.Background(),
-			arg2:   &Session{lastRequestNo: 1, RequestURL: "", EventURL: ""},
-			arg3:   LogoutRequest{},
+			clock:     &testClock{Now1: time.Date(2022, 2, 24, 21, 1, 58, 453000000, time.Local)},
+			requester: &testRequester{get1: []byte{123, 10, 9, 34, 112, 95, 110, 111, 34, 58, 34, 50, 34, 44, 10, 9, 34, 112, 95, 115, 100, 95, 100, 97, 116, 101, 34, 58, 34, 50, 48, 50, 50, 46, 48, 51, 46, 48, 49, 45, 49, 52, 58, 48, 51, 58, 51, 51, 46, 49, 48, 56, 34, 44, 10, 9, 34, 112, 95, 114, 118, 95, 100, 97, 116, 101, 34, 58, 34, 50, 48, 50, 50, 46, 48, 51, 46, 48, 49, 45, 49, 52, 58, 48, 51, 58, 51, 51, 46, 48, 57, 54, 34, 44, 10, 9, 34, 112, 95, 101, 114, 114, 110, 111, 34, 58, 34, 50, 34, 44, 10, 9, 34, 112, 95, 101, 114, 114, 34, 58, 34, 227, 130, 187, 227, 131, 131, 227, 130, 183, 227, 131, 167, 227, 131, 179, 227, 129, 140, 229, 136, 135, 230, 150, 173, 227, 129, 151, 227, 129, 190, 227, 129, 151, 227, 129, 159, 227, 128, 130, 34, 44, 10, 9, 34, 115, 67, 76, 77, 73, 68, 34, 58, 34, 67, 76, 77, 65, 117, 116, 104, 76, 111, 103, 111, 117, 116, 82, 101, 113, 117, 101, 115, 116, 34, 10, 125, 10, 10}},
+			arg1:      context.Background(),
+			arg2:      &Session{lastRequestNo: 1, RequestURL: "", EventURL: ""},
+			arg3:      LogoutRequest{},
 			want1: &LogoutResponse{
 				CommonResponse: CommonResponse{
 					No:           2,
@@ -152,15 +138,29 @@ func Test_client_Logout(t *testing.T) {
 				ResultText: "",
 			},
 			want2: nil},
-		{name: "200 OK以外が返ったらエラー",
-			clock:  &testClock{Now1: time.Date(2022, 2, 24, 21, 2, 23, 365000000, time.Local)},
-			status: http.StatusInternalServerError,
-			body:   []byte{},
-			arg1:   context.Background(),
-			arg2:   &Session{lastRequestNo: 1, RequestURL: "", EventURL: ""},
-			arg3:   LogoutRequest{},
-			want1:  nil,
-			want2:  StatusNotOkErr},
+		{name: "sessionがnilならエラー",
+			clock: &testClock{Now1: time.Date(2022, 2, 24, 21, 2, 23, 365000000, time.Local)},
+			arg1:  context.Background(),
+			arg2:  nil,
+			arg3:  LogoutRequest{},
+			want1: nil,
+			want2: NilArgumentErr},
+		{name: "リクエストでエラーが返されたらエラーを返す",
+			clock:     &testClock{Now1: time.Date(2022, 2, 24, 21, 2, 23, 365000000, time.Local)},
+			requester: &testRequester{get2: StatusNotOkErr},
+			arg1:      context.Background(),
+			arg2:      &Session{lastRequestNo: 1, RequestURL: "", EventURL: ""},
+			arg3:      LogoutRequest{},
+			want1:     nil,
+			want2:     StatusNotOkErr},
+		{name: "レスポンスのUnmarshalに失敗したらエラーを返す",
+			clock:     &testClock{Now1: time.Date(2022, 2, 24, 21, 2, 23, 365000000, time.Local)},
+			requester: &testRequester{get1: []byte{}},
+			arg1:      context.Background(),
+			arg2:      &Session{lastRequestNo: 1, RequestURL: "", EventURL: ""},
+			arg3:      LogoutRequest{},
+			want1:     nil,
+			want2:     UnmarshalFailedErr},
 	}
 
 	for _, test := range tests {
@@ -168,18 +168,7 @@ func Test_client_Logout(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
 
-			mux := http.NewServeMux()
-			mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-				w.WriteHeader(test.status)
-				_, _ = w.Write(test.body)
-			})
-			ts := httptest.NewServer(mux)
-			defer ts.Close()
-			if test.arg2 != nil {
-				test.arg2.RequestURL = ts.URL
-			}
-
-			client := &client{clock: test.clock}
+			client := &client{clock: test.clock, requester: test.requester}
 			got1, got2 := client.Logout(test.arg1, test.arg2, test.arg3)
 
 			if !reflect.DeepEqual(test.want1, got1) || !errors.Is(got2, test.want2) {

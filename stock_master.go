@@ -2,6 +2,8 @@ package tachibana
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"strings"
 	"time"
 )
@@ -234,9 +236,13 @@ func (c *client) StockMaster(ctx context.Context, session *Session, req StockMas
 	session.lastRequestNo++
 	r := req.request(session.lastRequestNo, c.clock.Now())
 
-	var res stockMasterResponse
-	if err := c.get(ctx, session.RequestURL, r, &res); err != nil {
+	b, err := c.requester.get(ctx, session.RequestURL, r)
+	if err != nil {
 		return nil, err
+	}
+	var res stockMasterResponse
+	if err := json.Unmarshal(b, &res); err != nil {
+		return nil, fmt.Errorf("%s: %w", err, UnmarshalFailedErr)
 	}
 
 	Res := res.response()

@@ -1,12 +1,19 @@
 package tachibana
 
 import (
+	"bufio"
 	"context"
+	"crypto/tls"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"io"
 	"io/ioutil"
+	"net"
 	"net/http"
+	"net/http/httputil"
 	"net/url"
+	"strings"
 	"time"
 
 	"golang.org/x/text/encoding/japanese"
@@ -17,9 +24,10 @@ import (
 // NewClient - クライアントの生成
 func NewClient(env Environment, ver ApiVersion) Client {
 	client := &client{
-		clock: newClock(),
-		env:   env,
-		ver:   ver,
+		clock:     newClock(),
+		env:       env,
+		ver:       ver,
+		requester: &requester{},
 	}
 	client.auth = client.authURL(client.env, client.ver)
 
@@ -44,32 +52,11 @@ type Client interface {
 }
 
 type client struct {
-	clock iClock
-	env   Environment
-	ver   ApiVersion
-	auth  string
-}
-
-// encode - 文字コードの変換(UTF-8 -> Shift-JIS)と、URLエンコード
-func (c *client) encode(str string) (string, error) {
-	// utf-8 to shift-jis
-	str, _, err := transform.String(japanese.ShiftJIS.NewEncoder(), str)
-	if err != nil {
-		return "", fmt.Errorf("%s: %w", err, EncodeErr)
-	}
-
-	// http encode
-	return url.QueryEscape(str), nil
-}
-
-// encode - URLデコードと、文字コードの変換(Shift-JIS -> UTF-8)
-func (c *client) decode(str string) (string, error) {
-	// レスポンスはbodyにはいってくるのでhttp decodeが不要
-
-	// shift-jis to utf-8
-	//   基本的に Shift-JIS -> UTF-8ではエンコードに失敗しないはずなので、エラーを捨てる
-	str, _, _ = transform.String(japanese.ShiftJIS.NewDecoder(), str)
-	return str, nil
+	clock     iClock
+	env       Environment
+	ver       ApiVersion
+	auth      string
+	requester iRequester
 }
 
 // host - ホスト
@@ -91,111 +78,6 @@ func (c *client) authURL(env Environment, ver ApiVersion) string {
 		path += string(ApiVersionLatest) // latest
 	}
 	return fmt.Sprintf("https://%s/%s/auth/", c.host(env), path)
-}
-
-// get - GETリクエスト
-func (c *client) get(ctx context.Context, uri string, request interface{}, response interface{}) error {
-	rb, err := json.Marshal(request)
-	if err != nil {
-		return err
-	}
-
-	query, err := c.encode(string(rb))
-	if err != nil {
-		return err
-	}
-
-	u, _ := url.Parse(uri)
-	u.RawQuery = query
-
-	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), nil)
-	if err != nil {
-		return err
-	}
-
-	// リクエスト送信
-	client := http.Client{}
-	res, err := client.Do(req)
-	if err != nil {
-		return err
-	}
-	defer res.Body.Close()
-	b, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		return err
-	}
-
-	if res.StatusCode == http.StatusOK {
-		if err := c.parseResponse(b, response); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("status is %d(body: %s): %w", res.StatusCode, string(b), StatusNotOkErr)
-	}
-
-	return nil
-}
-
-//// stream - chunked response リクエスト
-//func (c *client) stream(ctx context.Context, uri string, request interface{}, ch chan []byte) error {
-//	rb, err := json.Marshal(request)
-//	if err != nil {
-//		return err
-//	}
-//	query, err := c.encode(string(rb))
-//	if err != nil {
-//		return err
-//	}
-//
-//	u, _ := url.Parse(uri)
-//	u.RawQuery = query
-//
-//	// TCPソケットオープン
-//	dialer := &net.Dialer{
-//		Timeout:   10 * time.Second,
-//		KeepAlive: 10 * time.Second,
-//	}
-//	conn, err := tls.DialWithDialer(dialer, "tcp", fmt.Sprintf("%s:443", c.host(c.env)), nil)
-//	if err != nil {
-//		return nil
-//	}
-//	defer conn.Close()
-//
-//	// コネクションを通してリクエストの送信
-//	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), nil)
-//	err = req.Write(conn)
-//	if err != nil {
-//		return err
-//	}
-//
-//	// レスポンスの確認
-//	reader := bufio.NewReader(conn)
-//	res, err := http.ReadResponse(reader, req)
-//	if err != nil {
-//		return err
-//	}
-//	if res.TransferEncoding[0] != "chunked" {
-//		return errors.New("response is not chunked")
-//	}
-//
-//	// レスポンスをチャネルに流していく
-//	scanner := bufio.NewScanner(httputil.NewChunkedReader(reader))
-//	for scanner.Scan() {
-//		ch <- scanner.Bytes()
-//	}
-//
-//	close(ch)
-//	return nil
-//}
-
-// parseResponse - レスポンスをパースする
-func (c *client) parseResponse(body []byte, v interface{}) error {
-	d, _ := c.decode(string(body)) // エラーが発生しないのでチェックせず捨てる
-
-	if err := json.Unmarshal([]byte(d), v); err != nil {
-		return err
-	}
-	return nil
 }
 
 // commonResponseFormat - 共通レスポンスフォーマット
@@ -239,4 +121,180 @@ type CommonResponse struct {
 	ErrorNo      ErrorNo     // エラー番号
 	ErrorMessage string      // エラー文言
 	FeatureType  FeatureType // 機能ID
+}
+
+type iRequester interface {
+	get(ctx context.Context, uri string, request interface{}) ([]byte, error)
+	stream(ctx context.Context, uri string, request interface{}) (chan []byte, chan error)
+}
+
+type requester struct {
+	insecureSkipVerify bool
+}
+
+// encode - 文字コードの変換(UTF-8 -> Shift-JIS)と、URLエンコード
+func (r *requester) encode(b []byte) ([]byte, error) {
+	// utf-8 to shift-jis
+	b, _, err := transform.Bytes(japanese.ShiftJIS.NewEncoder(), b)
+	if err != nil {
+		return nil, fmt.Errorf("%s: %w", err, EncodeErr)
+	}
+
+	// http encode
+	return []byte(url.QueryEscape(string(b))), nil
+}
+
+// encode - URLデコードと、文字コードの変換(Shift-JIS -> UTF-8)
+func (r *requester) decode(b []byte) ([]byte, error) {
+	// レスポンスはbodyにはいってくるのでhttp decodeが不要
+
+	// shift-jis to utf-8
+	//   基本的に Shift-JIS -> UTF-8ではエンコードに失敗しないはずなので、エラーを捨てる
+	b, _, _ = transform.Bytes(japanese.ShiftJIS.NewDecoder(), b)
+	return b, nil
+}
+
+// get - GETリクエスト
+func (r *requester) get(ctx context.Context, uri string, request interface{}) ([]byte, error) {
+	rb, err := json.Marshal(request)
+	if err != nil {
+		return nil, err
+	}
+
+	qb, err := r.encode(rb)
+	if err != nil {
+		return nil, err
+	}
+
+	u, _ := url.Parse(uri)
+	u.RawQuery = string(qb)
+
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	// リクエスト送信
+	client := http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	b, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	if res.StatusCode == http.StatusOK {
+		return b, nil
+	} else {
+		return nil, fmt.Errorf("status is %d(body: %s): %w", res.StatusCode, string(b), StatusNotOkErr)
+	}
+}
+
+// stream - chunked response リクエスト
+func (r *requester) stream(ctx context.Context, uri string, request interface{}) (chan []byte, chan error) {
+	ch := make(chan []byte)
+	errCh := make(chan error)
+
+	go func() {
+		defer close(ch)
+		defer close(errCh)
+
+		rb, err := json.Marshal(request)
+		if err != nil {
+			errCh <- err
+			return
+		}
+
+		query, err := r.encode(rb)
+		if err != nil {
+			errCh <- err
+			return
+		}
+		u, _ := url.Parse(uri)
+		u.RawQuery = string(query)
+
+		// TCPソケットオープン
+		dialer := &net.Dialer{
+			Timeout:   5 * time.Second,
+			KeepAlive: 5 * time.Second,
+		}
+		host := u.Host
+		if !strings.Contains(host, ":") {
+			host += ":443"
+		}
+		conn, err := tls.DialWithDialer(dialer, "tcp", host, &tls.Config{InsecureSkipVerify: r.insecureSkipVerify})
+		if err != nil {
+			errCh <- err
+			return
+		}
+		defer conn.Close()
+
+		// コネクションを通してリクエストの送信
+		req, err := http.NewRequestWithContext(ctx, "GET", u.String(), nil)
+		if err != nil {
+			errCh <- err
+			return
+		}
+		err = req.Write(conn)
+		if err != nil {
+			errCh <- err
+			return
+		}
+
+		// レスポンスの確認
+		reader := bufio.NewReader(conn)
+		res, err := http.ReadResponse(reader, req)
+		if err != nil {
+			errCh <- err
+			return
+		}
+		if len(res.TransferEncoding) < 1 || res.TransferEncoding[0] != "chunked" {
+			errCh <- errors.New("response is not chunked")
+			return
+		}
+
+		// レスポンスをチャネルに流していく
+		sCh, sErrCh := r.scanChunkedResponse(reader)
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			case err, ok := <-sErrCh:
+				if ok && err != nil {
+					errCh <- err
+				}
+				return
+			case b, ok := <-sCh:
+				if !ok {
+					return
+				}
+
+				d, _ := r.decode(b) // decodeでは失敗がおきないのでエラーを捨てる
+				ch <- d
+			}
+		}
+	}()
+
+	return ch, errCh
+}
+
+func (r *requester) scanChunkedResponse(reader io.Reader) (chan []byte, chan error) {
+	ch := make(chan []byte)
+	errCh := make(chan error)
+
+	go func() {
+		defer close(ch)
+		defer close(errCh)
+
+		scanner := bufio.NewScanner(httputil.NewChunkedReader(reader))
+		for scanner.Scan() {
+			ch <- scanner.Bytes()
+		}
+		errCh <- scanner.Err()
+	}()
+
+	return ch, errCh
 }
