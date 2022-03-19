@@ -29,7 +29,6 @@ func NewClient(env Environment, ver ApiVersion) Client {
 		ver:       ver,
 		requester: &requester{},
 	}
-	client.auth = client.authURL(client.env, client.ver)
 
 	return client
 }
@@ -55,7 +54,6 @@ type client struct {
 	clock     iClock
 	env       Environment
 	ver       ApiVersion
-	auth      string
 	requester iRequester
 }
 
@@ -81,7 +79,7 @@ func (c *client) authURL(env Environment, ver ApiVersion) string {
 }
 
 // commonResponseFormat - 共通レスポンスフォーマット
-var commonResponseFormat ResponseFormat = ResponseFormatWrapped | ResponseFormatWordKey
+var commonResponseFormat = ResponseFormatWrapped | ResponseFormatWordKey
 
 // commonRequest - リクエストの共通的な項目
 type commonRequest struct {

@@ -139,7 +139,7 @@ func (r *LoginResponse) Session() (*Session, error) {
 func (c *client) Login(ctx context.Context, req LoginRequest) (*LoginResponse, error) {
 	r := req.request(1, c.clock.Now())
 
-	b, err := c.requester.get(ctx, c.auth, r)
+	b, err := c.requester.get(ctx, c.authURL(c.env, c.ver), r)
 	if err != nil {
 		return nil, err
 	}

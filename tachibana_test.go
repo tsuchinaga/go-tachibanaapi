@@ -166,7 +166,6 @@ func Test_NewClient(t *testing.T) {
 				clock:     newClock(),
 				env:       EnvironmentProduction,
 				ver:       ApiVersionLatest,
-				auth:      "https://kabuka.e-shiten.jp/e_api_v4r2/auth/",
 				requester: &requester{},
 			}},
 		{name: "デモへのクライアントの生成",
@@ -176,7 +175,6 @@ func Test_NewClient(t *testing.T) {
 				clock:     newClock(),
 				env:       EnvironmentDemo,
 				ver:       ApiVersionLatest,
-				auth:      "https://demo-kabuka.e-shiten.jp/e_api_v4r2/auth/",
 				requester: &requester{},
 			}},
 	}
