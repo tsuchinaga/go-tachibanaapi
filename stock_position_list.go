@@ -18,7 +18,7 @@ func (r *StockPositionListRequest) request(no int64, now time.Time) stockPositio
 		commonRequest: commonRequest{
 			No:             no,
 			SendDate:       RequestTime{Time: now},
-			FeatureType:    FeatureTypeStockPositionList,
+			MessageType:    MessageTypeStockPositionList,
 			ResponseFormat: commonResponseFormat,
 		},
 		IssueCode: r.IssueCode,

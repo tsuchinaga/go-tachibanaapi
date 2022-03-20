@@ -20,7 +20,7 @@ func (r *CancelOrderRequest) request(no int64, now time.Time) cancelOrderRequest
 		commonRequest: commonRequest{
 			No:             no,
 			SendDate:       RequestTime{Time: now},
-			FeatureType:    FeatureTypeCancelOrder,
+			MessageType:    MessageTypeCancelOrder,
 			ResponseFormat: commonResponseFormat,
 		},
 		OrderNumber:    r.OrderNumber,

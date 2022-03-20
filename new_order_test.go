@@ -44,7 +44,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				commonRequest: commonRequest{
 					No:             1234,
 					SendDate:       RequestTime{Time: time.Date(2022, 3, 9, 8, 17, 0, 0, time.Local)},
-					FeatureType:    FeatureTypeNewOrder,
+					MessageType:    MessageTypeNewOrder,
 					ResponseFormat: commonResponseFormat,
 				},
 				StockAccountType:  AccountTypeSpecific,
@@ -90,7 +90,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				commonRequest: commonRequest{
 					No:             1234,
 					SendDate:       RequestTime{Time: time.Date(2022, 3, 9, 8, 17, 0, 0, time.Local)},
-					FeatureType:    FeatureTypeNewOrder,
+					MessageType:    MessageTypeNewOrder,
 					ResponseFormat: commonResponseFormat,
 				},
 				StockAccountType:  AccountTypeSpecific,
@@ -136,7 +136,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				commonRequest: commonRequest{
 					No:             1234,
 					SendDate:       RequestTime{Time: time.Date(2022, 3, 9, 8, 17, 0, 0, time.Local)},
-					FeatureType:    FeatureTypeNewOrder,
+					MessageType:    MessageTypeNewOrder,
 					ResponseFormat: commonResponseFormat,
 				},
 				StockAccountType:  AccountTypeSpecific,
@@ -182,7 +182,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				commonRequest: commonRequest{
 					No:             1234,
 					SendDate:       RequestTime{Time: time.Date(2022, 3, 9, 8, 17, 0, 0, time.Local)},
-					FeatureType:    FeatureTypeNewOrder,
+					MessageType:    MessageTypeNewOrder,
 					ResponseFormat: commonResponseFormat,
 				},
 				StockAccountType:  AccountTypeSpecific,
@@ -228,7 +228,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				commonRequest: commonRequest{
 					No:             1234,
 					SendDate:       RequestTime{Time: time.Date(2022, 3, 9, 8, 17, 0, 0, time.Local)},
-					FeatureType:    FeatureTypeNewOrder,
+					MessageType:    MessageTypeNewOrder,
 					ResponseFormat: commonResponseFormat,
 				},
 				StockAccountType:  AccountTypeSpecific,
@@ -274,7 +274,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				commonRequest: commonRequest{
 					No:             1234,
 					SendDate:       RequestTime{Time: time.Date(2022, 3, 9, 8, 17, 0, 0, time.Local)},
-					FeatureType:    FeatureTypeNewOrder,
+					MessageType:    MessageTypeNewOrder,
 					ResponseFormat: commonResponseFormat,
 				},
 				StockAccountType:  AccountTypeSpecific,
@@ -320,7 +320,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				commonRequest: commonRequest{
 					No:             1234,
 					SendDate:       RequestTime{Time: time.Date(2022, 3, 9, 8, 17, 0, 0, time.Local)},
-					FeatureType:    FeatureTypeNewOrder,
+					MessageType:    MessageTypeNewOrder,
 					ResponseFormat: commonResponseFormat,
 				},
 				StockAccountType:  AccountTypeSpecific,
@@ -366,7 +366,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				commonRequest: commonRequest{
 					No:             1234,
 					SendDate:       RequestTime{Time: time.Date(2022, 3, 9, 8, 17, 0, 0, time.Local)},
-					FeatureType:    FeatureTypeNewOrder,
+					MessageType:    MessageTypeNewOrder,
 					ResponseFormat: commonResponseFormat,
 				},
 				StockAccountType:  AccountTypeSpecific,
@@ -414,7 +414,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				commonRequest: commonRequest{
 					No:             1234,
 					SendDate:       RequestTime{Time: time.Date(2022, 3, 9, 8, 17, 0, 0, time.Local)},
-					FeatureType:    FeatureTypeNewOrder,
+					MessageType:    MessageTypeNewOrder,
 					ResponseFormat: commonResponseFormat,
 				},
 				StockAccountType:  AccountTypeSpecific,
@@ -475,7 +475,7 @@ func Test_client_NewOrder(t *testing.T) {
 					ReceiveDate:  time.Date(2022, 3, 8, 8, 49, 6, 403000000, time.Local),
 					ErrorNo:      ErrorNoProblem,
 					ErrorMessage: "",
-					FeatureType:  FeatureTypeNewOrder,
+					MessageType:  MessageTypeNewOrder,
 				},
 				ResultCode:     "0",
 				ResultText:     "",
@@ -503,7 +503,7 @@ func Test_client_NewOrder(t *testing.T) {
 					ReceiveDate:  time.Date(2022, 3, 8, 8, 49, 52, 317000000, time.Local),
 					ErrorNo:      ErrorNoProblem,
 					ErrorMessage: "",
-					FeatureType:  FeatureTypeNewOrder,
+					MessageType:  MessageTypeNewOrder,
 				},
 				ResultCode:     "11007",
 				ResultText:     "銘柄コードに誤りがあります",
@@ -531,7 +531,7 @@ func Test_client_NewOrder(t *testing.T) {
 					ReceiveDate:  time.Date(2022, 3, 8, 8, 50, 38, 883000000, time.Local),
 					ErrorNo:      ErrorNoProblem,
 					ErrorMessage: "",
-					FeatureType:  FeatureTypeNewOrder,
+					MessageType:  MessageTypeNewOrder,
 				},
 				ResultCode:     "0",
 				ResultText:     "",

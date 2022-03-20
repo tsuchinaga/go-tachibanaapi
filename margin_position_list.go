@@ -18,7 +18,7 @@ func (r *MarginPositionListRequest) request(no int64, now time.Time) marginPosit
 		commonRequest: commonRequest{
 			No:             no,
 			SendDate:       RequestTime{Time: now},
-			FeatureType:    FeatureTypeMarginPositionList,
+			MessageType:    MessageTypeMarginPositionList,
 			ResponseFormat: commonResponseFormat,
 		},
 		IssueCode: r.IssueCode,

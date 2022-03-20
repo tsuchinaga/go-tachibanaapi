@@ -304,7 +304,7 @@ func Test_commonResponse_response(t *testing.T) {
 				ReceiveDate:  RequestTime{Time: time.Date(2022, 2, 25, 10, 5, 31, 123456789, time.Local)},
 				ErrorNo:      ErrorNoProblem,
 				ErrorMessage: "",
-				FeatureType:  FeatureTypeLoginResponse,
+				MessageType:  MessageTypeLoginResponse,
 			},
 			want1: CommonResponse{
 				No:           2,
@@ -312,7 +312,7 @@ func Test_commonResponse_response(t *testing.T) {
 				ReceiveDate:  time.Date(2022, 2, 25, 10, 5, 31, 123456789, time.Local),
 				ErrorNo:      ErrorNoProblem,
 				ErrorMessage: "",
-				FeatureType:  FeatureTypeLoginResponse,
+				MessageType:  MessageTypeLoginResponse,
 			}},
 	}
 

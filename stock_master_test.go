@@ -28,10 +28,10 @@ func Test_StockMasterRequest_request(t *testing.T) {
 				commonRequest: commonRequest{
 					No:             1234,
 					SendDate:       RequestTime{Time: time.Date(2022, 3, 4, 14, 0, 0, 0, time.Local)},
-					FeatureType:    FeatureTypeMasterData,
+					MessageType:    MessageTypeMasterData,
 					ResponseFormat: commonResponseFormat,
 				},
-				TargetFeature: string(FeatureTypeStockMaster),
+				TargetFeature: string(MessageTypeStockMaster),
 				Columns:       "",
 			}},
 		{name: "カラム指定がなければ全指定になる",
@@ -44,10 +44,10 @@ func Test_StockMasterRequest_request(t *testing.T) {
 				commonRequest: commonRequest{
 					No:             1234,
 					SendDate:       RequestTime{Time: time.Date(2022, 3, 4, 14, 0, 0, 0, time.Local)},
-					FeatureType:    FeatureTypeMasterData,
+					MessageType:    MessageTypeMasterData,
 					ResponseFormat: commonResponseFormat,
 				},
-				TargetFeature: string(FeatureTypeStockMaster),
+				TargetFeature: string(MessageTypeStockMaster),
 				Columns:       "",
 			}},
 		{name: "変換できる",
@@ -60,10 +60,10 @@ func Test_StockMasterRequest_request(t *testing.T) {
 				commonRequest: commonRequest{
 					No:             1234,
 					SendDate:       RequestTime{Time: time.Date(2022, 3, 4, 14, 0, 0, 0, time.Local)},
-					FeatureType:    FeatureTypeMasterData,
+					MessageType:    MessageTypeMasterData,
 					ResponseFormat: commonResponseFormat,
 				},
-				TargetFeature: string(FeatureTypeStockMaster),
+				TargetFeature: string(MessageTypeStockMaster),
 				Columns:       "sIssueCode,sIssueName",
 			}},
 	}
@@ -95,7 +95,7 @@ func Test_stockMasterResponse_response(t *testing.T) {
 					ReceiveDate:  RequestTime{Time: time.Date(2022, 3, 6, 10, 42, 21, 759000000, time.Local)},
 					ErrorNo:      ErrorNoProblem,
 					ErrorMessage: "",
-					FeatureType:  FeatureTypeMasterData,
+					MessageType:  MessageTypeMasterData,
 				},
 				StockMasters: []stockMaster{
 					{Code: "1475", Name: "ｉシェアーズＴＯＰＩＸ"},
@@ -109,7 +109,7 @@ func Test_stockMasterResponse_response(t *testing.T) {
 					ReceiveDate:  time.Date(2022, 3, 6, 10, 42, 21, 759000000, time.Local),
 					ErrorNo:      ErrorNoProblem,
 					ErrorMessage: "",
-					FeatureType:  FeatureTypeMasterData,
+					MessageType:  MessageTypeMasterData,
 				},
 				StockMasters: []StockMaster{
 					{Code: "1475", Name: "ｉシェアーズＴＯＰＩＸ"},
@@ -155,7 +155,7 @@ func Test_client_StockMaster(t *testing.T) {
 					ReceiveDate:  time.Date(2022, 3, 6, 10, 42, 21, 759000000, time.Local),
 					ErrorNo:      ErrorNoProblem,
 					ErrorMessage: "",
-					FeatureType:  FeatureTypeMasterData,
+					MessageType:  MessageTypeMasterData,
 				},
 				StockMasters: []StockMaster{
 					{Code: "1475", Name: "ｉシェアーズＴＯＰＩＸ"},
@@ -176,7 +176,7 @@ func Test_client_StockMaster(t *testing.T) {
 					ReceiveDate:  time.Date(2022, 3, 6, 20, 42, 11, 903000000, time.Local),
 					ErrorNo:      ErrorNoProblem,
 					ErrorMessage: "",
-					FeatureType:  FeatureTypeMasterData,
+					MessageType:  MessageTypeMasterData,
 				},
 				StockMasters: []StockMaster{
 					{

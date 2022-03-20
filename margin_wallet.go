@@ -19,7 +19,7 @@ func (r *MarginWalletRequest) request(no int64, now time.Time) marginWalletReque
 		commonRequest: commonRequest{
 			No:             no,
 			SendDate:       RequestTime{Time: now},
-			FeatureType:    FeatureTypeMarginWallet,
+			MessageType:    MessageTypeMarginWallet,
 			ResponseFormat: commonResponseFormat,
 		},
 		IssueCode: r.IssueCode,

@@ -182,7 +182,7 @@ func (r *MarketPriceRequest) request(no int64, now time.Time) marketPriceRequest
 		commonRequest: commonRequest{
 			No:             no,
 			SendDate:       RequestTime{Time: now},
-			FeatureType:    FeatureTypeMarketPrice,
+			MessageType:    MessageTypeMarketPrice,
 			ResponseFormat: commonResponseFormat,
 		},
 		IssueCodes: strings.Join(r.IssueCodes, ","),

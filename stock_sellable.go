@@ -18,7 +18,7 @@ func (r *StockSellableRequest) request(no int64, now time.Time) stockSellableReq
 		commonRequest: commonRequest{
 			No:             no,
 			SendDate:       RequestTime{Time: now},
-			FeatureType:    FeatureTypeStockSellable,
+			MessageType:    MessageTypeStockSellable,
 			ResponseFormat: commonResponseFormat,
 		},
 		IssueCode: r.IssueCode,

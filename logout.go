@@ -16,7 +16,7 @@ func (r *LogoutRequest) request(no int64, now time.Time) logoutRequest {
 		commonRequest: commonRequest{
 			No:             no,
 			SendDate:       RequestTime{Time: now},
-			FeatureType:    FeatureTypeLogoutRequest,
+			MessageType:    MessageTypeLogoutRequest,
 			ResponseFormat: commonResponseFormat,
 		},
 	}

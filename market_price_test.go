@@ -29,7 +29,7 @@ func Test_MarketPriceRequest_request(t *testing.T) {
 				commonRequest: commonRequest{
 					No:             1234,
 					SendDate:       RequestTime{Time: time.Date(2022, 3, 7, 12, 58, 0, 0, time.Local)},
-					FeatureType:    FeatureTypeMarketPrice,
+					MessageType:    MessageTypeMarketPrice,
 					ResponseFormat: commonResponseFormat,
 				},
 				IssueCodes: "",
@@ -46,7 +46,7 @@ func Test_MarketPriceRequest_request(t *testing.T) {
 				commonRequest: commonRequest{
 					No:             1234,
 					SendDate:       RequestTime{Time: time.Date(2022, 3, 7, 12, 58, 0, 0, time.Local)},
-					FeatureType:    FeatureTypeMarketPrice,
+					MessageType:    MessageTypeMarketPrice,
 					ResponseFormat: commonResponseFormat,
 				},
 				IssueCodes: "1475,1476",
@@ -91,7 +91,7 @@ func Test_client_MarketPrice(t *testing.T) {
 					ReceiveDate:  time.Date(2022, 3, 7, 12, 32, 27, 853000000, time.Local),
 					ErrorNo:      ErrorNoProblem,
 					ErrorMessage: "",
-					FeatureType:  FeatureTypeMarketPrice,
+					MessageType:  MessageTypeMarketPrice,
 				},
 				MarketPrices: []MarketPrice{
 					{
@@ -255,7 +255,7 @@ func Test_client_MarketPrice(t *testing.T) {
 					ReceiveDate:  time.Date(2022, 3, 7, 12, 32, 14, 777000000, time.Local),
 					ErrorNo:      ErrorNoProblem,
 					ErrorMessage: "",
-					FeatureType:  FeatureTypeMarketPrice,
+					MessageType:  MessageTypeMarketPrice,
 				},
 				MarketPrices: []MarketPrice{},
 			},
@@ -273,7 +273,7 @@ func Test_client_MarketPrice(t *testing.T) {
 					ReceiveDate:  time.Date(2022, 3, 7, 12, 32, 3, 123000000, time.Local),
 					ErrorNo:      ErrorNoProblem,
 					ErrorMessage: "",
-					FeatureType:  FeatureTypeMarketPrice,
+					MessageType:  MessageTypeMarketPrice,
 				},
 				MarketPrices: []MarketPrice{{IssueCode: "*"}},
 			},
@@ -291,7 +291,7 @@ func Test_client_MarketPrice(t *testing.T) {
 					ReceiveDate:  time.Date(2022, 3, 7, 12, 31, 38, 14000000, time.Local),
 					ErrorNo:      ErrorNoProblem,
 					ErrorMessage: "",
-					FeatureType:  FeatureTypeMarketPrice,
+					MessageType:  MessageTypeMarketPrice,
 				},
 				MarketPrices: []MarketPrice{
 					{IssueCode: "1475", CurrentPrice: 1826, CurrentPriceTime: time.Date(0, 1, 1, 12, 30, 0, 0, time.Local)},

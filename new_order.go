@@ -50,7 +50,7 @@ func (r NewOrderRequest) request(no int64, now time.Time) newOrderRequest {
 		commonRequest: commonRequest{
 			No:             no,
 			SendDate:       RequestTime{Time: now},
-			FeatureType:    FeatureTypeNewOrder,
+			MessageType:    MessageTypeNewOrder,
 			ResponseFormat: commonResponseFormat,
 		},
 		StockAccountType:  r.StockAccountType,

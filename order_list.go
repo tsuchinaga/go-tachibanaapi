@@ -20,7 +20,7 @@ func (r *OrderListRequest) request(no int64, now time.Time) orderListRequest {
 		commonRequest: commonRequest{
 			No:             no,
 			SendDate:       RequestTime{Time: now},
-			FeatureType:    FeatureTypeOrderList,
+			MessageType:    MessageTypeOrderList,
 			ResponseFormat: commonResponseFormat,
 		},
 		IssueCode:     r.IssueCode,

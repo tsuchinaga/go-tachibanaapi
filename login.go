@@ -19,7 +19,7 @@ func (r *LoginRequest) request(no int64, now time.Time) loginRequest {
 		commonRequest: commonRequest{
 			No:             no,
 			SendDate:       RequestTime{Time: now},
-			FeatureType:    FeatureTypeLoginRequest,
+			MessageType:    MessageTypeLoginRequest,
 			ResponseFormat: commonResponseFormat,
 		},
 		UserId:   r.UserId,
@@ -124,7 +124,7 @@ type LoginResponse struct {
 
 // Session - ログインレスポンスからセッションを取り出す
 func (r *LoginResponse) Session() (*Session, error) {
-	if r.ErrorNo != ErrorNoProblem || r.FeatureType != FeatureTypeLoginResponse || r.ResultCode != "0" {
+	if r.ErrorNo != ErrorNoProblem || r.MessageType != MessageTypeLoginResponse || r.ResultCode != "0" {
 		return nil, CanNotCreateSessionErr
 	}
 

@@ -49,7 +49,7 @@ func (r *CorrectOrderRequest) request(no int64, now time.Time) correctOrderReque
 		commonRequest: commonRequest{
 			No:             no,
 			SendDate:       RequestTime{Time: now},
-			FeatureType:    FeatureTypeCorrectOrder,
+			MessageType:    MessageTypeCorrectOrder,
 			ResponseFormat: commonResponseFormat,
 		},
 		OrderNumber:     r.OrderNumber,

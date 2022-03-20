@@ -29,49 +29,49 @@ const (
 	ResponseFormatWordKey     ResponseFormat = 4 // 引数項目番号ではなく引数項目での応答
 )
 
-// FeatureType - 機能種別
-type FeatureType string
+// MessageType - 機能種別
+type MessageType string
 
 const (
-	FeatureTypeUnspecified                 FeatureType = ""                                // 未指定
-	FeatureTypeLoginRequest                FeatureType = "CLMAuthLoginRequest"             // ログインリクエスト
-	FeatureTypeLoginResponse               FeatureType = "CLMAuthLoginAck"                 // ログインレスポンス
-	FeatureTypeLogoutRequest               FeatureType = "CLMAuthLogoutRequest"            // ログアウトリクエスト
-	FeatureTypeLogoutResponse              FeatureType = "CLMAuthLogoutAck"                // ログアウトレスポンス
-	FeatureTypeNewOrder                    FeatureType = "CLMKabuNewOrder"                 // 新規注文
-	FeatureTypeCorrectOrder                FeatureType = "CLMKabuCorrectOrder"             // 訂正注文
-	FeatureTypeCancelOrder                 FeatureType = "CLMKabuCancelOrder"              // 取消注文
-	FeatureTypeStockPositionList           FeatureType = "CLMGenbutuKabuList"              // 現物保有銘柄一覧
-	FeatureTypeMarginPositionList          FeatureType = "CLMShinyouTategyokuList"         // 信用建玉一覧
-	FeatureTypeStockWallet                 FeatureType = "CLMZanKaiKanougaku"              // 買余力
-	FeatureTypeMarginWallet                FeatureType = "CLMZanShinkiKanoIjiritu"         // 建余力&本日維持率
-	FeatureTypeStockSellable               FeatureType = "CLMZanUriKanousuu"               // 売却可能数量
-	FeatureTypeOrderList                   FeatureType = "CLMOrderList"                    // 注文一覧
-	FeatureTypeOrderListDetail             FeatureType = "CLMOrderListDetail"              // 注文約定一覧(詳細)
-	FeatureTypeSummary                     FeatureType = "CLMZanKaiSummary"                // 可能額サマリー
-	FeatureTypeSummaryRecord               FeatureType = "CLMZanKaiKanougakuSuii"          // 可能額推移
-	FeatureTypeStockEntryDetail            FeatureType = "CLMZanKaiGenbutuKaitukeSyousai"  // 現物株式買付可能額詳細
-	FeatureTypeMarginEntryDetail           FeatureType = "CLMZanKaiSinyouSinkidateSyousai" // 信用新規建て可能額詳細
-	FeatureTypeDepositRate                 FeatureType = "CLMZanRealHosyoukinRitu"         // リアル保証金率
-	FeatureTypeEventDownload               FeatureType = "CLMEventDownload"                // マスタ情報ダウンロード
-	FeatureTypeEventSystemStatus           FeatureType = "CLMSystemStatus"                 // システムステータス
-	FeatureTypeBusinessDay                 FeatureType = "CLMDateZyouhou"                  // 日付情報
-	FeatureTypeEventTickGroup              FeatureType = "CLMYobine"                       // 呼値
-	FeatureTypeEventOperationStatus        FeatureType = "CLMUnyouStatus"                  // 運用ステータス別状態
-	FeatureTypeEventStockOperationStatus   FeatureType = "CLMUnyouStatusKabu"              // 運用ステータス(株式)
-	FeatureTypeEventProductOperationStatus FeatureType = "CLMUnyouStatusHasei"             // 運用運用ステータス(派生)
-	FeatureTypeStockMaster                 FeatureType = "CLMIssueMstKabu"                 // 株式銘柄マスタ
-	FeatureTypeEventExchangeMaster         FeatureType = "CLMIssueSizyouMstKabu"           // 株式銘柄市場マスタ
-	FeatureTypeEventStockRegulation        FeatureType = "CLMIssueSizyouKiseiKabu"         // 株式銘柄別・市場別規制
-	FeatureTypeEventFutureMaster           FeatureType = "CLMIssueMstSak"                  // 先物銘柄マスタ
-	FeatureTypeEventOptionMaster           FeatureType = "CLMIssueMstOp"                   // オプション銘柄マスタ
-	FeatureTypeEventExchangeRegulation     FeatureType = "CLMIssueSizyouKiseiHasei"        // 派生銘柄別・市場別規制
-	FeatureTypeEventSubstitute             FeatureType = "CLMDaiyouKakeme"                 // 代用掛目
-	FeatureTypeEventDepositMaster          FeatureType = "CLMHosyoukinMst"                 // 保証金マスタ
-	FeatureTypeEventErrorReason            FeatureType = "CLMOrderErrReason"               // 取引所エラー等理由コード
-	FeatureTypeEventDownloadComplete       FeatureType = "CLMEventDownloadComplete"        // 初期ダウンロード終了通知
-	FeatureTypeMasterData                  FeatureType = "CLMMfdsGetMasterData"            // マスタ情報
-	FeatureTypeMarketPrice                 FeatureType = "CLMMfdsGetMarketPrice"           // 時価関連情報
+	MessageTypeUnspecified                 MessageType = ""                                // 未指定
+	MessageTypeLoginRequest                MessageType = "CLMAuthLoginRequest"             // ログインリクエスト
+	MessageTypeLoginResponse               MessageType = "CLMAuthLoginAck"                 // ログインレスポンス
+	MessageTypeLogoutRequest               MessageType = "CLMAuthLogoutRequest"            // ログアウトリクエスト
+	MessageTypeLogoutResponse              MessageType = "CLMAuthLogoutAck"                // ログアウトレスポンス
+	MessageTypeNewOrder                    MessageType = "CLMKabuNewOrder"                 // 新規注文
+	MessageTypeCorrectOrder                MessageType = "CLMKabuCorrectOrder"             // 訂正注文
+	MessageTypeCancelOrder                 MessageType = "CLMKabuCancelOrder"              // 取消注文
+	MessageTypeStockPositionList           MessageType = "CLMGenbutuKabuList"              // 現物保有銘柄一覧
+	MessageTypeMarginPositionList          MessageType = "CLMShinyouTategyokuList"         // 信用建玉一覧
+	MessageTypeStockWallet                 MessageType = "CLMZanKaiKanougaku"              // 買余力
+	MessageTypeMarginWallet                MessageType = "CLMZanShinkiKanoIjiritu"         // 建余力&本日維持率
+	MessageTypeStockSellable               MessageType = "CLMZanUriKanousuu"               // 売却可能数量
+	MessageTypeOrderList                   MessageType = "CLMOrderList"                    // 注文一覧
+	MessageTypeOrderListDetail             MessageType = "CLMOrderListDetail"              // 注文約定一覧(詳細)
+	MessageTypeSummary                     MessageType = "CLMZanKaiSummary"                // 可能額サマリー
+	MessageTypeSummaryRecord               MessageType = "CLMZanKaiKanougakuSuii"          // 可能額推移
+	MessageTypeStockEntryDetail            MessageType = "CLMZanKaiGenbutuKaitukeSyousai"  // 現物株式買付可能額詳細
+	MessageTypeMarginEntryDetail           MessageType = "CLMZanKaiSinyouSinkidateSyousai" // 信用新規建て可能額詳細
+	MessageTypeDepositRate                 MessageType = "CLMZanRealHosyoukinRitu"         // リアル保証金率
+	MessageTypeEventDownload               MessageType = "CLMEventDownload"                // マスタ情報ダウンロード
+	MessageTypeEventSystemStatus           MessageType = "CLMSystemStatus"                 // システムステータス
+	MessageTypeBusinessDay                 MessageType = "CLMDateZyouhou"                  // 日付情報
+	MessageTypeEventTickGroup              MessageType = "CLMYobine"                       // 呼値
+	MessageTypeEventOperationStatus        MessageType = "CLMUnyouStatus"                  // 運用ステータス別状態
+	MessageTypeEventStockOperationStatus   MessageType = "CLMUnyouStatusKabu"              // 運用ステータス(株式)
+	MessageTypeEventProductOperationStatus MessageType = "CLMUnyouStatusHasei"             // 運用運用ステータス(派生)
+	MessageTypeStockMaster                 MessageType = "CLMIssueMstKabu"                 // 株式銘柄マスタ
+	MessageTypeEventExchangeMaster         MessageType = "CLMIssueSizyouMstKabu"           // 株式銘柄市場マスタ
+	MessageTypeEventStockRegulation        MessageType = "CLMIssueSizyouKiseiKabu"         // 株式銘柄別・市場別規制
+	MessageTypeEventFutureMaster           MessageType = "CLMIssueMstSak"                  // 先物銘柄マスタ
+	MessageTypeEventOptionMaster           MessageType = "CLMIssueMstOp"                   // オプション銘柄マスタ
+	MessageTypeEventExchangeRegulation     MessageType = "CLMIssueSizyouKiseiHasei"        // 派生銘柄別・市場別規制
+	MessageTypeEventSubstitute             MessageType = "CLMDaiyouKakeme"                 // 代用掛目
+	MessageTypeEventDepositMaster          MessageType = "CLMHosyoukinMst"                 // 保証金マスタ
+	MessageTypeEventErrorReason            MessageType = "CLMOrderErrReason"               // 取引所エラー等理由コード
+	MessageTypeEventDownloadComplete       MessageType = "CLMEventDownloadComplete"        // 初期ダウンロード終了通知
+	MessageTypeMasterData                  MessageType = "CLMMfdsGetMasterData"            // マスタ情報
+	MessageTypeMarketPrice                 MessageType = "CLMMfdsGetMarketPrice"           // 時価関連情報
 )
 
 // NumberBool - 数値表現されているbool

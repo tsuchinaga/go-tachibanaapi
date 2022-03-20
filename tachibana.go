@@ -86,7 +86,7 @@ var commonResponseFormat = ResponseFormatWrapped | ResponseFormatWordKey
 type commonRequest struct {
 	No             int64          `json:"p_no,string"`      // 送信通番
 	SendDate       RequestTime    `json:"p_sd_date"`        // 送信日時
-	FeatureType    FeatureType    `json:"sCLMID"`           // 機能ID
+	MessageType    MessageType    `json:"sCLMID"`           // 機能ID
 	ResponseFormat ResponseFormat `json:"sJsonOfmt,string"` // レスポンスフォーマット
 }
 
@@ -97,7 +97,7 @@ type commonResponse struct {
 	ReceiveDate  RequestTime `json:"p_rv_date"`   // 受信日時
 	ErrorNo      ErrorNo     `json:"p_errno"`     // エラー番号
 	ErrorMessage string      `json:"p_err"`       // エラー文言
-	FeatureType  FeatureType `json:"sCLMID"`      // 機能ID
+	MessageType  MessageType `json:"sCLMID"`      // 機能ID
 }
 
 // response - パース用レスポンスから使いやすい形のレスポンスに変換して返す
@@ -108,7 +108,7 @@ func (r *commonResponse) response() CommonResponse {
 		ReceiveDate:  r.ReceiveDate.Time,
 		ErrorNo:      r.ErrorNo,
 		ErrorMessage: r.ErrorMessage,
-		FeatureType:  r.FeatureType,
+		MessageType:  r.MessageType,
 	}
 }
 
@@ -119,7 +119,7 @@ type CommonResponse struct {
 	ReceiveDate  time.Time   // 受信日時
 	ErrorNo      ErrorNo     // エラー番号
 	ErrorMessage string      // エラー文言
-	FeatureType  FeatureType // 機能ID
+	MessageType  MessageType // 機能ID
 }
 
 type iRequester interface {

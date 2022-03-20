@@ -19,7 +19,7 @@ func (r *StockWalletRequest) request(no int64, now time.Time) stockWalletRequest
 		commonRequest: commonRequest{
 			No:             no,
 			SendDate:       RequestTime{Time: now},
-			FeatureType:    FeatureTypeStockWallet,
+			MessageType:    MessageTypeStockWallet,
 			ResponseFormat: commonResponseFormat,
 		},
 		IssueCode: r.IssueCode,

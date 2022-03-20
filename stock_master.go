@@ -66,10 +66,10 @@ func (r *StockMasterRequest) request(no int64, now time.Time) stockMasterRequest
 		commonRequest: commonRequest{
 			No:             no,
 			SendDate:       RequestTime{Time: now},
-			FeatureType:    FeatureTypeMasterData,
+			MessageType:    MessageTypeMasterData,
 			ResponseFormat: commonResponseFormat,
 		},
-		TargetFeature: string(FeatureTypeStockMaster),
+		TargetFeature: string(MessageTypeStockMaster),
 		Columns:       strings.Join(columns, ","),
 	}
 }

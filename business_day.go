@@ -15,10 +15,10 @@ func (r *BusinessDayRequest) request(no int64, now time.Time) businessDayRequest
 		commonRequest: commonRequest{
 			No:             no,
 			SendDate:       RequestTime{Time: now},
-			FeatureType:    FeatureTypeEventDownload,
+			MessageType:    MessageTypeEventDownload,
 			ResponseFormat: commonResponseFormat,
 		},
-		TargetFeatures: string(FeatureTypeBusinessDay),
+		TargetFeatures: string(MessageTypeBusinessDay),
 	}
 }
 
@@ -131,7 +131,7 @@ func (c *client) BusinessDay(ctx context.Context, session *Session, req Business
 			}
 
 			// データ終了の合図が届いたらループを抜ける
-			if res.FeatureType == FeatureTypeEventDownloadComplete {
+			if res.MessageType == MessageTypeEventDownloadComplete {
 				return responses, nil
 			}
 

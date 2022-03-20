@@ -77,7 +77,7 @@ func Test_client_BusinessDay(t *testing.T) {
 				{
 					CommonResponse: CommonResponse{
 						SendDate:    time.Date(2022, 3, 21, 5, 33, 27, 293000000, time.Local),
-						FeatureType: "LMDateZyouhou",
+						MessageType: "LMDateZyouhou",
 					},
 					DayKey:                 DayKeyToday,
 					PrevDay1:               time.Date(2022, 3, 18, 0, 0, 0, 0, time.Local),
@@ -101,7 +101,7 @@ func Test_client_BusinessDay(t *testing.T) {
 				{
 					CommonResponse: CommonResponse{
 						SendDate:    time.Date(2022, 3, 21, 5, 33, 27, 293000000, time.Local),
-						FeatureType: "LMDateZyouhou",
+						MessageType: "LMDateZyouhou",
 					},
 					DayKey:                 DayKeyNextDay,
 					PrevDay2:               time.Date(2022, 3, 18, 0, 0, 0, 0, time.Local),
@@ -144,7 +144,7 @@ func Test_client_BusinessDay(t *testing.T) {
 				{
 					CommonResponse: CommonResponse{
 						SendDate:    time.Date(2022, 3, 21, 5, 33, 27, 293000000, time.Local),
-						FeatureType: "LMDateZyouhou",
+						MessageType: "LMDateZyouhou",
 					},
 					DayKey:                 DayKeyToday,
 					PrevDay1:               time.Date(2022, 3, 18, 0, 0, 0, 0, time.Local),
@@ -168,7 +168,7 @@ func Test_client_BusinessDay(t *testing.T) {
 				{
 					CommonResponse: CommonResponse{
 						SendDate:    time.Date(2022, 3, 21, 5, 33, 27, 293000000, time.Local),
-						FeatureType: "LMDateZyouhou",
+						MessageType: "LMDateZyouhou",
 					},
 					DayKey:                 DayKeyNextDay,
 					PrevDay2:               time.Date(2022, 3, 18, 0, 0, 0, 0, time.Local),
