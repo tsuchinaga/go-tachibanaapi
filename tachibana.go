@@ -48,6 +48,7 @@ type Client interface {
 	MarginPositionList(ctx context.Context, session *Session, req MarginPositionListRequest) (*MarginPositionListResponse, error) // 信用建玉リスト
 	StockMaster(ctx context.Context, session *Session, req StockMasterRequest) (*StockMasterResponse, error)                      // 株式銘柄マスタ
 	MarketPrice(ctx context.Context, session *Session, req MarketPriceRequest) (*MarketPriceResponse, error)                      // 時価関連情報
+	BusinessDay(ctx context.Context, session *Session, req BusinessDayRequest) ([]*BusinessDayResponse, error)                    // 日付情報
 }
 
 type client struct {
@@ -123,7 +124,7 @@ type CommonResponse struct {
 
 type iRequester interface {
 	get(ctx context.Context, uri string, request interface{}) ([]byte, error)
-	stream(ctx context.Context, uri string, request interface{}) (chan []byte, chan error)
+	stream(ctx context.Context, uri string, request interface{}) (<-chan []byte, <-chan error)
 }
 
 type requester struct {
@@ -192,7 +193,7 @@ func (r *requester) get(ctx context.Context, uri string, request interface{}) ([
 }
 
 // stream - chunked response リクエスト
-func (r *requester) stream(ctx context.Context, uri string, request interface{}) (chan []byte, chan error) {
+func (r *requester) stream(ctx context.Context, uri string, request interface{}) (<-chan []byte, <-chan error) {
 	ch := make(chan []byte)
 	errCh := make(chan error)
 
@@ -279,7 +280,7 @@ func (r *requester) stream(ctx context.Context, uri string, request interface{})
 	return ch, errCh
 }
 
-func (r *requester) scanChunkedResponse(reader io.Reader) (chan []byte, chan error) {
+func (r *requester) scanChunkedResponse(reader io.Reader) (<-chan []byte, <-chan error) {
 	ch := make(chan []byte)
 	errCh := make(chan error)
 

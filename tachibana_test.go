@@ -30,7 +30,7 @@ func (t *testRequester) get(ctx context.Context, uri string, request interface{}
 	t.getHistory = append(t.getHistory, request)
 	return t.get1, t.get2
 }
-func (t *testRequester) stream(ctx context.Context, uri string, request interface{}) (chan []byte, chan error) {
+func (t *testRequester) stream(ctx context.Context, uri string, request interface{}) (<-chan []byte, <-chan error) {
 	t.streamCount++
 	t.streamHistory = append(t.streamHistory, ctx)
 	t.streamHistory = append(t.streamHistory, uri)
