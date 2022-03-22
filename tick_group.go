@@ -168,70 +168,70 @@ func (r *tickGroupResponse) response() TickGroupResponse {
 // TickGroupResponse - 呼値レスポンス
 type TickGroupResponse struct {
 	CommonResponse
-	TickGroupType TickGroupType `json:"sYobineTaniNumber"`      // 呼値の単位番号
-	StartDate     time.Time     `json:"sTekiyouDay"`            // 適用日
-	BasePrice1    float64       `json:"sKizunPrice_1,string"`   // 基準値段1
-	BasePrice2    float64       `json:"sKizunPrice_2,string"`   // 基準値段2
-	BasePrice3    float64       `json:"sKizunPrice_3,string"`   // 基準値段3
-	BasePrice4    float64       `json:"sKizunPrice_4,string"`   // 基準値段4
-	BasePrice5    float64       `json:"sKizunPrice_5,string"`   // 基準値段5
-	BasePrice6    float64       `json:"sKizunPrice_6,string"`   // 基準値段6
-	BasePrice7    float64       `json:"sKizunPrice_7,string"`   // 基準値段7
-	BasePrice8    float64       `json:"sKizunPrice_8,string"`   // 基準値段8
-	BasePrice9    float64       `json:"sKizunPrice_9,string"`   // 基準値段9
-	BasePrice10   float64       `json:"sKizunPrice_10,string"`  // 基準値段10
-	BasePrice11   float64       `json:"sKizunPrice_11,string"`  // 基準値段11
-	BasePrice12   float64       `json:"sKizunPrice_12,string"`  // 基準値段12
-	BasePrice13   float64       `json:"sKizunPrice_13,string"`  // 基準値段13
-	BasePrice14   float64       `json:"sKizunPrice_14,string"`  // 基準値段14
-	BasePrice15   float64       `json:"sKizunPrice_15,string"`  // 基準値段15
-	BasePrice16   float64       `json:"sKizunPrice_16,string"`  // 基準値段16
-	BasePrice17   float64       `json:"sKizunPrice_17,string"`  // 基準値段17
-	BasePrice18   float64       `json:"sKizunPrice_18,string"`  // 基準値段18
-	BasePrice19   float64       `json:"sKizunPrice_19,string"`  // 基準値段19
-	BasePrice20   float64       `json:"sKizunPrice_20,string"`  // 基準値段20
-	UnitPrice1    float64       `json:"sYobineTanka_1,string"`  // 呼値値段1
-	UnitPrice2    float64       `json:"sYobineTanka_2,string"`  // 呼値値段2
-	UnitPrice3    float64       `json:"sYobineTanka_3,string"`  // 呼値値段3
-	UnitPrice4    float64       `json:"sYobineTanka_4,string"`  // 呼値値段4
-	UnitPrice5    float64       `json:"sYobineTanka_5,string"`  // 呼値値段5
-	UnitPrice6    float64       `json:"sYobineTanka_6,string"`  // 呼値値段6
-	UnitPrice7    float64       `json:"sYobineTanka_7,string"`  // 呼値値段7
-	UnitPrice8    float64       `json:"sYobineTanka_8,string"`  // 呼値値段8
-	UnitPrice9    float64       `json:"sYobineTanka_9,string"`  // 呼値値段9
-	UnitPrice10   float64       `json:"sYobineTanka_10,string"` // 呼値値段10
-	UnitPrice11   float64       `json:"sYobineTanka_11,string"` // 呼値値段11
-	UnitPrice12   float64       `json:"sYobineTanka_12,string"` // 呼値値段12
-	UnitPrice13   float64       `json:"sYobineTanka_13,string"` // 呼値値段13
-	UnitPrice14   float64       `json:"sYobineTanka_14,string"` // 呼値値段14
-	UnitPrice15   float64       `json:"sYobineTanka_15,string"` // 呼値値段15
-	UnitPrice16   float64       `json:"sYobineTanka_16,string"` // 呼値値段16
-	UnitPrice17   float64       `json:"sYobineTanka_17,string"` // 呼値値段17
-	UnitPrice18   float64       `json:"sYobineTanka_18,string"` // 呼値値段18
-	UnitPrice19   float64       `json:"sYobineTanka_19,string"` // 呼値値段19
-	UnitPrice20   float64       `json:"sYobineTanka_20,string"` // 呼値値段20
-	Digits1       float64       `json:"sDecimal_1,string"`      // 小数点桁数1
-	Digits2       float64       `json:"sDecimal_2,string"`      // 小数点桁数2
-	Digits3       float64       `json:"sDecimal_3,string"`      // 小数点桁数3
-	Digits4       float64       `json:"sDecimal_4,string"`      // 小数点桁数4
-	Digits5       float64       `json:"sDecimal_5,string"`      // 小数点桁数5
-	Digits6       float64       `json:"sDecimal_6,string"`      // 小数点桁数6
-	Digits7       float64       `json:"sDecimal_7,string"`      // 小数点桁数7
-	Digits8       float64       `json:"sDecimal_8,string"`      // 小数点桁数8
-	Digits9       float64       `json:"sDecimal_9,string"`      // 小数点桁数9
-	Digits10      float64       `json:"sDecimal_10,string"`     // 小数点桁数10
-	Digits11      float64       `json:"sDecimal_11,string"`     // 小数点桁数11
-	Digits12      float64       `json:"sDecimal_12,string"`     // 小数点桁数12
-	Digits13      float64       `json:"sDecimal_13,string"`     // 小数点桁数13
-	Digits14      float64       `json:"sDecimal_14,string"`     // 小数点桁数14
-	Digits15      float64       `json:"sDecimal_15,string"`     // 小数点桁数15
-	Digits16      float64       `json:"sDecimal_16,string"`     // 小数点桁数16
-	Digits17      float64       `json:"sDecimal_17,string"`     // 小数点桁数17
-	Digits18      float64       `json:"sDecimal_18,string"`     // 小数点桁数18
-	Digits19      float64       `json:"sDecimal_19,string"`     // 小数点桁数19
-	Digits20      float64       `json:"sDecimal_20,string"`     // 小数点桁数20
-	CreateDate    time.Time     `json:"sCreateDate"`            // 作成日時
-	UpdateDate    time.Time     `json:"sUpdateDate"`            // 更新日時
+	TickGroupType TickGroupType // 呼値の単位番号
+	StartDate     time.Time     // 適用日
+	BasePrice1    float64       // 基準値段1
+	BasePrice2    float64       // 基準値段2
+	BasePrice3    float64       // 基準値段3
+	BasePrice4    float64       // 基準値段4
+	BasePrice5    float64       // 基準値段5
+	BasePrice6    float64       // 基準値段6
+	BasePrice7    float64       // 基準値段7
+	BasePrice8    float64       // 基準値段8
+	BasePrice9    float64       // 基準値段9
+	BasePrice10   float64       // 基準値段10
+	BasePrice11   float64       // 基準値段11
+	BasePrice12   float64       // 基準値段12
+	BasePrice13   float64       // 基準値段13
+	BasePrice14   float64       // 基準値段14
+	BasePrice15   float64       // 基準値段15
+	BasePrice16   float64       // 基準値段16
+	BasePrice17   float64       // 基準値段17
+	BasePrice18   float64       // 基準値段18
+	BasePrice19   float64       // 基準値段19
+	BasePrice20   float64       // 基準値段20
+	UnitPrice1    float64       // 呼値値段1
+	UnitPrice2    float64       // 呼値値段2
+	UnitPrice3    float64       // 呼値値段3
+	UnitPrice4    float64       // 呼値値段4
+	UnitPrice5    float64       // 呼値値段5
+	UnitPrice6    float64       // 呼値値段6
+	UnitPrice7    float64       // 呼値値段7
+	UnitPrice8    float64       // 呼値値段8
+	UnitPrice9    float64       // 呼値値段9
+	UnitPrice10   float64       // 呼値値段10
+	UnitPrice11   float64       // 呼値値段11
+	UnitPrice12   float64       // 呼値値段12
+	UnitPrice13   float64       // 呼値値段13
+	UnitPrice14   float64       // 呼値値段14
+	UnitPrice15   float64       // 呼値値段15
+	UnitPrice16   float64       // 呼値値段16
+	UnitPrice17   float64       // 呼値値段17
+	UnitPrice18   float64       // 呼値値段18
+	UnitPrice19   float64       // 呼値値段19
+	UnitPrice20   float64       // 呼値値段20
+	Digits1       float64       // 小数点桁数1
+	Digits2       float64       // 小数点桁数2
+	Digits3       float64       // 小数点桁数3
+	Digits4       float64       // 小数点桁数4
+	Digits5       float64       // 小数点桁数5
+	Digits6       float64       // 小数点桁数6
+	Digits7       float64       // 小数点桁数7
+	Digits8       float64       // 小数点桁数8
+	Digits9       float64       // 小数点桁数9
+	Digits10      float64       // 小数点桁数10
+	Digits11      float64       // 小数点桁数11
+	Digits12      float64       // 小数点桁数12
+	Digits13      float64       // 小数点桁数13
+	Digits14      float64       // 小数点桁数14
+	Digits15      float64       // 小数点桁数15
+	Digits16      float64       // 小数点桁数16
+	Digits17      float64       // 小数点桁数17
+	Digits18      float64       // 小数点桁数18
+	Digits19      float64       // 小数点桁数19
+	Digits20      float64       // 小数点桁数20
+	CreateDate    time.Time     // 作成日時
+	UpdateDate    time.Time     // 更新日時
 }
 
 // TickGroup - 呼値
