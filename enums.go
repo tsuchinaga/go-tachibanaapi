@@ -56,7 +56,7 @@ const (
 	MessageTypeEventDownload               MessageType = "CLMEventDownload"                // マスタ情報ダウンロード
 	MessageTypeEventSystemStatus           MessageType = "CLMSystemStatus"                 // システムステータス
 	MessageTypeBusinessDay                 MessageType = "CLMDateZyouhou"                  // 日付情報
-	MessageTypeEventTickGroup              MessageType = "CLMYobine"                       // 呼値
+	MessageTypeTickGroup                   MessageType = "CLMYobine"                       // 呼値
 	MessageTypeEventOperationStatus        MessageType = "CLMUnyouStatus"                  // 運用ステータス別状態
 	MessageTypeEventStockOperationStatus   MessageType = "CLMUnyouStatusKabu"              // 運用ステータス(株式)
 	MessageTypeEventProductOperationStatus MessageType = "CLMUnyouStatusHasei"             // 運用運用ステータス(派生)
@@ -420,7 +420,8 @@ const (
 	TickGroupTypeStock1      TickGroupType = "101" // 株式1
 	TickGroupTypeStock2      TickGroupType = "102" // 株式2
 	TickGroupTypeStock3      TickGroupType = "103" // 株式3
-	TickGroupTypeBond        TickGroupType = "201" // 債券1
+	TickGroupTypeBond1       TickGroupType = "201" // 債券1
+	TickGroupTypeBond2       TickGroupType = "202" // 債券2
 	TickGroupTypeNK225       TickGroupType = "318" // 日経225先物
 	TickGroupTypeNK225Mini   TickGroupType = "319" // 日経225mini先物
 	TickGroupTypeNK225OP     TickGroupType = "418" // 日経225OP

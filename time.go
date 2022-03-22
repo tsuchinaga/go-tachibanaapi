@@ -153,3 +153,27 @@ func (t *Hm) UnmarshalJSON(b []byte) error {
 	*t = Hm{Time: time.Date(0, 1, 1, tt.Hour(), tt.Minute(), 0, 0, time.Local)}
 	return nil
 }
+
+type Hms struct {
+	time.Time
+}
+
+func (t Hms) MarshalJSON() ([]byte, error) {
+	if t.Time.IsZero() {
+		return []byte(`""`), nil
+	}
+	return []byte(t.Time.Format(`"150405"`)), nil
+}
+
+func (t *Hms) UnmarshalJSON(b []byte) error {
+	str := string(b)
+	if b == nil || str == `""` || str == "null" {
+		return nil
+	}
+	tt, err := time.Parse(`"150405"`, str)
+	if err != nil {
+		return err
+	}
+	*t = Hms{Time: time.Date(0, 1, 1, tt.Hour(), tt.Minute(), tt.Second(), 0, time.Local)}
+	return nil
+}

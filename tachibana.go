@@ -49,6 +49,7 @@ type Client interface {
 	StockMaster(ctx context.Context, session *Session, req StockMasterRequest) (*StockMasterResponse, error)                      // 株式銘柄マスタ
 	MarketPrice(ctx context.Context, session *Session, req MarketPriceRequest) (*MarketPriceResponse, error)                      // 時価関連情報
 	BusinessDay(ctx context.Context, session *Session, req BusinessDayRequest) ([]*BusinessDayResponse, error)                    // 日付情報
+	TickGroup(ctx context.Context, session *Session, req TickGroupRequest) ([]*TickGroupResponse, error)                          // 呼値
 }
 
 type client struct {
