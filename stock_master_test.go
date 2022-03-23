@@ -52,7 +52,7 @@ func Test_StockMasterRequest_request(t *testing.T) {
 			}},
 		{name: "変換できる",
 			request: StockMasterRequest{
-				Columns: []StockMasterColumn{StockMasterColumnCode, StockMasterColumnName},
+				Columns: []StockMasterColumn{StockMasterColumnIssueCode, StockMasterColumnName},
 			},
 			arg1: 1234,
 			arg2: time.Date(2022, 3, 4, 14, 0, 0, 0, time.Local),
@@ -112,8 +112,8 @@ func Test_stockMasterResponse_response(t *testing.T) {
 					MessageType:  MessageTypeMasterData,
 				},
 				StockMasters: []StockMaster{
-					{Code: "1475", Name: "ｉシェアーズＴＯＰＩＸ"},
-					{Code: "1476", Name: "ｉシェアーズＪリート"},
+					{IssueCode: "1475", Name: "ｉシェアーズＴＯＰＩＸ"},
+					{IssueCode: "1476", Name: "ｉシェアーズＪリート"},
 				},
 			}},
 	}
@@ -158,8 +158,8 @@ func Test_client_StockMaster(t *testing.T) {
 					MessageType:  MessageTypeMasterData,
 				},
 				StockMasters: []StockMaster{
-					{Code: "1475", Name: "ｉシェアーズＴＯＰＩＸ"},
-					{Code: "1476", Name: "ｉシェアーズＪリート"},
+					{IssueCode: "1475", Name: "ｉシェアーズＴＯＰＩＸ"},
+					{IssueCode: "1476", Name: "ｉシェアーズＪリート"},
 				},
 			},
 			want2: nil},
@@ -180,7 +180,7 @@ func Test_client_StockMaster(t *testing.T) {
 				},
 				StockMasters: []StockMaster{
 					{
-						Code:                 "8058",
+						IssueCode:            "8058",
 						Name:                 "三菱商事",
 						ShortName:            "三菱商",
 						Kana:                 "ミツビシ  シヨウジ",
@@ -280,7 +280,7 @@ func Test_client_StockMaster_Execute(t *testing.T) {
 	}
 
 	got3, got4 := client.StockMaster(context.Background(), session, StockMasterRequest{
-		Columns: []StockMasterColumn{StockMasterColumnCode, StockMasterColumnName},
+		Columns: []StockMasterColumn{StockMasterColumnIssueCode, StockMasterColumnName},
 	})
 
 	log.Printf("%+v, %+v\n", got3, got4)

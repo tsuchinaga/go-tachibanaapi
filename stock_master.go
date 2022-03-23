@@ -12,7 +12,7 @@ import (
 type StockMasterColumn string
 
 const (
-	StockMasterColumnCode                 StockMasterColumn = "sIssueCode"             // 銘柄コード
+	StockMasterColumnIssueCode            StockMasterColumn = "sIssueCode"             // 銘柄コード
 	StockMasterColumnName                 StockMasterColumn = "sIssueName"             // 銘柄名
 	StockMasterColumnShortName            StockMasterColumn = "sIssueNameRyaku"        // 銘柄名略称
 	StockMasterColumnKana                 StockMasterColumn = "sIssueNameKana"         // 銘柄名(カナ)
@@ -138,7 +138,7 @@ type stockMaster struct {
 
 func (r *stockMaster) response() StockMaster {
 	return StockMaster{
-		Code:                 r.Code,
+		IssueCode:            r.Code,
 		Name:                 r.Name,
 		ShortName:            r.ShortName,
 		Kana:                 r.Kana,
@@ -186,7 +186,7 @@ type StockMasterResponse struct {
 
 // StockMaster - 株式銘柄
 type StockMaster struct {
-	Code                 string          `json:"sIssueCode"`                    // 銘柄コード
+	IssueCode            string          `json:"sIssueCode"`                    // 銘柄コード
 	Name                 string          `json:"sIssueName"`                    // 銘柄名
 	ShortName            string          `json:"sIssueNameRyaku"`               // 銘柄名略称
 	Kana                 string          `json:"sIssueNameKana"`                // 銘柄名(カナ)

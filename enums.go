@@ -61,7 +61,7 @@ const (
 	MessageTypeEventStockOperationStatus   MessageType = "CLMUnyouStatusKabu"              // 運用ステータス(株式)
 	MessageTypeEventProductOperationStatus MessageType = "CLMUnyouStatusHasei"             // 運用運用ステータス(派生)
 	MessageTypeStockMaster                 MessageType = "CLMIssueMstKabu"                 // 株式銘柄マスタ
-	MessageTypeEventExchangeMaster         MessageType = "CLMIssueSizyouMstKabu"           // 株式銘柄市場マスタ
+	MessageTypeStockExchangeMaster         MessageType = "CLMIssueSizyouMstKabu"           // 株式銘柄市場マスタ
 	MessageTypeEventStockRegulation        MessageType = "CLMIssueSizyouKiseiKabu"         // 株式銘柄別・市場別規制
 	MessageTypeEventFutureMaster           MessageType = "CLMIssueMstSak"                  // 先物銘柄マスタ
 	MessageTypeEventOptionMaster           MessageType = "CLMIssueMstOp"                   // オプション銘柄マスタ
@@ -132,6 +132,10 @@ type Exchange string
 const (
 	ExchangeUnspecified Exchange = ""   // 未指定
 	ExchangeToushou     Exchange = "00" // 東証
+	ExchangeMeishou     Exchange = "02" // 名証
+	ExchangeFukushou    Exchange = "05" // 福証
+	ExchangeSatsushou   Exchange = "07" // 札証
+	ExchangeStopping    Exchange = "09" // 取引不可
 )
 
 // Side - 売買区分

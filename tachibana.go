@@ -34,22 +34,23 @@ func NewClient(env Environment, ver ApiVersion) Client {
 }
 
 type Client interface {
-	Login(ctx context.Context, req LoginRequest) (*LoginResponse, error)                                                          // ログイン
-	Logout(ctx context.Context, session *Session, req LogoutRequest) (*LogoutResponse, error)                                     // ログアウト
-	NewOrder(ctx context.Context, session *Session, req NewOrderRequest) (*NewOrderResponse, error)                               // 新規注文
-	CorrectOrder(ctx context.Context, session *Session, req CorrectOrderRequest) (*CorrectOrderResponse, error)                   // 訂正注文
-	CancelOrder(ctx context.Context, session *Session, req CancelOrderRequest) (*CancelOrderResponse, error)                      // 取消注文
-	StockWallet(ctx context.Context, session *Session, req StockWalletRequest) (*StockWalletResponse, error)                      // 買余力
-	MarginWallet(ctx context.Context, session *Session, req MarginWalletRequest) (*MarginWalletResponse, error)                   // 建余力&本日維持率
-	StockSellable(ctx context.Context, session *Session, req StockSellableRequest) (*StockSellableResponse, error)                // 売却可能数量
-	OrderList(ctx context.Context, session *Session, req OrderListRequest) (*OrderListResponse, error)                            // 注文一覧
-	OrderListDetail(ctx context.Context, session *Session, req OrderListDetailRequest) (*OrderListDetailResponse, error)          // 注文一覧(詳細)
-	StockPositionList(ctx context.Context, session *Session, req StockPositionListRequest) (*StockPositionListResponse, error)    // 現物株リスト
-	MarginPositionList(ctx context.Context, session *Session, req MarginPositionListRequest) (*MarginPositionListResponse, error) // 信用建玉リスト
-	StockMaster(ctx context.Context, session *Session, req StockMasterRequest) (*StockMasterResponse, error)                      // 株式銘柄マスタ
-	MarketPrice(ctx context.Context, session *Session, req MarketPriceRequest) (*MarketPriceResponse, error)                      // 時価関連情報
-	BusinessDay(ctx context.Context, session *Session, req BusinessDayRequest) ([]*BusinessDayResponse, error)                    // 日付情報
-	TickGroup(ctx context.Context, session *Session, req TickGroupRequest) ([]*TickGroupResponse, error)                          // 呼値
+	Login(ctx context.Context, req LoginRequest) (*LoginResponse, error)                                                             // ログイン
+	Logout(ctx context.Context, session *Session, req LogoutRequest) (*LogoutResponse, error)                                        // ログアウト
+	NewOrder(ctx context.Context, session *Session, req NewOrderRequest) (*NewOrderResponse, error)                                  // 新規注文
+	CorrectOrder(ctx context.Context, session *Session, req CorrectOrderRequest) (*CorrectOrderResponse, error)                      // 訂正注文
+	CancelOrder(ctx context.Context, session *Session, req CancelOrderRequest) (*CancelOrderResponse, error)                         // 取消注文
+	StockWallet(ctx context.Context, session *Session, req StockWalletRequest) (*StockWalletResponse, error)                         // 買余力
+	MarginWallet(ctx context.Context, session *Session, req MarginWalletRequest) (*MarginWalletResponse, error)                      // 建余力&本日維持率
+	StockSellable(ctx context.Context, session *Session, req StockSellableRequest) (*StockSellableResponse, error)                   // 売却可能数量
+	OrderList(ctx context.Context, session *Session, req OrderListRequest) (*OrderListResponse, error)                               // 注文一覧
+	OrderListDetail(ctx context.Context, session *Session, req OrderListDetailRequest) (*OrderListDetailResponse, error)             // 注文一覧(詳細)
+	StockPositionList(ctx context.Context, session *Session, req StockPositionListRequest) (*StockPositionListResponse, error)       // 現物株リスト
+	MarginPositionList(ctx context.Context, session *Session, req MarginPositionListRequest) (*MarginPositionListResponse, error)    // 信用建玉リスト
+	StockMaster(ctx context.Context, session *Session, req StockMasterRequest) (*StockMasterResponse, error)                         // 株式銘柄マスタ
+	StockExchangeMaster(ctx context.Context, session *Session, req StockExchangeMasterRequest) (*StockExchangeMasterResponse, error) // 株式銘柄市場マスタ
+	MarketPrice(ctx context.Context, session *Session, req MarketPriceRequest) (*MarketPriceResponse, error)                         // 時価関連情報
+	BusinessDay(ctx context.Context, session *Session, req BusinessDayRequest) ([]*BusinessDayResponse, error)                       // 日付情報
+	TickGroup(ctx context.Context, session *Session, req TickGroupRequest) ([]*TickGroupResponse, error)                             // 呼値
 }
 
 type client struct {
