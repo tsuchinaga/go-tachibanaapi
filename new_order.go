@@ -11,23 +11,23 @@ import (
 
 // NewOrderRequest - 新規注文リクエスト
 type NewOrderRequest struct {
-	StockAccountType  AccountType     // 譲渡益課税区分
-	MarginAccountType AccountType     // 建玉譲渡益課税区分
-	IssueCode         string          // 銘柄コード
-	Exchange          Exchange        // 市場
-	Side              Side            // 売買区分
-	ExecutionTiming   ExecutionTiming // 執行条件
-	OrderPrice        float64         // 注文値段
-	OrderQuantity     float64         // 注文数量
-	TradeType         TradeType       // 現金信用区分
-	ExpireDate        time.Time       // 注文期日
-	ExpireDateIsToday bool            // 注文期日を当日
-	StopOrderType     StopOrderType   // 逆指値注文種別
-	TriggerPrice      float64         // 逆指値条件
-	StopOrderPrice    float64         // 逆指値値段
-	ExitOrderType     ExitOrderType   // 建日種類
-	SecondPassword    string          // 第二パスワード
-	ExitPositions     []ExitPosition  // 返済リスト
+	AccountType         AccountType         // 譲渡益課税区分
+	DeliveryAccountType DeliveryAccountType // 建玉譲渡益課税区分
+	IssueCode           string              // 銘柄コード
+	Exchange            Exchange            // 市場
+	Side                Side                // 売買区分
+	ExecutionTiming     ExecutionTiming     // 執行条件
+	OrderPrice          float64             // 注文値段
+	OrderQuantity       float64             // 注文数量
+	TradeType           TradeType           // 現金信用区分
+	ExpireDate          time.Time           // 注文期日
+	ExpireDateIsToday   bool                // 注文期日を当日
+	StopOrderType       StopOrderType       // 逆指値注文種別
+	TriggerPrice        float64             // 逆指値条件
+	StopOrderPrice      float64             // 逆指値値段
+	ExitOrderType       ExitOrderType       // 建日種類
+	SecondPassword      string              // 第二パスワード
+	ExitPositions       []ExitPosition      // 返済リスト
 }
 
 func (r NewOrderRequest) request(no int64, now time.Time) newOrderRequest {
@@ -53,43 +53,43 @@ func (r NewOrderRequest) request(no int64, now time.Time) newOrderRequest {
 			MessageType:    MessageTypeNewOrder,
 			ResponseFormat: commonResponseFormat,
 		},
-		StockAccountType:  r.StockAccountType,
-		MarginAccountType: r.MarginAccountType,
-		IssueCode:         r.IssueCode,
-		Exchange:          r.Exchange,
-		Side:              r.Side,
-		ExecutionTiming:   r.ExecutionTiming,
-		OrderPrice:        orderPrice,
-		OrderQuantity:     r.OrderQuantity,
-		TradeType:         r.TradeType,
-		ExpireDate:        Ymd{Time: r.ExpireDate, isToday: r.ExpireDateIsToday},
-		StopOrderType:     r.StopOrderType,
-		TriggerPrice:      r.TriggerPrice,
-		StopOrderPrice:    stopOrderPrice,
-		ExitOrderType:     r.ExitOrderType,
-		SecondPassword:    r.SecondPassword,
-		ExitPositions:     exitPositions,
+		AccountType:         r.AccountType,
+		DeliveryAccountType: r.DeliveryAccountType,
+		IssueCode:           r.IssueCode,
+		Exchange:            r.Exchange,
+		Side:                r.Side,
+		ExecutionTiming:     r.ExecutionTiming,
+		OrderPrice:          orderPrice,
+		OrderQuantity:       r.OrderQuantity,
+		TradeType:           r.TradeType,
+		ExpireDate:          Ymd{Time: r.ExpireDate, isToday: r.ExpireDateIsToday},
+		StopOrderType:       r.StopOrderType,
+		TriggerPrice:        r.TriggerPrice,
+		StopOrderPrice:      stopOrderPrice,
+		ExitOrderType:       r.ExitOrderType,
+		SecondPassword:      r.SecondPassword,
+		ExitPositions:       exitPositions,
 	}
 }
 
 type newOrderRequest struct {
 	commonRequest
-	StockAccountType  AccountType     `json:"sZyoutoekiKazeiC"`          // 譲渡益課税区分
-	MarginAccountType AccountType     `json:"sTategyokuZyoutoekiKazeiC"` // 建玉譲渡益課税区分
-	IssueCode         string          `json:"sIssueCode"`                // 銘柄コード
-	Exchange          Exchange        `json:"sSizyouC"`                  // 市場
-	Side              Side            `json:"sBaibaiKubun"`              // 売買区分
-	ExecutionTiming   ExecutionTiming `json:"sCondition"`                // 執行条件
-	OrderPrice        string          `json:"sOrderPrice"`               // 注文値段
-	OrderQuantity     float64         `json:"sOrderSuryou,string"`       // 注文数量
-	TradeType         TradeType       `json:"sGenkinShinyouKubun"`       // 現金信用区分
-	ExpireDate        Ymd             `json:"sOrderExpireDay"`           // 注文期日
-	StopOrderType     StopOrderType   `json:"sGyakusasiOrderType"`       // 逆指値注文種別
-	TriggerPrice      float64         `json:"sGyakusasiZyouken,string"`  // 逆指値条件
-	StopOrderPrice    string          `json:"sGyakusasiPrice"`           // 逆指値値段
-	ExitOrderType     ExitOrderType   `json:"sTatebiType"`               // 建日種類
-	SecondPassword    string          `json:"sSecondPassword"`           // 第二パスワード
-	ExitPositions     []ExitPosition  `json:"aCLMKabuHensaiData"`        // 返済リスト
+	AccountType         AccountType         `json:"sZyoutoekiKazeiC"`          // 譲渡益課税区分
+	DeliveryAccountType DeliveryAccountType `json:"sTategyokuZyoutoekiKazeiC"` // 建玉譲渡益課税区分
+	IssueCode           string              `json:"sIssueCode"`                // 銘柄コード
+	Exchange            Exchange            `json:"sSizyouC"`                  // 市場
+	Side                Side                `json:"sBaibaiKubun"`              // 売買区分
+	ExecutionTiming     ExecutionTiming     `json:"sCondition"`                // 執行条件
+	OrderPrice          string              `json:"sOrderPrice"`               // 注文値段
+	OrderQuantity       float64             `json:"sOrderSuryou,string"`       // 注文数量
+	TradeType           TradeType           `json:"sGenkinShinyouKubun"`       // 現金信用区分
+	ExpireDate          Ymd                 `json:"sOrderExpireDay"`           // 注文期日
+	StopOrderType       StopOrderType       `json:"sGyakusasiOrderType"`       // 逆指値注文種別
+	TriggerPrice        float64             `json:"sGyakusasiZyouken,string"`  // 逆指値条件
+	StopOrderPrice      string              `json:"sGyakusasiPrice"`           // 逆指値値段
+	ExitOrderType       ExitOrderType       `json:"sTatebiType"`               // 建日種類
+	SecondPassword      string              `json:"sSecondPassword"`           // 第二パスワード
+	ExitPositions       []ExitPosition      `json:"aCLMKabuHensaiData"`        // 返済リスト
 }
 
 type ExitPosition struct {

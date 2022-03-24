@@ -92,10 +92,20 @@ type AccountType string
 
 const (
 	AccountTypeUnspecified AccountType = ""  // 未指定
-	AccountTypeUnused      AccountType = "*" // 信用の場合のみ現引、現渡以外の取引
 	AccountTypeSpecific    AccountType = "1" // 特定
 	AccountTypeGeneral     AccountType = "3" // 一般
 	AccountTypeNISA        AccountType = "5" // NISA
+)
+
+// DeliveryAccountType - 口座種別
+type DeliveryAccountType string
+
+const (
+	DeliveryAccountTypeUnspecified DeliveryAccountType = ""  // 未指定
+	DeliveryAccountTypeUnused      DeliveryAccountType = "*" // 信用の場合のみ現引、現渡以外の取引
+	DeliveryAccountTypeSpecific    DeliveryAccountType = "1" // 特定
+	DeliveryAccountTypeGeneral     DeliveryAccountType = "3" // 一般
+	DeliveryAccountTypeNISA        DeliveryAccountType = "5" // NISA
 )
 
 // SpecificAccountType - 特定口座区分
