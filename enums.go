@@ -175,12 +175,12 @@ const (
 type TradeType string
 
 const (
-	TradeTypeUnspecified  TradeType = ""  // 未指定
-	TradeTypeStock        TradeType = "0" // 現物
-	TradeTypeSystemEntry  TradeType = "2" // 新規(制度信用6ヶ月)
-	TradeTypeSystemExit   TradeType = "4" // 返済(制度信用6ヶ月)
-	TradeTypeGeneralEntry TradeType = "6" // 新規(一般信用6ヶ月)
-	TradeTypeGeneralExit  TradeType = "8" // 返済(一般信用6ヶ月)
+	TradeTypeUnspecified    TradeType = ""  // 未指定
+	TradeTypeStock          TradeType = "0" // 現物
+	TradeTypeStandardEntry  TradeType = "2" // 新規(制度信用6ヶ月)
+	TradeTypeStandardExit   TradeType = "4" // 返済(制度信用6ヶ月)
+	TradeTypeNegotiateEntry TradeType = "6" // 新規(一般信用6ヶ月)
+	TradeTypeNegotiateExit  TradeType = "8" // 返済(一般信用6ヶ月)
 )
 
 // StopOrderType - 逆指値注文種別
@@ -222,12 +222,12 @@ const (
 type ExitTermType string
 
 const (
-	ExitTermTypeUnspecified          ExitTermType = ""   // 未指定
-	ExitTermTypeNoLimit              ExitTermType = "00" // 期限なし
-	ExitTermTypeSystemMargin6m       ExitTermType = "26" // 制度信用6ヶ月
-	ExitTermTypeSystemMarginNoLimit  ExitTermType = "29" // 制度信用無期限
-	ExitTermTypeGeneralMargin6m      ExitTermType = "36" // 一般信用6ヶ月
-	ExitTermTypeGeneralMarginNoLimit ExitTermType = "39" // 一般信用無期限
+	ExitTermTypeUnspecified            ExitTermType = ""   // 未指定
+	ExitTermTypeNoLimit                ExitTermType = "00" // 期限なし
+	ExitTermTypeStandardMargin6m       ExitTermType = "26" // 制度信用6ヶ月
+	ExitTermTypeStandardMarginNoLimit  ExitTermType = "29" // 制度信用無期限
+	ExitTermTypeNegotiateMargin6m      ExitTermType = "36" // 一般信用6ヶ月
+	ExitTermTypeNegotiateMarginNoLimit ExitTermType = "39" // 一般信用無期限
 )
 
 // ExecutionType - 注文値段区分
@@ -504,8 +504,8 @@ type MarginType string
 const (
 	MarginTypeUnspecified   MarginType = ""  // 未指定
 	MarginTypeMarginTrading MarginType = "1" // 貸借銘柄
-	MarginTypeSystem        MarginType = "2" // 信用制度銘柄
-	MarginTypeGeneral       MarginType = "3" // 一般信用銘柄
+	MarginTypeStandard      MarginType = "2" // 信用制度銘柄
+	MarginTypeNegotiate     MarginType = "3" // 一般信用銘柄
 )
 
 // TradeRestriction - 取引禁止
