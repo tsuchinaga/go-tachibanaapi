@@ -101,7 +101,7 @@ type order struct {
 	StopOrderExecutionType ExecutionType     `json:"sOrderGyakusasiKubun"`          // 逆指値値段区分
 	StopOrderPrice         float64           `json:"sOrderGyakusasiPrice,string"`   // 逆指値値段
 	TriggerType            TriggerType       `json:"sOrderTriggerType"`             // トリガータイプ
-	ExitOrderType          ExitOrderType     `json:"sOrderTatebiType"`              // 建日種類
+	ExitPositionType       ExitPositionType  `json:"sOrderTatebiType"`              // 建日種類(返済ポジション指定方法)
 	ContractQuantity       float64           `json:"sOrderYakuzyouSuryo,string"`    // 成立株数
 	ContractPrice          float64           `json:"sOrderYakuzyouPrice,string"`    // 成立単価
 	PartContractType       PartContractType  `json:"sOrderUtidekiKbn"`              // 内出来区分
@@ -137,7 +137,7 @@ func (r *order) response() Order {
 		StopOrderExecutionType: r.StopOrderExecutionType,
 		StopOrderPrice:         r.StopOrderPrice,
 		TriggerType:            r.TriggerType,
-		ExitOrderType:          r.ExitOrderType,
+		ExitPositionType:       r.ExitPositionType,
 		ContractQuantity:       r.ContractQuantity,
 		ContractPrice:          r.ContractPrice,
 		PartContractType:       r.PartContractType,
@@ -187,7 +187,7 @@ type Order struct {
 	StopOrderExecutionType ExecutionType     // 逆指値値段区分
 	StopOrderPrice         float64           // 逆指値値段
 	TriggerType            TriggerType       // トリガータイプ
-	ExitOrderType          ExitOrderType     // 建日種類
+	ExitPositionType       ExitPositionType  // 建日種類(返済ポジション指定方法)
 	ContractQuantity       float64           // 成立株数
 	ContractPrice          float64           // 成立単価
 	PartContractType       PartContractType  // 内出来区分

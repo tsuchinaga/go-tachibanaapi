@@ -193,17 +193,17 @@ const (
 	StopOrderTypeOCO         StopOrderType = "2" // 通常 + 逆指値
 )
 
-// ExitOrderType - 建日種類
-type ExitOrderType string
+// ExitPositionType - 建日種類(返済ポジション指定方法)
+type ExitPositionType string
 
 const (
-	ExitOrderTypeUnspecified    ExitOrderType = ""  // 未指定
-	ExitOrderTypeNoSelected     ExitOrderType = "*" // 指定なし(現物または新規)
-	ExitOrderTypeUnused         ExitOrderType = " " // 未使用
-	ExitOrderTypePositionNumber ExitOrderType = "1" // 個別指定
-	ExitOrderTypeDayAsc         ExitOrderType = "2" // 建日順
-	ExitOrderTypeProfitDesc     ExitOrderType = "3" // 単価益順
-	ExitOrderTypeProfitAsc      ExitOrderType = "4" // 単価損順
+	ExitPositionTypeUnspecified    ExitPositionType = ""  // 未指定
+	ExitPositionTypeNoSelected     ExitPositionType = "*" // 指定なし(現物または新規)
+	ExitPositionTypeUnused         ExitPositionType = " " // 未使用
+	ExitPositionTypePositionNumber ExitPositionType = "1" // 個別指定
+	ExitPositionTypeDayAsc         ExitPositionType = "2" // 建日順
+	ExitPositionTypeProfitDesc     ExitPositionType = "3" // 単価益順
+	ExitPositionTypeProfitAsc      ExitPositionType = "4" // 単価損順
 )
 
 // OrderInquiryStatus - 注文状態

@@ -185,7 +185,7 @@ func Test_orderListDetailResponse_UnmarshalJSON(t *testing.T) {
 				EstimationAmount:       3,
 				Commission:             0,
 				CommissionTax:          0,
-				ExitOrderType:          ExitOrderTypePositionNumber,
+				ExitPositionType:       ExitPositionTypePositionNumber,
 				ExchangeErrorCode:      "",
 				ExchangeOrderDateTime:  YmdHms{Time: time.Date(2022, 2, 28, 11, 13, 23, 0, time.Local)},
 				Contracts: []contract{{
@@ -313,7 +313,7 @@ func Test_orderListDetailResponse_UnmarshalJSON(t *testing.T) {
 				EstimationAmount:       0,
 				Commission:             0,
 				CommissionTax:          0,
-				ExitOrderType:          "",
+				ExitPositionType:       "",
 				ExchangeErrorCode:      "",
 				ExchangeOrderDateTime:  YmdHms{},
 				Contracts:              []contract{},
@@ -389,7 +389,7 @@ func Test_orderListDetailResponse_response(t *testing.T) {
 				EstimationAmount:       3,
 				Commission:             0,
 				CommissionTax:          0,
-				ExitOrderType:          ExitOrderTypePositionNumber,
+				ExitPositionType:       ExitPositionTypePositionNumber,
 				ExchangeErrorCode:      "",
 				ExchangeOrderDateTime:  YmdHms{Time: time.Date(2022, 2, 28, 11, 13, 23, 0, time.Local)},
 				Contracts: []contract{{
@@ -464,7 +464,7 @@ func Test_orderListDetailResponse_response(t *testing.T) {
 				EstimationAmount:       3,
 				Commission:             0,
 				CommissionTax:          0,
-				ExitOrderType:          ExitOrderTypePositionNumber,
+				ExitPositionType:       ExitPositionTypePositionNumber,
 				ExchangeErrorCode:      "",
 				ExchangeOrderDateTime:  time.Date(2022, 2, 28, 11, 13, 23, 0, time.Local),
 				Contracts: []Contract{{
@@ -665,7 +665,7 @@ func Test_client_OrderListDetail(t *testing.T) {
 				EstimationAmount:       3,
 				Commission:             0,
 				CommissionTax:          0,
-				ExitOrderType:          ExitOrderTypePositionNumber,
+				ExitPositionType:       ExitPositionTypePositionNumber,
 				ExchangeErrorCode:      "",
 				ExchangeOrderDateTime:  time.Date(2022, 2, 28, 11, 13, 23, 0, time.Local),
 				Contracts: []Contract{{

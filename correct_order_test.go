@@ -265,7 +265,7 @@ func Test_client_CorrectOrder_Execute_NoChange(t *testing.T) {
 		StopOrderType:       StopOrderTypeNormal,
 		TriggerPrice:        0,
 		StopOrderPrice:      0,
-		ExitOrderType:       ExitOrderTypeUnused,
+		ExitPositionType:    ExitPositionTypeUnused,
 		SecondPassword:      secondPassword,
 		ExitPositions:       []ExitPosition{},
 	})
@@ -333,7 +333,7 @@ func Test_client_CorrectOrder_Execute_Change(t *testing.T) {
 		StopOrderType:       StopOrderTypeNormal,
 		TriggerPrice:        0,
 		StopOrderPrice:      0,
-		ExitOrderType:       ExitOrderTypeUnused,
+		ExitPositionType:    ExitPositionTypeUnused,
 		SecondPassword:      secondPassword,
 		ExitPositions:       []ExitPosition{},
 	})

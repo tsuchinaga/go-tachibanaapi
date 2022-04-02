@@ -151,7 +151,7 @@ func Test_client_CancelOrder_Execute(t *testing.T) {
 		StopOrderType:       StopOrderTypeNormal,
 		TriggerPrice:        0,
 		StopOrderPrice:      0,
-		ExitOrderType:       ExitOrderTypeUnused,
+		ExitPositionType:    ExitPositionTypeUnused,
 		SecondPassword:      secondPassword,
 		ExitPositions:       []ExitPosition{},
 	})

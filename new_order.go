@@ -25,7 +25,7 @@ type NewOrderRequest struct {
 	StopOrderType       StopOrderType       // 逆指値注文種別
 	TriggerPrice        float64             // 逆指値条件
 	StopOrderPrice      float64             // 逆指値値段
-	ExitOrderType       ExitOrderType       // 建日種類
+	ExitPositionType    ExitPositionType    // 建日種類(返済ポジション指定方法)
 	SecondPassword      string              // 第二パスワード
 	ExitPositions       []ExitPosition      // 返済リスト
 }
@@ -66,7 +66,7 @@ func (r NewOrderRequest) request(no int64, now time.Time) newOrderRequest {
 		StopOrderType:       r.StopOrderType,
 		TriggerPrice:        r.TriggerPrice,
 		StopOrderPrice:      stopOrderPrice,
-		ExitOrderType:       r.ExitOrderType,
+		ExitPositionType:    r.ExitPositionType,
 		SecondPassword:      r.SecondPassword,
 		ExitPositions:       exitPositions,
 	}
@@ -87,7 +87,7 @@ type newOrderRequest struct {
 	StopOrderType       StopOrderType       `json:"sGyakusasiOrderType"`       // 逆指値注文種別
 	TriggerPrice        float64             `json:"sGyakusasiZyouken,string"`  // 逆指値条件
 	StopOrderPrice      string              `json:"sGyakusasiPrice"`           // 逆指値値段
-	ExitOrderType       ExitOrderType       `json:"sTatebiType"`               // 建日種類
+	ExitPositionType    ExitPositionType    `json:"sTatebiType"`               // 建日種類(返済ポジション指定方法)
 	SecondPassword      string              `json:"sSecondPassword"`           // 第二パスワード
 	ExitPositions       []ExitPosition      `json:"aCLMKabuHensaiData"`        // 返済リスト
 }

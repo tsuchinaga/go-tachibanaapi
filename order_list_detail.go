@@ -72,7 +72,7 @@ type orderListDetailResponse struct {
 	EstimationAmount       float64          `json:"sGaisanDaikin,string"`       // 概算代金
 	Commission             float64          `json:"sBaiBaiTesuryo,string"`      // 手数料
 	CommissionTax          float64          `json:"sShouhizei,string"`          // 消費税
-	ExitOrderType          ExitOrderType    `json:"sTatebiType"`                // 建日種類
+	ExitPositionType       ExitPositionType `json:"sTatebiType"`                // 建日種類(返済ポジション指定方法)
 	ExchangeErrorCode      string           `json:"sSizyouErrorCode"`           // 市場/取次ErrorCode
 	ExchangeOrderDateTime  YmdHms           `json:"sOrderAcceptTime"`           // 市場注文受付時刻
 	Contracts              []contract       `json:"aYakuzyouSikkouList"`        // 約定失効リスト
@@ -161,7 +161,7 @@ func (r *orderListDetailResponse) response() OrderListDetailResponse {
 		EstimationAmount:       r.EstimationAmount,
 		Commission:             r.Commission,
 		CommissionTax:          r.CommissionTax,
-		ExitOrderType:          r.ExitOrderType,
+		ExitPositionType:       r.ExitPositionType,
 		ExchangeErrorCode:      r.ExchangeErrorCode,
 		ExchangeOrderDateTime:  r.ExchangeOrderDateTime.Time,
 		Contracts:              contracts,
@@ -267,7 +267,7 @@ type OrderListDetailResponse struct {
 	EstimationAmount       float64          // 概算代金
 	Commission             float64          // 手数料
 	CommissionTax          float64          // 消費税
-	ExitOrderType          ExitOrderType    // 建日種類
+	ExitPositionType       ExitPositionType // 建日種類(返済ポジション指定方法)
 	ExchangeErrorCode      string           // 市場/取次ErrorCode
 	ExchangeOrderDateTime  time.Time        // 市場注文受付時刻
 	Contracts              []Contract       // 約定失効リスト

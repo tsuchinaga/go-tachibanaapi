@@ -59,7 +59,7 @@ func main() {
 			StopOrderType:       tachibana.StopOrderTypeNormal,
 			TriggerPrice:        0,
 			StopOrderPrice:      0,
-			ExitOrderType:       tachibana.ExitOrderTypeUnused,
+			ExitPositionType:    tachibana.ExitPositionTypeUnused,
 			SecondPassword:      secondPassword,
 			ExitPositions:       nil,
 		})
