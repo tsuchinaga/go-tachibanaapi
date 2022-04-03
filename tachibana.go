@@ -188,6 +188,7 @@ func (r *requester) get(ctx context.Context, uri string, request interface{}) ([
 	}
 
 	if res.StatusCode == http.StatusOK {
+		b, _ = r.decode(b)
 		return b, nil
 	} else {
 		return nil, fmt.Errorf("status is %d(body: %s): %w", res.StatusCode, string(b), StatusNotOkErr)
