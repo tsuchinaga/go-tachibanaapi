@@ -27,6 +27,11 @@ func main() {
 		}
 		log.Printf("%+v\n", res)
 
+		if res.ResultCode != "0" || res.UnreadDocument {
+			log.Fatalf("ResultCode: %s, ResultText: %s, UnreadDocument: %v\n", res.ResultCode, res.ResultText, res.UnreadDocument)
+			return
+		}
+
 		session, err = res.Session()
 		if err != nil {
 			log.Fatalln(err)

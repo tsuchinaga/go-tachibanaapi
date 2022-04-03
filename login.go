@@ -117,7 +117,7 @@ type LoginResponse struct {
 	ChinaForeignAccount       bool                // 中国F口座開設区分
 	FXAccount                 bool                // 為替保証金口座開設区分
 	NISAAccount               bool                // 非課税口座開設区分
-	UnreadDocument            bool                // 金商法交付書面未読フラグ
+	UnreadDocument            bool                // 金商法交付書面未読フラグ ※この項目がtrueならリクエスト用のURLが発行されない
 	RequestURL                string              // 仮想URL(REQUEST)
 	EventURL                  string              // 仮想URL(EVENT)
 }

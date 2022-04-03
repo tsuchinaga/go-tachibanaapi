@@ -29,7 +29,8 @@ func main() {
 			log.Fatalln(err)
 		}
 		log.Printf("%+v\n", res)
-		if res.ResultCode != "0" {
+		if res.ResultCode != "0" || res.UnreadDocument {
+			log.Fatalf("ResultCode: %s, ResultText: %s, UnreadDocument: %v\n", res.ResultCode, res.ResultText, res.UnreadDocument)
 			return
 		}
 
