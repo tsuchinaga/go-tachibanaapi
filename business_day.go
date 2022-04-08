@@ -101,8 +101,9 @@ func (c *client) BusinessDay(ctx context.Context, session *Session, req Business
 	if session == nil {
 		return nil, NilArgumentErr
 	}
-	session.mtx.Lock()
-	defer session.mtx.Unlock()
+	// マスタ情報ダウンロード系は他のリクエストと並行して実行できるため、ロックしない
+	//session.mtx.Lock()
+	//defer session.mtx.Unlock()
 
 	session.lastRequestNo++
 	r := req.request(session.lastRequestNo, c.clock.Now())
