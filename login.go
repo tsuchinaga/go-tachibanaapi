@@ -124,7 +124,7 @@ type LoginResponse struct {
 
 // Session - ログインレスポンスからセッションを取り出す
 func (r *LoginResponse) Session() (*Session, error) {
-	if r.ErrorNo != ErrorNoProblem || r.MessageType != MessageTypeLoginResponse || r.ResultCode != "0" {
+	if r.ErrorNo != ErrorNoProblem || r.MessageType != MessageTypeLoginResponse || r.ResultCode != "0" || r.UnreadDocument {
 		return nil, CanNotCreateSessionErr
 	}
 
