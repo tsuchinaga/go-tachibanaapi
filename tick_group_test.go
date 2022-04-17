@@ -421,6 +421,285 @@ func Test_client_TickGroup(t *testing.T) {
 	}
 }
 
+func Test_TickGroupResponse_BasePrices(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name              string
+		TickGroupResponse TickGroupResponse
+		want1             []float64
+	}{
+		{name: "最初からゼロ値ならすべてゼロで返される",
+			TickGroupResponse: TickGroupResponse{
+				BasePrice1:  0,
+				BasePrice2:  0,
+				BasePrice3:  0,
+				BasePrice4:  0,
+				BasePrice5:  0,
+				BasePrice6:  0,
+				BasePrice7:  0,
+				BasePrice8:  0,
+				BasePrice9:  0,
+				BasePrice10: 0,
+				BasePrice11: 0,
+				BasePrice12: 0,
+				BasePrice13: 0,
+				BasePrice14: 0,
+				BasePrice15: 0,
+				BasePrice16: 0,
+				BasePrice17: 0,
+				BasePrice18: 0,
+				BasePrice19: 0,
+				BasePrice20: 0,
+			},
+			want1: []float64{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+		{name: "途中まで値があれば、値がないところはゼロで返される",
+			TickGroupResponse: TickGroupResponse{
+				BasePrice1:  1,
+				BasePrice2:  2,
+				BasePrice3:  3,
+				BasePrice4:  4,
+				BasePrice5:  5,
+				BasePrice6:  6,
+				BasePrice7:  7,
+				BasePrice8:  8,
+				BasePrice9:  9,
+				BasePrice10: 10,
+				BasePrice11: 0,
+				BasePrice12: 0,
+				BasePrice13: 0,
+				BasePrice14: 0,
+				BasePrice15: 0,
+				BasePrice16: 0,
+				BasePrice17: 0,
+				BasePrice18: 0,
+				BasePrice19: 0,
+				BasePrice20: 0,
+			},
+			want1: []float64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+		{name: "最後まで値があれば、最後まで配列にして返される",
+			TickGroupResponse: TickGroupResponse{
+				BasePrice1:  1,
+				BasePrice2:  2,
+				BasePrice3:  3,
+				BasePrice4:  4,
+				BasePrice5:  5,
+				BasePrice6:  6,
+				BasePrice7:  7,
+				BasePrice8:  8,
+				BasePrice9:  9,
+				BasePrice10: 10,
+				BasePrice11: 11,
+				BasePrice12: 12,
+				BasePrice13: 13,
+				BasePrice14: 14,
+				BasePrice15: 15,
+				BasePrice16: 16,
+				BasePrice17: 17,
+				BasePrice18: 18,
+				BasePrice19: 19,
+				BasePrice20: 20,
+			},
+			want1: []float64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}},
+	}
+
+	for _, test := range tests {
+		test := test
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			got1 := test.TickGroupResponse.BasePrices()
+			if !reflect.DeepEqual(test.want1, got1) {
+				t.Errorf("%s error\nwant: %+v\ngot: %+v\n", t.Name(), test.want1, got1)
+			}
+		})
+	}
+}
+
+func Test_TickGroupResponse_UnitPrices(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name              string
+		TickGroupResponse TickGroupResponse
+		want1             []float64
+	}{
+		{name: "最初からゼロ値ならすべてゼロで返される",
+			TickGroupResponse: TickGroupResponse{
+				UnitPrice1:  0,
+				UnitPrice2:  0,
+				UnitPrice3:  0,
+				UnitPrice4:  0,
+				UnitPrice5:  0,
+				UnitPrice6:  0,
+				UnitPrice7:  0,
+				UnitPrice8:  0,
+				UnitPrice9:  0,
+				UnitPrice10: 0,
+				UnitPrice11: 0,
+				UnitPrice12: 0,
+				UnitPrice13: 0,
+				UnitPrice14: 0,
+				UnitPrice15: 0,
+				UnitPrice16: 0,
+				UnitPrice17: 0,
+				UnitPrice18: 0,
+				UnitPrice19: 0,
+				UnitPrice20: 0,
+			},
+			want1: []float64{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+		{name: "途中まで値があれば、値がないところはゼロで返される",
+			TickGroupResponse: TickGroupResponse{
+				UnitPrice1:  1,
+				UnitPrice2:  2,
+				UnitPrice3:  3,
+				UnitPrice4:  4,
+				UnitPrice5:  5,
+				UnitPrice6:  6,
+				UnitPrice7:  7,
+				UnitPrice8:  8,
+				UnitPrice9:  9,
+				UnitPrice10: 10,
+				UnitPrice11: 0,
+				UnitPrice12: 0,
+				UnitPrice13: 0,
+				UnitPrice14: 0,
+				UnitPrice15: 0,
+				UnitPrice16: 0,
+				UnitPrice17: 0,
+				UnitPrice18: 0,
+				UnitPrice19: 0,
+				UnitPrice20: 0,
+			},
+			want1: []float64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+		{name: "最後まで値があれば、最後まで配列にして返される",
+			TickGroupResponse: TickGroupResponse{
+				UnitPrice1:  1,
+				UnitPrice2:  2,
+				UnitPrice3:  3,
+				UnitPrice4:  4,
+				UnitPrice5:  5,
+				UnitPrice6:  6,
+				UnitPrice7:  7,
+				UnitPrice8:  8,
+				UnitPrice9:  9,
+				UnitPrice10: 10,
+				UnitPrice11: 11,
+				UnitPrice12: 12,
+				UnitPrice13: 13,
+				UnitPrice14: 14,
+				UnitPrice15: 15,
+				UnitPrice16: 16,
+				UnitPrice17: 17,
+				UnitPrice18: 18,
+				UnitPrice19: 19,
+				UnitPrice20: 20,
+			},
+			want1: []float64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}},
+	}
+
+	for _, test := range tests {
+		test := test
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			got1 := test.TickGroupResponse.UnitPrices()
+			if !reflect.DeepEqual(test.want1, got1) {
+				t.Errorf("%s error\nwant: %+v\ngot: %+v\n", t.Name(), test.want1, got1)
+			}
+		})
+	}
+}
+
+func Test_TickGroupResponse_Digits(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name              string
+		TickGroupResponse TickGroupResponse
+		want1             []float64
+	}{
+		{name: "最初からゼロ値ならすべてゼロで返される",
+			TickGroupResponse: TickGroupResponse{
+				Digits1:  0,
+				Digits2:  0,
+				Digits3:  0,
+				Digits4:  0,
+				Digits5:  0,
+				Digits6:  0,
+				Digits7:  0,
+				Digits8:  0,
+				Digits9:  0,
+				Digits10: 0,
+				Digits11: 0,
+				Digits12: 0,
+				Digits13: 0,
+				Digits14: 0,
+				Digits15: 0,
+				Digits16: 0,
+				Digits17: 0,
+				Digits18: 0,
+				Digits19: 0,
+				Digits20: 0,
+			},
+			want1: []float64{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+		{name: "途中まで値があれば、値がないところはゼロで返される",
+			TickGroupResponse: TickGroupResponse{
+				Digits1:  1,
+				Digits2:  2,
+				Digits3:  3,
+				Digits4:  4,
+				Digits5:  5,
+				Digits6:  6,
+				Digits7:  7,
+				Digits8:  8,
+				Digits9:  9,
+				Digits10: 10,
+				Digits11: 0,
+				Digits12: 0,
+				Digits13: 0,
+				Digits14: 0,
+				Digits15: 0,
+				Digits16: 0,
+				Digits17: 0,
+				Digits18: 0,
+				Digits19: 0,
+				Digits20: 0,
+			},
+			want1: []float64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+		{name: "最後まで値があれば、最後まで配列にして返される",
+			TickGroupResponse: TickGroupResponse{
+				Digits1:  1,
+				Digits2:  2,
+				Digits3:  3,
+				Digits4:  4,
+				Digits5:  5,
+				Digits6:  6,
+				Digits7:  7,
+				Digits8:  8,
+				Digits9:  9,
+				Digits10: 10,
+				Digits11: 11,
+				Digits12: 12,
+				Digits13: 13,
+				Digits14: 14,
+				Digits15: 15,
+				Digits16: 16,
+				Digits17: 17,
+				Digits18: 18,
+				Digits19: 19,
+				Digits20: 20,
+			},
+			want1: []float64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}},
+	}
+
+	for _, test := range tests {
+		test := test
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			got1 := test.TickGroupResponse.Digits()
+			if !reflect.DeepEqual(test.want1, got1) {
+				t.Errorf("%s error\nwant: %+v\ngot: %+v\n", t.Name(), test.want1, got1)
+			}
+		})
+	}
+}
+
 func Test_client_TickGroup_Execute(t *testing.T) {
 	t.Skip("実際にAPIを叩くテストのため、通常はスキップ")
 	t.Parallel()

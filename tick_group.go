@@ -234,6 +234,89 @@ type TickGroupResponse struct {
 	UpdateDate    time.Time     // 更新日時
 }
 
+// BasePrices - 基準価格を配列で取得する
+func (r *TickGroupResponse) BasePrices() []float64 {
+	res := make([]float64, 20)
+	res[0] = r.BasePrice1
+	res[1] = r.BasePrice2
+	res[2] = r.BasePrice3
+	res[3] = r.BasePrice4
+	res[4] = r.BasePrice5
+	res[5] = r.BasePrice6
+	res[6] = r.BasePrice7
+	res[7] = r.BasePrice8
+	res[8] = r.BasePrice9
+	res[9] = r.BasePrice10
+	res[10] = r.BasePrice11
+	res[11] = r.BasePrice12
+	res[12] = r.BasePrice13
+	res[13] = r.BasePrice14
+	res[14] = r.BasePrice15
+	res[15] = r.BasePrice16
+	res[16] = r.BasePrice17
+	res[17] = r.BasePrice18
+	res[18] = r.BasePrice19
+	res[19] = r.BasePrice20
+
+	return res
+}
+
+// UnitPrices - 呼値値段を配列で取得する
+func (r *TickGroupResponse) UnitPrices() []float64 {
+	res := make([]float64, 20)
+
+	res[0] = r.UnitPrice1
+	res[1] = r.UnitPrice2
+	res[2] = r.UnitPrice3
+	res[3] = r.UnitPrice4
+	res[4] = r.UnitPrice5
+	res[5] = r.UnitPrice6
+	res[6] = r.UnitPrice7
+	res[7] = r.UnitPrice8
+	res[8] = r.UnitPrice9
+	res[9] = r.UnitPrice10
+	res[10] = r.UnitPrice11
+	res[11] = r.UnitPrice12
+	res[12] = r.UnitPrice13
+	res[13] = r.UnitPrice14
+	res[14] = r.UnitPrice15
+	res[15] = r.UnitPrice16
+	res[16] = r.UnitPrice17
+	res[17] = r.UnitPrice18
+	res[18] = r.UnitPrice19
+	res[19] = r.UnitPrice20
+
+	return res
+}
+
+// Digits - 小数点桁数を配列で取得する
+func (r *TickGroupResponse) Digits() []float64 {
+	res := make([]float64, 20)
+
+	res[0] = r.Digits1
+	res[1] = r.Digits2
+	res[2] = r.Digits3
+	res[3] = r.Digits4
+	res[4] = r.Digits5
+	res[5] = r.Digits6
+	res[6] = r.Digits7
+	res[7] = r.Digits8
+	res[8] = r.Digits9
+	res[9] = r.Digits10
+	res[10] = r.Digits11
+	res[11] = r.Digits12
+	res[12] = r.Digits13
+	res[13] = r.Digits14
+	res[14] = r.Digits15
+	res[15] = r.Digits16
+	res[16] = r.Digits17
+	res[17] = r.Digits18
+	res[18] = r.Digits19
+	res[19] = r.Digits20
+
+	return res
+}
+
 // TickGroup - 呼値
 func (c *client) TickGroup(ctx context.Context, session *Session, req TickGroupRequest) ([]*TickGroupResponse, error) {
 	if session == nil {
