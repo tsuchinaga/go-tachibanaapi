@@ -100,68 +100,30 @@ func (r *tickGroupResponse) response() TickGroupResponse {
 		CommonResponse: r.commonResponse.response(),
 		TickGroupType:  r.TickGroupType,
 		StartDate:      r.StartDate.Time,
-		BasePrice1:     r.BasePrice1,
-		BasePrice2:     r.BasePrice2,
-		BasePrice3:     r.BasePrice3,
-		BasePrice4:     r.BasePrice4,
-		BasePrice5:     r.BasePrice5,
-		BasePrice6:     r.BasePrice6,
-		BasePrice7:     r.BasePrice7,
-		BasePrice8:     r.BasePrice8,
-		BasePrice9:     r.BasePrice9,
-		BasePrice10:    r.BasePrice10,
-		BasePrice11:    r.BasePrice11,
-		BasePrice12:    r.BasePrice12,
-		BasePrice13:    r.BasePrice13,
-		BasePrice14:    r.BasePrice14,
-		BasePrice15:    r.BasePrice15,
-		BasePrice16:    r.BasePrice16,
-		BasePrice17:    r.BasePrice17,
-		BasePrice18:    r.BasePrice18,
-		BasePrice19:    r.BasePrice19,
-		BasePrice20:    r.BasePrice20,
-		UnitPrice1:     r.UnitPrice1,
-		UnitPrice2:     r.UnitPrice2,
-		UnitPrice3:     r.UnitPrice3,
-		UnitPrice4:     r.UnitPrice4,
-		UnitPrice5:     r.UnitPrice5,
-		UnitPrice6:     r.UnitPrice6,
-		UnitPrice7:     r.UnitPrice7,
-		UnitPrice8:     r.UnitPrice8,
-		UnitPrice9:     r.UnitPrice9,
-		UnitPrice10:    r.UnitPrice10,
-		UnitPrice11:    r.UnitPrice11,
-		UnitPrice12:    r.UnitPrice12,
-		UnitPrice13:    r.UnitPrice13,
-		UnitPrice14:    r.UnitPrice14,
-		UnitPrice15:    r.UnitPrice15,
-		UnitPrice16:    r.UnitPrice16,
-		UnitPrice17:    r.UnitPrice17,
-		UnitPrice18:    r.UnitPrice18,
-		UnitPrice19:    r.UnitPrice19,
-		UnitPrice20:    r.UnitPrice20,
-		Digits1:        r.Digits1,
-		Digits2:        r.Digits2,
-		Digits3:        r.Digits3,
-		Digits4:        r.Digits4,
-		Digits5:        r.Digits5,
-		Digits6:        r.Digits6,
-		Digits7:        r.Digits7,
-		Digits8:        r.Digits8,
-		Digits9:        r.Digits9,
-		Digits10:       r.Digits10,
-		Digits11:       r.Digits11,
-		Digits12:       r.Digits12,
-		Digits13:       r.Digits13,
-		Digits14:       r.Digits14,
-		Digits15:       r.Digits15,
-		Digits16:       r.Digits16,
-		Digits17:       r.Digits17,
-		Digits18:       r.Digits18,
-		Digits19:       r.Digits19,
-		Digits20:       r.Digits20,
-		CreateDate:     r.CreateDate.Time,
-		UpdateDate:     r.UpdateDate.Time,
+		TickGroups: [20]TickGroup{
+			{Number: 1, BasePrice: r.BasePrice1, UnitPrice: r.UnitPrice1, Digits: r.Digits1},
+			{Number: 2, BasePrice: r.BasePrice2, UnitPrice: r.UnitPrice2, Digits: r.Digits2},
+			{Number: 3, BasePrice: r.BasePrice3, UnitPrice: r.UnitPrice3, Digits: r.Digits3},
+			{Number: 4, BasePrice: r.BasePrice4, UnitPrice: r.UnitPrice4, Digits: r.Digits4},
+			{Number: 5, BasePrice: r.BasePrice5, UnitPrice: r.UnitPrice5, Digits: r.Digits5},
+			{Number: 6, BasePrice: r.BasePrice6, UnitPrice: r.UnitPrice6, Digits: r.Digits6},
+			{Number: 7, BasePrice: r.BasePrice7, UnitPrice: r.UnitPrice7, Digits: r.Digits7},
+			{Number: 8, BasePrice: r.BasePrice8, UnitPrice: r.UnitPrice8, Digits: r.Digits8},
+			{Number: 9, BasePrice: r.BasePrice9, UnitPrice: r.UnitPrice9, Digits: r.Digits9},
+			{Number: 10, BasePrice: r.BasePrice10, UnitPrice: r.UnitPrice10, Digits: r.Digits10},
+			{Number: 11, BasePrice: r.BasePrice11, UnitPrice: r.UnitPrice11, Digits: r.Digits11},
+			{Number: 12, BasePrice: r.BasePrice12, UnitPrice: r.UnitPrice12, Digits: r.Digits12},
+			{Number: 13, BasePrice: r.BasePrice13, UnitPrice: r.UnitPrice13, Digits: r.Digits13},
+			{Number: 14, BasePrice: r.BasePrice14, UnitPrice: r.UnitPrice14, Digits: r.Digits14},
+			{Number: 15, BasePrice: r.BasePrice15, UnitPrice: r.UnitPrice15, Digits: r.Digits15},
+			{Number: 16, BasePrice: r.BasePrice16, UnitPrice: r.UnitPrice16, Digits: r.Digits16},
+			{Number: 17, BasePrice: r.BasePrice17, UnitPrice: r.UnitPrice17, Digits: r.Digits17},
+			{Number: 18, BasePrice: r.BasePrice18, UnitPrice: r.UnitPrice18, Digits: r.Digits18},
+			{Number: 19, BasePrice: r.BasePrice19, UnitPrice: r.UnitPrice19, Digits: r.Digits19},
+			{Number: 20, BasePrice: r.BasePrice20, UnitPrice: r.UnitPrice20, Digits: r.Digits20},
+		},
+		CreateDate: r.CreateDate.Time,
+		UpdateDate: r.UpdateDate.Time,
 	}
 }
 
@@ -170,151 +132,17 @@ type TickGroupResponse struct {
 	CommonResponse
 	TickGroupType TickGroupType // 呼値の単位番号
 	StartDate     time.Time     // 適用日
-	BasePrice1    float64       // 基準値段1
-	BasePrice2    float64       // 基準値段2
-	BasePrice3    float64       // 基準値段3
-	BasePrice4    float64       // 基準値段4
-	BasePrice5    float64       // 基準値段5
-	BasePrice6    float64       // 基準値段6
-	BasePrice7    float64       // 基準値段7
-	BasePrice8    float64       // 基準値段8
-	BasePrice9    float64       // 基準値段9
-	BasePrice10   float64       // 基準値段10
-	BasePrice11   float64       // 基準値段11
-	BasePrice12   float64       // 基準値段12
-	BasePrice13   float64       // 基準値段13
-	BasePrice14   float64       // 基準値段14
-	BasePrice15   float64       // 基準値段15
-	BasePrice16   float64       // 基準値段16
-	BasePrice17   float64       // 基準値段17
-	BasePrice18   float64       // 基準値段18
-	BasePrice19   float64       // 基準値段19
-	BasePrice20   float64       // 基準値段20
-	UnitPrice1    float64       // 呼値値段1
-	UnitPrice2    float64       // 呼値値段2
-	UnitPrice3    float64       // 呼値値段3
-	UnitPrice4    float64       // 呼値値段4
-	UnitPrice5    float64       // 呼値値段5
-	UnitPrice6    float64       // 呼値値段6
-	UnitPrice7    float64       // 呼値値段7
-	UnitPrice8    float64       // 呼値値段8
-	UnitPrice9    float64       // 呼値値段9
-	UnitPrice10   float64       // 呼値値段10
-	UnitPrice11   float64       // 呼値値段11
-	UnitPrice12   float64       // 呼値値段12
-	UnitPrice13   float64       // 呼値値段13
-	UnitPrice14   float64       // 呼値値段14
-	UnitPrice15   float64       // 呼値値段15
-	UnitPrice16   float64       // 呼値値段16
-	UnitPrice17   float64       // 呼値値段17
-	UnitPrice18   float64       // 呼値値段18
-	UnitPrice19   float64       // 呼値値段19
-	UnitPrice20   float64       // 呼値値段20
-	Digits1       float64       // 小数点桁数1
-	Digits2       float64       // 小数点桁数2
-	Digits3       float64       // 小数点桁数3
-	Digits4       float64       // 小数点桁数4
-	Digits5       float64       // 小数点桁数5
-	Digits6       float64       // 小数点桁数6
-	Digits7       float64       // 小数点桁数7
-	Digits8       float64       // 小数点桁数8
-	Digits9       float64       // 小数点桁数9
-	Digits10      float64       // 小数点桁数10
-	Digits11      float64       // 小数点桁数11
-	Digits12      float64       // 小数点桁数12
-	Digits13      float64       // 小数点桁数13
-	Digits14      float64       // 小数点桁数14
-	Digits15      float64       // 小数点桁数15
-	Digits16      float64       // 小数点桁数16
-	Digits17      float64       // 小数点桁数17
-	Digits18      float64       // 小数点桁数18
-	Digits19      float64       // 小数点桁数19
-	Digits20      float64       // 小数点桁数20
+	TickGroups    [20]TickGroup // 呼値グループリスト
 	CreateDate    time.Time     // 作成日時
 	UpdateDate    time.Time     // 更新日時
 }
 
-// BasePrices - 基準価格を配列で取得する
-func (r *TickGroupResponse) BasePrices() []float64 {
-	res := make([]float64, 20)
-	res[0] = r.BasePrice1
-	res[1] = r.BasePrice2
-	res[2] = r.BasePrice3
-	res[3] = r.BasePrice4
-	res[4] = r.BasePrice5
-	res[5] = r.BasePrice6
-	res[6] = r.BasePrice7
-	res[7] = r.BasePrice8
-	res[8] = r.BasePrice9
-	res[9] = r.BasePrice10
-	res[10] = r.BasePrice11
-	res[11] = r.BasePrice12
-	res[12] = r.BasePrice13
-	res[13] = r.BasePrice14
-	res[14] = r.BasePrice15
-	res[15] = r.BasePrice16
-	res[16] = r.BasePrice17
-	res[17] = r.BasePrice18
-	res[18] = r.BasePrice19
-	res[19] = r.BasePrice20
-
-	return res
-}
-
-// UnitPrices - 呼値値段を配列で取得する
-func (r *TickGroupResponse) UnitPrices() []float64 {
-	res := make([]float64, 20)
-
-	res[0] = r.UnitPrice1
-	res[1] = r.UnitPrice2
-	res[2] = r.UnitPrice3
-	res[3] = r.UnitPrice4
-	res[4] = r.UnitPrice5
-	res[5] = r.UnitPrice6
-	res[6] = r.UnitPrice7
-	res[7] = r.UnitPrice8
-	res[8] = r.UnitPrice9
-	res[9] = r.UnitPrice10
-	res[10] = r.UnitPrice11
-	res[11] = r.UnitPrice12
-	res[12] = r.UnitPrice13
-	res[13] = r.UnitPrice14
-	res[14] = r.UnitPrice15
-	res[15] = r.UnitPrice16
-	res[16] = r.UnitPrice17
-	res[17] = r.UnitPrice18
-	res[18] = r.UnitPrice19
-	res[19] = r.UnitPrice20
-
-	return res
-}
-
-// Digits - 小数点桁数を配列で取得する
-func (r *TickGroupResponse) Digits() []float64 {
-	res := make([]float64, 20)
-
-	res[0] = r.Digits1
-	res[1] = r.Digits2
-	res[2] = r.Digits3
-	res[3] = r.Digits4
-	res[4] = r.Digits5
-	res[5] = r.Digits6
-	res[6] = r.Digits7
-	res[7] = r.Digits8
-	res[8] = r.Digits9
-	res[9] = r.Digits10
-	res[10] = r.Digits11
-	res[11] = r.Digits12
-	res[12] = r.Digits13
-	res[13] = r.Digits14
-	res[14] = r.Digits15
-	res[15] = r.Digits16
-	res[16] = r.Digits17
-	res[17] = r.Digits18
-	res[18] = r.Digits19
-	res[19] = r.Digits20
-
-	return res
+// TickGroup - 呼値グループ
+type TickGroup struct {
+	Number    int     // 番号
+	BasePrice float64 // 基準値段
+	UnitPrice float64 // 呼値値段
+	Digits    float64 // 小数点桁数
 }
 
 // TickGroup - 呼値
