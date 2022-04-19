@@ -8,18 +8,18 @@ import (
 	"time"
 )
 
-// OrderListDetailRequest - 注文約定一覧(詳細)リクエスト
-type OrderListDetailRequest struct {
+// OrderDetailRequest - 注文約定一覧(詳細)リクエスト
+type OrderDetailRequest struct {
 	OrderNumber   string    // 注文番号
 	ExecutionDate time.Time // 営業日
 }
 
-func (r *OrderListDetailRequest) request(no int64, now time.Time) orderListDetailRequest {
-	return orderListDetailRequest{
+func (r *OrderDetailRequest) request(no int64, now time.Time) orderDetailRequest {
+	return orderDetailRequest{
 		commonRequest: commonRequest{
 			No:             no,
 			SendDate:       RequestTime{Time: now},
-			MessageType:    MessageTypeOrderListDetail,
+			MessageType:    MessageTypeOrderDetail,
 			ResponseFormat: commonResponseFormat,
 		},
 		OrderNumber:   r.OrderNumber,
@@ -27,13 +27,13 @@ func (r *OrderListDetailRequest) request(no int64, now time.Time) orderListDetai
 	}
 }
 
-type orderListDetailRequest struct {
+type orderDetailRequest struct {
 	commonRequest
 	OrderNumber   string `json:"sOrderNumber,omitempty"` // 注文番号
 	ExecutionDate Ymd    `json:"sEigyouDay,omitempty"`   // 営業日
 }
 
-type orderListDetailResponse struct {
+type orderDetailResponse struct {
 	commonResponse
 	OrderNumber            string           `json:"sOrderNumber"`               // 注文番号
 	ExecutionDate          Ymd              `json:"sEigyouDay"`                 // 営業日
@@ -79,7 +79,7 @@ type orderListDetailResponse struct {
 	HoldPositions          []holdPosition   `json:"aKessaiOrderTategyokuList"`  // 決済注文建株指定リスト
 }
 
-func (r *orderListDetailResponse) UnmarshalJSON(b []byte) error {
+func (r *orderDetailResponse) UnmarshalJSON(b []byte) error {
 	// 文字列でないところに空文字を返されることがあるので、置換しておく
 	replaced := b
 	replaces := map[string]string{
@@ -101,7 +101,7 @@ func (r *orderListDetailResponse) UnmarshalJSON(b []byte) error {
 		replaced = bytes.Replace(replaced, []byte(o), []byte(n), -1)
 	}
 
-	type alias orderListDetailResponse
+	type alias orderDetailResponse
 	ra := &struct {
 		*alias
 	}{
@@ -111,7 +111,7 @@ func (r *orderListDetailResponse) UnmarshalJSON(b []byte) error {
 	return json.Unmarshal(replaced, ra)
 }
 
-func (r *orderListDetailResponse) response() OrderListDetailResponse {
+func (r *orderDetailResponse) response() OrderDetailResponse {
 	contracts := make([]Contract, len(r.Contracts))
 	for i, c := range r.Contracts {
 		contracts[i] = c.response()
@@ -122,7 +122,7 @@ func (r *orderListDetailResponse) response() OrderListDetailResponse {
 		holdPositions[i] = hp.response()
 	}
 
-	return OrderListDetailResponse{
+	return OrderDetailResponse{
 		CommonResponse:         r.commonResponse.response(),
 		OrderNumber:            r.OrderNumber,
 		ExecutionDate:          r.ExecutionDate.Time,
@@ -227,8 +227,8 @@ func (r *holdPosition) response() HoldPosition {
 	}
 }
 
-// OrderListDetailResponse - 注文約定一覧(詳細)レスポンス
-type OrderListDetailResponse struct {
+// OrderDetailResponse - 注文約定一覧(詳細)レスポンス
+type OrderDetailResponse struct {
 	CommonResponse
 	OrderNumber            string           // 注文番号
 	ExecutionDate          time.Time        // 営業日
@@ -303,8 +303,8 @@ type HoldPosition struct {
 	Profit        float64   // 決済損益/受渡代金
 }
 
-// OrderListDetail - 注文約定一覧(詳細)
-func (c *client) OrderListDetail(ctx context.Context, session *Session, req OrderListDetailRequest) (*OrderListDetailResponse, error) {
+// OrderDetail - 注文約定一覧(詳細)
+func (c *client) OrderDetail(ctx context.Context, session *Session, req OrderDetailRequest) (*OrderDetailResponse, error) {
 	if session == nil {
 		return nil, NilArgumentErr
 	}
@@ -318,7 +318,7 @@ func (c *client) OrderListDetail(ctx context.Context, session *Session, req Orde
 	if err != nil {
 		return nil, err
 	}
-	var res orderListDetailResponse
+	var res orderDetailResponse
 	if err := json.Unmarshal(b, &res); err != nil {
 		return nil, fmt.Errorf("%s: %w", err, UnmarshalFailedErr)
 	}

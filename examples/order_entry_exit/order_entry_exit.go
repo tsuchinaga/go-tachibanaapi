@@ -124,7 +124,7 @@ func main() {
 	// 注文詳細から約定値を取得
 	var price float64
 	{
-		res, err := client.OrderListDetail(context.Background(), session, tachibana.OrderListDetailRequest{
+		res, err := client.OrderDetail(context.Background(), session, tachibana.OrderDetailRequest{
 			OrderNumber:   orderNumber,
 			ExecutionDate: executionDate,
 		})

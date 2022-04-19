@@ -43,7 +43,7 @@ type Client interface {
 	MarginWallet(ctx context.Context, session *Session, req MarginWalletRequest) (*MarginWalletResponse, error)                      // 建余力&本日維持率
 	StockSellable(ctx context.Context, session *Session, req StockSellableRequest) (*StockSellableResponse, error)                   // 売却可能数量
 	OrderList(ctx context.Context, session *Session, req OrderListRequest) (*OrderListResponse, error)                               // 注文一覧
-	OrderListDetail(ctx context.Context, session *Session, req OrderListDetailRequest) (*OrderListDetailResponse, error)             // 注文一覧(詳細)
+	OrderDetail(ctx context.Context, session *Session, req OrderDetailRequest) (*OrderDetailResponse, error)                         // 注文一覧(詳細)
 	StockPositionList(ctx context.Context, session *Session, req StockPositionListRequest) (*StockPositionListResponse, error)       // 現物株リスト
 	MarginPositionList(ctx context.Context, session *Session, req MarginPositionListRequest) (*MarginPositionListResponse, error)    // 信用建玉リスト
 	StockMaster(ctx context.Context, session *Session, req StockMasterRequest) (*StockMasterResponse, error)                         // 株式銘柄マスタ

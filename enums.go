@@ -47,7 +47,7 @@ const (
 	MessageTypeMarginWallet                MessageType = "CLMZanShinkiKanoIjiritu"         // 建余力&本日維持率
 	MessageTypeStockSellable               MessageType = "CLMZanUriKanousuu"               // 売却可能数量
 	MessageTypeOrderList                   MessageType = "CLMOrderList"                    // 注文一覧
-	MessageTypeOrderListDetail             MessageType = "CLMOrderListDetail"              // 注文約定一覧(詳細)
+	MessageTypeOrderDetail                 MessageType = "CLMOrderListDetail"              // 注文約定一覧(詳細)
 	MessageTypeSummary                     MessageType = "CLMZanKaiSummary"                // 可能額サマリー
 	MessageTypeSummaryRecord               MessageType = "CLMZanKaiKanougakuSuii"          // 可能額推移
 	MessageTypeStockEntryDetail            MessageType = "CLMZanKaiGenbutuKaitukeSyousai"  // 現物株式買付可能額詳細
