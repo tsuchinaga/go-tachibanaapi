@@ -38,20 +38,12 @@ func (r NewOrderRequest) request(no int64, now time.Time) newOrderRequest {
 
 	orderPrice := "*" // 指定なし
 	if r.StopOrderType != StopOrderTypeStop {
-		if float64(int64(r.OrderPrice)) == r.OrderPrice {
-			orderPrice = strconv.FormatFloat(r.OrderPrice, 'f', -1, 64)
-		} else {
-			orderPrice = strconv.FormatFloat(r.OrderPrice, 'f', 1, 64)
-		}
+		orderPrice = strconv.FormatFloat(r.OrderPrice, 'f', -1, 64)
 	}
 
 	stopOrderPrice := "*" // 指定なし
 	if r.StopOrderType != StopOrderTypeNormal {
-		if float64(int64(r.OrderPrice)) == r.OrderPrice {
-			stopOrderPrice = strconv.FormatFloat(r.StopOrderPrice, 'f', -1, 64)
-		} else {
-			stopOrderPrice = strconv.FormatFloat(r.StopOrderPrice, 'f', 1, 64)
-		}
+		stopOrderPrice = strconv.FormatFloat(r.StopOrderPrice, 'f', -1, 64)
 	}
 
 	return newOrderRequest{

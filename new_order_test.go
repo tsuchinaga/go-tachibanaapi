@@ -444,7 +444,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				Exchange:            ExchangeToushou,
 				Side:                SideBuy,
 				ExecutionTiming:     ExecutionTimingNormal,
-				OrderPrice:          429.29999999999995,
+				OrderPrice:          429.3,
 				OrderQuantity:       10,
 				TradeType:           TradeTypeStandardEntry,
 				ExpireDate:          time.Time{},
