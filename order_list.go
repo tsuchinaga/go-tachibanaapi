@@ -176,7 +176,7 @@ type Order struct {
 	AccountType            AccountType       // 譲渡益課税区分
 	TradeType              TradeType         // 現金信用区分
 	ExitTermType           ExitTermType      // 弁済区分
-	Side                   Side              // 弁済区分
+	Side                   Side              // 売買区分
 	OrderQuantity          float64           // 注文株数
 	CurrentQuantity        float64           // 有効株数
 	Price                  float64           // 注文単価
