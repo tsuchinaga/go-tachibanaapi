@@ -30,10 +30,20 @@ type NewOrderRequest struct {
 	ExitPositions       []ExitPosition      // 返済リスト
 }
 
+type ExitPosition struct {
+	PositionNumber string  // 新規建玉番号
+	SequenceNumber int     // 建日順位
+	OrderQuantity  float64 // 注文数量
+}
+
 func (r NewOrderRequest) request(no int64, now time.Time) newOrderRequest {
-	exitPositions := make([]ExitPosition, len(r.ExitPositions))
+	exitPositions := make([]exitPosition, len(r.ExitPositions))
 	for i, p := range r.ExitPositions {
-		exitPositions[i] = p
+		exitPositions[i] = exitPosition{
+			PositionNumber: p.PositionNumber,
+			SequenceNumber: strconv.Itoa(p.SequenceNumber),
+			OrderQuantity:  strconv.FormatFloat(p.OrderQuantity, 'f', -1, 64),
+		}
 	}
 
 	orderPrice := "*" // 指定なし
@@ -89,10 +99,10 @@ type newOrderRequest struct {
 	StopOrderPrice      string              `json:"sGyakusasiPrice"`           // 逆指値値段
 	ExitPositionType    ExitPositionType    `json:"sTatebiType"`               // 建日種類(返済ポジション指定方法)
 	SecondPassword      string              `json:"sSecondPassword"`           // 第二パスワード
-	ExitPositions       []ExitPosition      `json:"aCLMKabuHensaiData"`        // 返済リスト
+	ExitPositions       []exitPosition      `json:"aCLMKabuHensaiData"`        // 返済リスト
 }
 
-type ExitPosition struct {
+type exitPosition struct {
 	PositionNumber string `json:"sTategyokuNumber"` // 新規建玉番号
 	SequenceNumber string `json:"sTatebiZyuni"`     // 建日順位
 	OrderQuantity  string `json:"sOrderSuryou"`     // 注文数量

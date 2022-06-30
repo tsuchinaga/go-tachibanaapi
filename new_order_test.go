@@ -62,7 +62,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				StopOrderPrice:      "*",
 				ExitPositionType:    ExitPositionTypeUnused,
 				SecondPassword:      "second-password",
-				ExitPositions:       []ExitPosition{},
+				ExitPositions:       []exitPosition{},
 			}},
 		{name: "現物指値を変換できる",
 			request: NewOrderRequest{
@@ -108,7 +108,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				StopOrderPrice:      "*",
 				ExitPositionType:    ExitPositionTypeUnused,
 				SecondPassword:      "second-password",
-				ExitPositions:       []ExitPosition{},
+				ExitPositions:       []exitPosition{},
 			}},
 		{name: "現物逆指値を変換できる",
 			request: NewOrderRequest{
@@ -154,7 +154,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				StopOrderPrice:      "0",
 				ExitPositionType:    ExitPositionTypeUnused,
 				SecondPassword:      "second-password",
-				ExitPositions:       []ExitPosition{},
+				ExitPositions:       []exitPosition{},
 			}},
 		{name: "現物OCOを変換できる",
 			request: NewOrderRequest{
@@ -200,7 +200,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				StopOrderPrice:      "0",
 				ExitPositionType:    ExitPositionTypeUnused,
 				SecondPassword:      "second-password",
-				ExitPositions:       []ExitPosition{},
+				ExitPositions:       []exitPosition{},
 			}},
 		{name: "現物エグジットを変換できる",
 			request: NewOrderRequest{
@@ -246,7 +246,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				StopOrderPrice:      "*",
 				ExitPositionType:    ExitPositionTypeUnused,
 				SecondPassword:      "second-password",
-				ExitPositions:       []ExitPosition{},
+				ExitPositions:       []exitPosition{},
 			}},
 		{name: "信用買いエントリーを変換できる",
 			request: NewOrderRequest{
@@ -292,7 +292,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				StopOrderPrice:      "*",
 				ExitPositionType:    ExitPositionTypeUnused,
 				SecondPassword:      "second-password",
-				ExitPositions:       []ExitPosition{},
+				ExitPositions:       []exitPosition{},
 			}},
 		{name: "信用売りエグジットを変換できる",
 			request: NewOrderRequest{
@@ -338,7 +338,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				StopOrderPrice:      "*",
 				ExitPositionType:    ExitPositionTypeDayAsc,
 				SecondPassword:      "second-password",
-				ExitPositions:       []ExitPosition{},
+				ExitPositions:       []exitPosition{},
 			}},
 		{name: "信用売りエントリーを変換できる",
 			request: NewOrderRequest{
@@ -384,7 +384,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				StopOrderPrice:      "*",
 				ExitPositionType:    ExitPositionTypeUnused,
 				SecondPassword:      "second-password",
-				ExitPositions:       []ExitPosition{},
+				ExitPositions:       []exitPosition{},
 			}},
 		{name: "信用買いエグジットを変換できる",
 			request: NewOrderRequest{
@@ -405,7 +405,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				ExitPositionType:    ExitPositionTypePositionNumber,
 				SecondPassword:      "second-password",
 				ExitPositions: []ExitPosition{
-					{PositionNumber: "202203090000557", SequenceNumber: "1", OrderQuantity: "1"},
+					{PositionNumber: "202203090000557", SequenceNumber: 1, OrderQuantity: 1},
 				},
 			},
 			arg1: 1234,
@@ -432,7 +432,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				StopOrderPrice:      "*",
 				ExitPositionType:    ExitPositionTypePositionNumber,
 				SecondPassword:      "second-password",
-				ExitPositions: []ExitPosition{
+				ExitPositions: []exitPosition{
 					{PositionNumber: "202203090000557", SequenceNumber: "1", OrderQuantity: "1"},
 				},
 			}},
@@ -480,7 +480,7 @@ func Test_NewOrderRequest_request(t *testing.T) {
 				StopOrderPrice:      "*",
 				ExitPositionType:    ExitPositionTypeUnused,
 				SecondPassword:      "second-password",
-				ExitPositions:       []ExitPosition{},
+				ExitPositions:       []exitPosition{},
 			}},
 	}
 
