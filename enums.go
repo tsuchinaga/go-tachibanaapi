@@ -286,6 +286,8 @@ const (
 	OrderStatusTriggered       OrderStatus = "16" // 切替完了・逆指注文(未約定)
 	OrderStatusTriggerFailed   OrderStatus = "17" // 切替失敗・逆指注文(失敗)
 	OrderStatusCarryOverFailed OrderStatus = "19" // 繰越失効
+	OrderStatusPartIncident    OrderStatus = "20" // 一部障害処理
+	OrderStatusIncident        OrderStatus = "21" // 障害処理
 	OrderStatusInOrderStop     OrderStatus = "50" // 逆指値発注中
 )
 
