@@ -142,10 +142,12 @@ type Exchange string
 const (
 	ExchangeUnspecified Exchange = ""   // 未指定
 	ExchangeToushou     Exchange = "00" // 東証
+	ExchangeDaishou     Exchange = "01" // 大証
 	ExchangeMeishou     Exchange = "02" // 名証
 	ExchangeFukushou    Exchange = "05" // 福証
 	ExchangeSatsushou   Exchange = "07" // 札証
-	ExchangeStopping    Exchange = "09" // 取引不可
+	ExchangeOddLot      Exchange = "08" // 端株
+	ExchangeStopping    Exchange = "09" // 場外
 )
 
 // Side - 売買区分
@@ -157,6 +159,8 @@ const (
 	SideBuy         Side = "3" // 買
 	SideDelivery    Side = "5" // 現渡
 	SideReceipt     Side = "7" // 現引
+	SideAssign      Side = "8" // 割当
+	SideExercise    Side = "9" // 権利行使
 )
 
 // ExecutionTiming - 執行条件
@@ -519,4 +523,82 @@ const (
 	TradeRestrictionTrading     TradeRestriction = "1" // 取引禁止
 	TradeRestrictionMarket      TradeRestriction = "2" // 成行禁止
 	TradeRestrictionFraction    TradeRestriction = "3" // 端株禁止
+)
+
+// EventType - 通知種別
+type EventType string
+
+const (
+	EventTypeUnspecified     EventType = ""   // 未指定
+	EventTypeErrorStatus     EventType = "ST" // エラーステータス情報配信指定
+	EventTypeKeepAlive       EventType = "KP" // キープアライブ情報配信指定
+	EventTypeMarketPrice     EventType = "FD" // 時価情報配信指定
+	EventTypeContract        EventType = "EC" // 注文約定通知イベント配信指定
+	EventTypeNews            EventType = "NS" // ニュース通知イベント配信指定
+	EventTypeSystemStatus    EventType = "SS" // システムステータス配信指定
+	EventTypeOperationStatus EventType = "US" // 運用ステータス配信指定
+)
+
+// StreamOrderType - 通知種別
+type StreamOrderType string
+
+const (
+	StreamOrderTypeUnspecified         StreamOrderType = ""    // 未指定
+	StreamOrderTypeReceiveOrder        StreamOrderType = "1"   // 注文受付
+	StreamOrderTypeReceiveCorrect      StreamOrderType = "2"   // 訂正受付
+	StreamOrderTypeReceiveCancel       StreamOrderType = "3"   // 取消受付
+	StreamOrderTypeReceiveError        StreamOrderType = "4"   // 注文受付エラー
+	StreamOrderTypeReceiveCorrectError StreamOrderType = "5"   // 訂正受付エラー
+	StreamOrderTypeReceiveCancelError  StreamOrderType = "6"   // 取消受付エラー
+	StreamOrderTypeOrderError          StreamOrderType = "7"   // 新規登録エラー
+	StreamOrderTypeCorrectError        StreamOrderType = "8"   // 訂正登録エラー
+	StreamOrderTypeCancelError         StreamOrderType = "9"   // 取消登録エラー
+	StreamOrderTypeCorrected           StreamOrderType = "10"  // 訂正完了
+	StreamOrderTypeCanceled            StreamOrderType = "11"  // 取消完了
+	StreamOrderTypeContract            StreamOrderType = "12"  // 約定成立
+	StreamOrderTypeExpire              StreamOrderType = "13"  // 失効
+	StreamOrderTypeExpireContinue      StreamOrderType = "14"  // 失効（連続注文）
+	StreamOrderTypeCancelContract      StreamOrderType = "15"  // 約定取消
+	StreamOrderTypeCarryOver           StreamOrderType = "16"  // 注文繰越
+	StreamOrderTypeReceived            StreamOrderType = "100" // 注文状態変更
+)
+
+// ProductType - 商品種別
+type ProductType string
+
+const (
+	ProductTypeUnspecified ProductType = ""  // 未指定
+	ProductTypeStock       ProductType = "1" // 株式
+	ProductTypeFuture      ProductType = "3" // 先物
+	ProductTypeOption      ProductType = "4" // オプション
+)
+
+// StreamOrderStatus - イベント通知注文ステータス
+type StreamOrderStatus string
+
+const (
+	StreamOrderStatusUnspecified      StreamOrderStatus = ""  // 未指定
+	StreamOrderStatusNew              StreamOrderStatus = "0" // 受付未済
+	StreamOrderStatusReceived         StreamOrderStatus = "1" // 受付済
+	StreamOrderStatusError            StreamOrderStatus = "2" // 受付エラー
+	StreamOrderStatusPartExpired      StreamOrderStatus = "3" // 一部失効
+	StreamOrderStatusExpired          StreamOrderStatus = "4" // 全部失効
+	StreamOrderStatusCarryOverExpired StreamOrderStatus = "5" // 繰越失効
+)
+
+// CancelOrderStatus - 訂正取消ステータス
+type CancelOrderStatus string
+
+const (
+	CancelOrderStatusUnspecified   CancelOrderStatus = ""  // 未指定
+	CancelOrderStatusNoCorrect     CancelOrderStatus = "0" // 訂正なし
+	CancelOrderStatusInCorrect     CancelOrderStatus = "1" // 訂正中
+	CancelOrderStatusInCancel      CancelOrderStatus = "2" // 取消中
+	CancelOrderStatusCorrected     CancelOrderStatus = "3" // 訂正完了
+	CancelOrderStatusCanceled      CancelOrderStatus = "4" // 取消完了
+	CancelOrderStatusCorrectFailed CancelOrderStatus = "5" // 訂正失敗
+	CancelOrderStatusCancelFailed  CancelOrderStatus = "6" // 取消失敗
+	CancelOrderStatusSwitch        CancelOrderStatus = "7" // 切替注文
+	CancelOrderStatusSwitched      CancelOrderStatus = "8" // 切替完了
+	CancelOrderStatusSwitchFailed  CancelOrderStatus = "9" // 切替注文失敗
 )

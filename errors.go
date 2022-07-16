@@ -8,4 +8,5 @@ var (
 	StatusNotOkErr         = errors.New("status not ok")
 	CanNotCreateSessionErr = errors.New("cannot create session")
 	UnmarshalFailedErr     = errors.New("unmarshal failed")
+	StreamError            = errors.New("stream error")
 )

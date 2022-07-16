@@ -51,6 +51,7 @@ type Client interface {
 	MarketPrice(ctx context.Context, session *Session, req MarketPriceRequest) (*MarketPriceResponse, error)                         // 時価関連情報
 	BusinessDay(ctx context.Context, session *Session, req BusinessDayRequest) ([]*BusinessDayResponse, error)                       // 日付情報
 	TickGroup(ctx context.Context, session *Session, req TickGroupRequest) ([]*TickGroupResponse, error)                             // 呼値
+	Stream(ctx context.Context, session *Session, req StreamRequest) (<-chan StreamResponse, <-chan error)                           // イベントストリーム
 }
 
 type client struct {
@@ -204,17 +205,23 @@ func (r *requester) stream(ctx context.Context, uri string, request interface{})
 		defer close(ch)
 		defer close(errCh)
 
-		rb, err := json.Marshal(request)
-		if err != nil {
-			errCh <- err
-			return
+		var query []byte
+		switch req := request.(type) {
+		case StreamRequest:
+			query = req.Query()
+		default:
+			rb, err := json.Marshal(request)
+			if err != nil {
+				errCh <- err
+				return
+			}
+			query, err = r.encode(rb)
+			if err != nil {
+				errCh <- err
+				return
+			}
 		}
 
-		query, err := r.encode(rb)
-		if err != nil {
-			errCh <- err
-			return
-		}
 		u, _ := url.Parse(uri)
 		u.RawQuery = string(query)
 
