@@ -208,9 +208,6 @@ func Test_client_StockExchangeMaster_Execute(t *testing.T) {
 	t.Skip("実際にAPIを叩くテストのため、通常はスキップ")
 	t.Parallel()
 
-	userId := "user-id"
-	password := "password"
-
 	client := NewClient(EnvironmentProduction, ApiVersionLatest)
 	got1, got2 := client.Login(context.Background(), LoginRequest{
 		UserId:   userId,

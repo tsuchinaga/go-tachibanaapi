@@ -638,10 +638,6 @@ func Test_client_NewOrder_Execute_Stock_Entry(t *testing.T) {
 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
-	userId := "user-id"
-	password := "password"
-	secondPassword := "second-password"
-
 	client := NewClient(EnvironmentProduction, ApiVersionLatest)
 	got1, got2 := client.Login(context.Background(), LoginRequest{
 		UserId:   userId,
@@ -681,10 +677,6 @@ func Test_client_NewOrder_Execute_Stock_Exit(t *testing.T) {
 	t.Parallel()
 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
-
-	userId := "user-id"
-	password := "password"
-	secondPassword := "second-password"
 
 	client := NewClient(EnvironmentProduction, ApiVersionLatest)
 	got1, got2 := client.Login(context.Background(), LoginRequest{
@@ -726,10 +718,6 @@ func Test_client_NewOrder_Execute_Stop(t *testing.T) {
 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
-	userId := "user-id"
-	password := "password"
-	secondPassword := "second-password"
-
 	client := NewClient(EnvironmentProduction, ApiVersionLatest)
 	got1, got2 := client.Login(context.Background(), LoginRequest{
 		UserId:   userId,
@@ -769,10 +757,6 @@ func Test_client_NewOrder_Execute_Stock_OCO(t *testing.T) {
 	t.Parallel()
 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
-
-	userId := "user-id"
-	password := "password"
-	secondPassword := "second-password"
 
 	client := NewClient(EnvironmentProduction, ApiVersionLatest)
 	got1, got2 := client.Login(context.Background(), LoginRequest{
@@ -814,10 +798,6 @@ func Test_client_NewOrder_Execute_Margin(t *testing.T) {
 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
-	userId := "user-id"
-	password := "password"
-	secondPassword := "second-password"
-
 	client := NewClient(EnvironmentProduction, ApiVersionLatest)
 	got1, got2 := client.Login(context.Background(), LoginRequest{
 		UserId:   userId,
@@ -857,10 +837,6 @@ func Test_client_NewOrder_Execute_Margin_Exit(t *testing.T) {
 	t.Parallel()
 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
-
-	userId := "user-id"
-	password := "password"
-	secondPassword := "second-password"
 
 	client := NewClient(EnvironmentProduction, ApiVersionLatest)
 	got1, got2 := client.Login(context.Background(), LoginRequest{

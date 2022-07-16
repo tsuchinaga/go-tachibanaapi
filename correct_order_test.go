@@ -231,10 +231,6 @@ func Test_client_CorrectOrder_Execute_NoChange(t *testing.T) {
 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
-	userId := "user-id"
-	password := "password"
-	secondPassword := "second-password"
-
 	client := NewClient(EnvironmentProduction, ApiVersionLatest)
 	got1, got2 := client.Login(context.Background(), LoginRequest{
 		UserId:   userId,
@@ -298,10 +294,6 @@ func Test_client_CorrectOrder_Execute_Change(t *testing.T) {
 	t.Parallel()
 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
-
-	userId := "user-id"
-	password := "password"
-	secondPassword := "second-password"
 
 	client := NewClient(EnvironmentProduction, ApiVersionLatest)
 	got1, got2 := client.Login(context.Background(), LoginRequest{

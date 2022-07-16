@@ -119,9 +119,6 @@ func Test_client_StockSellable_Execute(t *testing.T) {
 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
-	userId := "user-id"
-	password := "password"
-
 	client := NewClient(EnvironmentProduction, ApiVersionLatest)
 	got1, got2 := client.Login(context.Background(), LoginRequest{
 		UserId:   userId,
