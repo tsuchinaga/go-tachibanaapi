@@ -25,7 +25,6 @@ func main() {
 			log.Fatalln(err)
 		}
 		log.Printf("%+v\n", res)
-
 		if res.ResultCode != "0" || res.UnreadDocument {
 			log.Fatalf("ResultCode: %s, ResultText: %s, UnreadDocument: %v\n", res.ResultCode, res.ResultText, res.UnreadDocument)
 			return
@@ -39,12 +38,29 @@ func main() {
 		log.Printf("%+v\n", session)
 	}
 
-	// ログアウト
+	// ストリーム
 	{
-		res, err := client.Logout(context.Background(), session, tachibana.LogoutRequest{})
-		if err != nil {
-			log.Fatalln(err)
+		resCh, errCh := client.Stream(context.Background(), session, tachibana.StreamRequest{
+			ColumnNumber:      nil,
+			IssueCodes:        nil,
+			MarketCodes:       nil,
+			StartStreamNumber: 0,
+			StreamEventTypes:  []tachibana.EventType{},
+		})
+
+		for {
+			select {
+			case err, ok := <-errCh:
+				if ok {
+					log.Printf("err: %+v\n", err)
+				}
+				return
+			case res, ok := <-resCh:
+				if !ok {
+					return
+				}
+				log.Printf("res: %+v\n", res)
+			}
 		}
-		log.Printf("%+v\n", res)
 	}
 }

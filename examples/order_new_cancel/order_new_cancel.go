@@ -5,15 +5,13 @@ import (
 	"log"
 	"time"
 
+	"gitlab.com/tsuchinaga/go-tachibanaapi/examples"
+
 	tachibana "gitlab.com/tsuchinaga/go-tachibanaapi"
 )
 
 func main() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
-
-	userId := "user-id"
-	password := "password"
-	secondPassword := "second-password"
 
 	client := tachibana.NewClient(tachibana.EnvironmentProduction, tachibana.ApiVersionLatest)
 
@@ -21,8 +19,8 @@ func main() {
 	var session *tachibana.Session
 	{
 		res, err := client.Login(context.Background(), tachibana.LoginRequest{
-			UserId:   userId,
-			Password: password,
+			UserId:   examples.UserId,
+			Password: examples.Password,
 		})
 		if err != nil {
 			log.Fatalln(err)
@@ -61,7 +59,7 @@ func main() {
 			TriggerPrice:        0,
 			StopOrderPrice:      0,
 			ExitPositionType:    tachibana.ExitPositionTypeUnused,
-			SecondPassword:      secondPassword,
+			SecondPassword:      examples.SecondPassword,
 			ExitPositions:       nil,
 		})
 
@@ -83,7 +81,7 @@ func main() {
 		res, err := client.CancelOrder(context.Background(), session, tachibana.CancelOrderRequest{
 			OrderNumber:    orderNumber,
 			ExecutionDate:  executionDate,
-			SecondPassword: secondPassword,
+			SecondPassword: examples.SecondPassword,
 		})
 
 		if err != nil {
