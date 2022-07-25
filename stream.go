@@ -202,6 +202,7 @@ type NewsStreamResponse struct {
 	NumOfIssue    int       // 関連銘柄コードリスト
 	Issues        []string  // 関連銘柄コードリスト
 	Title         string    // ニュースタイトル
+	Content       string    // ニュース本文
 }
 
 func (r *NewsStreamResponse) parse(m map[string][]string, b []byte) {
@@ -218,7 +219,8 @@ func (r *NewsStreamResponse) parse(m map[string][]string, b []byte) {
 	r.Genres = r.getFromMap(m, "p_GRL")
 	r.NumOfIssue, _ = strconv.Atoi(r.getFromMap(m, "p_ISN")[0])
 	r.Issues = r.getFromMap(m, "p_ISL")
-	r.Title = r.getFromMap(m, "p_HDL")[0]
+	r.Title = r.getFromMap(m, "p_HLD")[0]
+	r.Content = r.getFromMap(m, "p_TX")[0]
 }
 
 type SystemStatusStreamResponse struct {
