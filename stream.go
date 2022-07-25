@@ -12,7 +12,7 @@ import (
 type StreamRequest struct {
 	ColumnNumber      []int       // 株価ボード専用 行番号
 	IssueCodes        []string    // 株価ボード専用 銘柄コード
-	MarketCodes       []string    // 株価ボード専用 市場コード
+	MarketCodes       []Exchange  // 株価ボード専用 市場コード
 	StartStreamNumber int64       // 配信開始イベント通知番号
 	StreamEventTypes  []EventType // 通知種別
 }
