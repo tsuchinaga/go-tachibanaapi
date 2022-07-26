@@ -180,7 +180,7 @@ type MarketPriceStreamResponse struct {
 }
 
 func (r *MarketPriceStreamResponse) getColumnNumber(m map[string][]string) int {
-	for k, _ := range m {
+	for k := range m {
 		match := regexp.MustCompile(`^p_(\d+)_.+$`).FindAllStringSubmatch(k, -1)
 		if len(match) == 0 {
 			continue
@@ -403,7 +403,7 @@ func (r *NewsStreamResponse) parse(m map[string][]string, b []byte) {
 	r.Genres = r.getFromMap(m, "p_GRL")
 	r.NumOfIssue, _ = strconv.Atoi(r.getFromMap(m, "p_ISN")[0])
 	r.Issues = r.getFromMap(m, "p_ISL")
-	r.Title = r.getFromMap(m, "p_HLD")[0]
+	r.Title = r.getFromMap(m, "p_HDL")[0]
 	r.Content = r.getFromMap(m, "p_TX")[0]
 }
 
