@@ -22,6 +22,9 @@ func Test_StreamRequest_Query(t *testing.T) {
 			want1: []byte("p_rid=22&p_board_no=1000&p_eno=0&p_evt_cmd=")},
 		{name: "各種設定をバイト列に出来る",
 			req: StreamRequest{
+				ColumnNumber:      []int{1, 2, 3},
+				IssueCodes:        []string{"1111", "2222", "3333"},
+				MarketCodes:       []Exchange{ExchangeToushou, ExchangeMeishou, ExchangeSatsushou},
 				StartStreamNumber: 1000,
 				StreamEventTypes: []EventType{
 					EventTypeErrorStatus,
@@ -31,7 +34,7 @@ func Test_StreamRequest_Query(t *testing.T) {
 					EventTypeOperationStatus,
 				},
 			},
-			want1: []byte("p_rid=22&p_board_no=1000&p_eno=1000&p_evt_cmd=ST,KP,EC,SS,US")},
+			want1: []byte("p_rid=22&p_board_no=1000&p_gyou_no=1,2,3&p_issue_code=1111,2222,3333&p_mkt_code=00,02,07&p_eno=1000&p_evt_cmd=ST,KP,EC,SS,US")},
 	}
 
 	for _, test := range tests {

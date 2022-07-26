@@ -23,6 +23,26 @@ func (r *StreamRequest) Query() []byte {
 	res = append(res, "p_rid=22")
 	res = append(res, "p_board_no=1000")
 
+	if len(r.ColumnNumber) > 0 {
+		columns := make([]string, len(r.ColumnNumber))
+		for i, n := range r.ColumnNumber {
+			columns[i] = strconv.Itoa(n)
+		}
+		res = append(res, "p_gyou_no="+strings.Join(columns, ","))
+	}
+
+	if len(r.IssueCodes) > 0 {
+		res = append(res, "p_issue_code="+strings.Join(r.IssueCodes, ","))
+	}
+
+	if len(r.MarketCodes) > 0 {
+		exchanges := make([]string, len(r.MarketCodes))
+		for i, e := range r.MarketCodes {
+			exchanges[i] = string(e)
+		}
+		res = append(res, "p_mkt_code="+strings.Join(exchanges, ","))
+	}
+
 	if r.StartStreamNumber <= 0 {
 		res = append(res, "p_eno=0")
 	} else {
