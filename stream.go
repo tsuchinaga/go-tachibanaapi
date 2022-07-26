@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -101,6 +102,169 @@ func (r *CommonStreamResponse) parse(m map[string][]string, b []byte) {
 	r.ErrorNo = ErrorNo(r.getFromMap(m, "p_errno")[0])
 	r.ErrorText = r.getFromMap(m, "p_err")[0]
 	r.Body = b
+}
+
+type MarketPriceStreamResponse struct {
+	CommonStreamResponse
+	ColumnNumber      int                 // 行番号
+	AskQuantityMarket float64             // 売数量(成行)
+	BidQuantityMarket float64             // 買数量(成行)
+	AskQuantity       float64             // 売気配数量
+	BidQuantity       float64             // 買気配数量
+	DiscontinuityType string              // 不連続要因銘柄区分
+	StopHigh          CurrentPriceType    // 日通し高値フラグ
+	HighPrice         float64             // 高値
+	HighPriceTime     time.Time           // 高値時刻
+	TradingAmount     float64             // 売買代金
+	StopLow           CurrentPriceType    // 日通し安値フラグ
+	LowPrice          float64             // 安値
+	LowPriceTime      time.Time           // 安値時刻
+	OpenPrice         float64             // 始値
+	OpenPriceTime     time.Time           // 始値時刻
+	ChangePriceType   ChangePriceType     // 現値前値比較
+	CurrentPrice      float64             // 現在値
+	CurrentPriceTime  time.Time           // 現在値時刻
+	Volume            float64             // 出来高
+	ExRightType       string              // 配当落銘柄区分
+	PrevDayPercent    float64             // 騰落率
+	PrevDayRatio      float64             // 前日比
+	AskQuantity10     float64             // 売-10-数量
+	AskPrice10        float64             // 売-10-値段
+	AskQuantity9      float64             // 売-9-数量
+	AskPrice9         float64             // 売-9-値段
+	AskQuantity8      float64             // 売-8-数量
+	AskPrice8         float64             // 売-8-値段
+	AskQuantity7      float64             // 売-7-数量
+	AskPrice7         float64             // 売-7-値段
+	AskQuantity6      float64             // 売-6-数量
+	AskPrice6         float64             // 売-6-値段
+	AskQuantity5      float64             // 売-5-数量
+	AskPrice5         float64             // 売-5-値段
+	AskQuantity4      float64             // 売-4-数量
+	AskPrice4         float64             // 売-4-値段
+	AskQuantity3      float64             // 売-3-数量
+	AskPrice3         float64             // 売-3-値段
+	AskQuantity2      float64             // 売-2-数量
+	AskPrice2         float64             // 売-2-値段
+	AskQuantity1      float64             // 売-1-数量
+	AskPrice1         float64             // 売-1-値段
+	BidQuantity1      float64             // 買-1-数量
+	BidPrice1         float64             // 買-1-値段
+	BidQuantity2      float64             // 買-2-数量
+	BidPrice2         float64             // 買-2-値段
+	BidQuantity3      float64             // 買-3-数量
+	BidPrice3         float64             // 買-3-値段
+	BidQuantity4      float64             // 買-4-数量
+	BidPrice4         float64             // 買-4-値段
+	BidQuantity5      float64             // 買-5-数量
+	BidPrice5         float64             // 買-5-値段
+	BidQuantity6      float64             // 買-6-数量
+	BidPrice6         float64             // 買-6-値段
+	BidQuantity7      float64             // 買-7-数量
+	BidPrice7         float64             // 買-7-値段
+	BidQuantity8      float64             // 買-8-数量
+	BidPrice8         float64             // 買-8-値段
+	BidQuantity9      float64             // 買-9-数量
+	BidPrice9         float64             // 買-9-値段
+	BidQuantity10     float64             // 買-10-数量
+	BidPrice10        float64             // 買-10-値段
+	Section           string              // 所属
+	PRP               float64             // 前日終値
+	AskPrice          float64             // 売気配値
+	AskSign           IndicationPriceType // 売気配値種類
+	BidPrice          float64             // 買気配値
+	BidSign           IndicationPriceType // 買気配値種類
+	AskQuantityOver   float64             // 売-OVER
+	BidQuantityUnder  float64             // 買-UNDER
+	VWAP              float64             // VWAP
+}
+
+func (r *MarketPriceStreamResponse) getColumnNumber(m map[string][]string) int {
+	for k, _ := range m {
+		match := regexp.MustCompile(`^p_(\d+)_.+$`).FindAllStringSubmatch(k, -1)
+		if len(match) == 0 {
+			continue
+		}
+
+		i, _ := strconv.Atoi(match[0][1])
+		return i
+	}
+	return 0
+}
+
+func (r *MarketPriceStreamResponse) parse(m map[string][]string, b []byte) {
+	r.CommonStreamResponse.parse(m, b)
+	r.ColumnNumber = r.getColumnNumber(m)
+	r.AskQuantityMarket, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_AAV", r.ColumnNumber))[0], 64)
+	r.BidQuantityMarket, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_ABV", r.ColumnNumber))[0], 64)
+	r.AskQuantity, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_AV", r.ColumnNumber))[0], 64)
+	r.BidQuantity, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_BV", r.ColumnNumber))[0], 64)
+	r.DiscontinuityType = r.getFromMap(m, fmt.Sprintf("p_%d_DCFS", r.ColumnNumber))[0]
+	r.StopHigh = CurrentPriceType(r.getFromMap(m, fmt.Sprintf("p_%d_DHF", r.ColumnNumber))[0])
+	r.HighPrice, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_DHP", r.ColumnNumber))[0], 64)
+	r.HighPriceTime, _ = time.ParseInLocation("15:04", r.getFromMap(m, fmt.Sprintf("p_%d_DHP:T", r.ColumnNumber))[0], time.Local)
+	r.TradingAmount, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_DJ", r.ColumnNumber))[0], 64)
+	r.StopLow = CurrentPriceType(r.getFromMap(m, fmt.Sprintf("p_%d_DLF", r.ColumnNumber))[0])
+	r.LowPrice, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_DLP", r.ColumnNumber))[0], 64)
+	r.LowPriceTime, _ = time.ParseInLocation("15:04", r.getFromMap(m, fmt.Sprintf("p_%d_DLP:T", r.ColumnNumber))[0], time.Local)
+	r.OpenPrice, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_DOP", r.ColumnNumber))[0], 64)
+	r.OpenPriceTime, _ = time.ParseInLocation("15:04", r.getFromMap(m, fmt.Sprintf("p_%d_DOP:T", r.ColumnNumber))[0], time.Local)
+	r.ChangePriceType = ChangePriceType(r.getFromMap(m, fmt.Sprintf("p_%d_DPG", r.ColumnNumber))[0])
+	r.CurrentPrice, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_DPP", r.ColumnNumber))[0], 64)
+	r.CurrentPriceTime, _ = time.ParseInLocation("15:04", r.getFromMap(m, fmt.Sprintf("p_%d_DPP:T", r.ColumnNumber))[0], time.Local)
+	r.Volume, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_DV", r.ColumnNumber))[0], 64)
+	r.ExRightType = r.getFromMap(m, fmt.Sprintf("p_%d_DVES", r.ColumnNumber))[0]
+	r.PrevDayPercent, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_DYRP", r.ColumnNumber))[0], 64)
+	r.PrevDayRatio, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_DYWP", r.ColumnNumber))[0], 64)
+	r.AskQuantity10, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAV10", r.ColumnNumber))[0], 64)
+	r.AskPrice10, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAP10", r.ColumnNumber))[0], 64)
+	r.AskQuantity9, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAV9", r.ColumnNumber))[0], 64)
+	r.AskPrice9, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAP9", r.ColumnNumber))[0], 64)
+	r.AskQuantity8, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAV8", r.ColumnNumber))[0], 64)
+	r.AskPrice8, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAP8", r.ColumnNumber))[0], 64)
+	r.AskQuantity7, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAV7", r.ColumnNumber))[0], 64)
+	r.AskPrice7, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAP7", r.ColumnNumber))[0], 64)
+	r.AskQuantity6, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAV6", r.ColumnNumber))[0], 64)
+	r.AskPrice6, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAP6", r.ColumnNumber))[0], 64)
+	r.AskQuantity5, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAV5", r.ColumnNumber))[0], 64)
+	r.AskPrice5, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAP5", r.ColumnNumber))[0], 64)
+	r.AskQuantity4, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAV4", r.ColumnNumber))[0], 64)
+	r.AskPrice4, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAP4", r.ColumnNumber))[0], 64)
+	r.AskQuantity3, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAV3", r.ColumnNumber))[0], 64)
+	r.AskPrice3, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAP3", r.ColumnNumber))[0], 64)
+	r.AskQuantity2, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAV2", r.ColumnNumber))[0], 64)
+	r.AskPrice2, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAP2", r.ColumnNumber))[0], 64)
+	r.AskQuantity1, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAV1", r.ColumnNumber))[0], 64)
+	r.AskPrice1, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GAP1", r.ColumnNumber))[0], 64)
+	r.BidQuantity1, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBV1", r.ColumnNumber))[0], 64)
+	r.BidPrice1, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBP1", r.ColumnNumber))[0], 64)
+	r.BidQuantity2, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBV2", r.ColumnNumber))[0], 64)
+	r.BidPrice2, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBP2", r.ColumnNumber))[0], 64)
+	r.BidQuantity3, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBV3", r.ColumnNumber))[0], 64)
+	r.BidPrice3, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBP3", r.ColumnNumber))[0], 64)
+	r.BidQuantity4, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBV4", r.ColumnNumber))[0], 64)
+	r.BidPrice4, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBP4", r.ColumnNumber))[0], 64)
+	r.BidQuantity5, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBV5", r.ColumnNumber))[0], 64)
+	r.BidPrice5, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBP5", r.ColumnNumber))[0], 64)
+	r.BidQuantity6, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBV6", r.ColumnNumber))[0], 64)
+	r.BidPrice6, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBP6", r.ColumnNumber))[0], 64)
+	r.BidQuantity7, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBV7", r.ColumnNumber))[0], 64)
+	r.BidPrice7, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBP7", r.ColumnNumber))[0], 64)
+	r.BidQuantity8, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBV8", r.ColumnNumber))[0], 64)
+	r.BidPrice8, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBP8", r.ColumnNumber))[0], 64)
+	r.BidQuantity9, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBV9", r.ColumnNumber))[0], 64)
+	r.BidPrice9, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBP9", r.ColumnNumber))[0], 64)
+	r.BidQuantity10, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBV10", r.ColumnNumber))[0], 64)
+	r.BidPrice10, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_GBP10", r.ColumnNumber))[0], 64)
+	r.Section = r.getFromMap(m, fmt.Sprintf("p_%d_LISS", r.ColumnNumber))[0]
+	r.PRP, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_PRP", r.ColumnNumber))[0], 64)
+	r.AskPrice, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_QAP", r.ColumnNumber))[0], 64)
+	r.AskSign = IndicationPriceType(r.getFromMap(m, fmt.Sprintf("p_%d_QAS", r.ColumnNumber))[0])
+	r.BidPrice, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_QBP", r.ColumnNumber))[0], 64)
+	r.BidSign = IndicationPriceType(r.getFromMap(m, fmt.Sprintf("p_%d_QBS", r.ColumnNumber))[0])
+	r.AskQuantityOver, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_QOV", r.ColumnNumber))[0], 64)
+	r.BidQuantityUnder, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_QUV", r.ColumnNumber))[0], 64)
+	r.VWAP, _ = strconv.ParseFloat(r.getFromMap(m, fmt.Sprintf("p_%d_VWAP", r.ColumnNumber))[0], 64)
 }
 
 type ContractStreamResponse struct {
@@ -333,6 +497,8 @@ func (c *client) Stream(ctx context.Context, session *Session, req StreamRequest
 				switch EventType(t[0]) {
 				case EventTypeKeepAlive: // keep aliveは通知しない
 					continue
+				case EventTypeMarketPrice:
+					res = new(MarketPriceStreamResponse)
 				case EventTypeContract:
 					res = new(ContractStreamResponse)
 				case EventTypeNews:
