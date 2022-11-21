@@ -556,7 +556,7 @@ func (c *client) MarketPrice(ctx context.Context, session *Session, req MarketPr
 	session.lastRequestNo++
 	r := req.request(session.lastRequestNo, c.clock.Now())
 
-	b, err := c.requester.get(ctx, session.RequestURL, r)
+	b, err := c.requester.get(ctx, session.PriceURL, r)
 	if err != nil {
 		return nil, err
 	}

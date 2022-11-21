@@ -112,7 +112,7 @@ func (c *client) BusinessDay(ctx context.Context, session *Session, req Business
 	cCtx, cf := context.WithCancel(ctx)
 	defer cf()
 
-	ch, errCh := c.requester.stream(cCtx, session.RequestURL, r)
+	ch, errCh := c.requester.stream(cCtx, session.MasterURL, r)
 	var responses []*BusinessDayResponse
 	for {
 		select {

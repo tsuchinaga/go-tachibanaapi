@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -74,7 +75,7 @@ func (c *client) host(env Environment) string {
 func (c *client) authURL(env Environment, ver ApiVersion) string {
 	path := "e_api_"
 	switch ver {
-	case ApiVersionV4R1, ApiVersionV4R2:
+	case ApiVersionV4R3:
 		path += string(ver)
 	default:
 		path += string(ApiVersionLatest) // latest
@@ -187,6 +188,8 @@ func (r *requester) get(ctx context.Context, uri string, request interface{}) ([
 	if err != nil {
 		return nil, err
 	}
+
+	log.Println(b)
 
 	if res.StatusCode == http.StatusOK {
 		b, _ = r.decode(b)

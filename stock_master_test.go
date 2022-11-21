@@ -269,8 +269,8 @@ func Test_client_StockMaster_Execute(t *testing.T) {
 
 	client := NewClient(EnvironmentProduction, ApiVersionLatest)
 	got1, got2 := client.Login(context.Background(), LoginRequest{
-		UserId:   "user-id",
-		Password: "password",
+		UserId:   userId,
+		Password: password,
 	})
 	log.Printf("%+v, %+v\n", got1, got2)
 

@@ -236,7 +236,7 @@ func (c *client) StockMaster(ctx context.Context, session *Session, req StockMas
 	session.lastRequestNo++
 	r := req.request(session.lastRequestNo, c.clock.Now())
 
-	b, err := c.requester.get(ctx, session.RequestURL, r)
+	b, err := c.requester.get(ctx, session.MasterURL, r)
 	if err != nil {
 		return nil, err
 	}
