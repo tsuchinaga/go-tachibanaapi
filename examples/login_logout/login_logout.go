@@ -12,7 +12,7 @@ import (
 func main() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
-	client := tachibana.NewClient(tachibana.EnvironmentProduction, tachibana.ApiVersionLatest)
+	client := tachibana.NewClient(tachibana.EnvironmentDemo, tachibana.ApiVersionLatest)
 
 	// ログイン
 	var session *tachibana.Session

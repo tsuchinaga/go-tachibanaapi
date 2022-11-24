@@ -12,6 +12,8 @@ var NoChangeFloat float64 = math.Inf(-1)
 type Session struct {
 	lastRequestNo int64
 	RequestURL    string
+	MasterURL     string
+	PriceURL      string
 	EventURL      string
 	mtx           sync.Mutex
 }

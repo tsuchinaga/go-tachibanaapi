@@ -161,7 +161,7 @@ func (c *client) TickGroup(ctx context.Context, session *Session, req TickGroupR
 	cCtx, cf := context.WithCancel(ctx)
 	defer cf()
 
-	ch, errCh := c.requester.stream(cCtx, session.RequestURL, r)
+	ch, errCh := c.requester.stream(cCtx, session.MasterURL, r)
 	var responses []*TickGroupResponse
 	for {
 		select {

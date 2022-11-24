@@ -14,9 +14,8 @@ type ApiVersion string
 
 const (
 	ApiVersionUnspecified ApiVersion = ""     // 未指定
-	ApiVersionV4R1        ApiVersion = "v4r1" // V4R1
-	ApiVersionV4R2        ApiVersion = "v4r2" // V4R2
-	ApiVersionLatest                 = ApiVersionV4R2
+	ApiVersionV4R3        ApiVersion = "v4r3" // V4R3
+	ApiVersionLatest                 = ApiVersionV4R3
 )
 
 // ResponseFormat - 応答データフォーマット指定

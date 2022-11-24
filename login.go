@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"sync"
 	"time"
 )
 
@@ -60,6 +61,8 @@ type loginResponse struct {
 	NISAAccount               NumberBool          `json:"sHikazeiKouzaKubun"`        // 非課税口座開設区分
 	UnreadDocument            NumberBool          `json:"sKinsyouhouMidokuFlg"`      // 金商法交付書面未読フラグ
 	RequestURL                string              `json:"sUrlRequest"`               // 仮想URL(REQUEST)
+	MasterURL                 string              `json:"sUrlMaster"`                // 仮想URL(MASTER)
+	PriceURL                  string              `json:"sUrlPrice"`                 // 仮想URL(PRICE)
 	EventURL                  string              `json:"sUrlEvent"`                 // 仮想URL(EVENT)
 }
 
@@ -89,6 +92,8 @@ func (r *loginResponse) response() LoginResponse {
 		NISAAccount:               r.NISAAccount.Bool(),
 		UnreadDocument:            r.UnreadDocument.Bool(),
 		RequestURL:                r.RequestURL,
+		MasterURL:                 r.MasterURL,
+		PriceURL:                  r.PriceURL,
 		EventURL:                  r.EventURL,
 	}
 }
@@ -119,6 +124,8 @@ type LoginResponse struct {
 	NISAAccount               bool                // 非課税口座開設区分
 	UnreadDocument            bool                // 金商法交付書面未読フラグ ※この項目がtrueならリクエスト用のURLが発行されない
 	RequestURL                string              // 仮想URL(REQUEST)
+	MasterURL                 string              // 仮想URL(MASTER)
+	PriceURL                  string              // 仮想URL(PRICE)
 	EventURL                  string              // 仮想URL(EVENT)
 }
 
@@ -131,7 +138,10 @@ func (r *LoginResponse) Session() (*Session, error) {
 	return &Session{
 		lastRequestNo: r.No,
 		RequestURL:    r.RequestURL,
+		MasterURL:     r.MasterURL,
+		PriceURL:      r.PriceURL,
 		EventURL:      r.EventURL,
+		mtx:           sync.Mutex{},
 	}, nil
 }
 
