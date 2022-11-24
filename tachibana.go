@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -188,8 +187,6 @@ func (r *requester) get(ctx context.Context, uri string, request interface{}) ([
 	if err != nil {
 		return nil, err
 	}
-
-	log.Println(b)
 
 	if res.StatusCode == http.StatusOK {
 		b, _ = r.decode(b)
