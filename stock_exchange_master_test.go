@@ -232,6 +232,9 @@ func Test_client_StockExchangeMaster_Execute(t *testing.T) {
 			StockExchangeMasterColumnIssueCode,
 			StockExchangeMasterColumnExchange,
 			StockExchangeMasterColumnTickGroupType,
+			StockExchangeMasterColumnUnderLimitPrice,
+			StockExchangeMasterColumnUpperLimitPrice,
+			StockExchangeMasterColumnPrevClosePrice,
 		},
 	})
 	log.Printf("%+v, %+v\n", got3, got4)

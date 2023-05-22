@@ -1,6 +1,7 @@
 package tachibana
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -83,6 +84,25 @@ type stockMasterRequest struct {
 type stockMasterResponse struct {
 	commonResponse
 	StockMasters []stockMaster `json:"CLMIssueMstKabu"` // 株式銘柄マスタ
+}
+
+func (r *stockMasterResponse) UnmarshalJSON(b []byte) error {
+	replaced := b
+	replaces := map[string]string{
+		`"sDaiyouHyoukaTanka":""`: `"sDaiyouHyoukaTanka":"0"`,
+	}
+	for o, n := range replaces {
+		replaced = bytes.Replace(replaced, []byte(o), []byte(n), -1)
+	}
+
+	type alias stockMasterResponse
+	ra := &struct {
+		*alias
+	}{
+		alias: (*alias)(r),
+	}
+
+	return json.Unmarshal(replaced, ra)
 }
 
 func (r *stockMasterResponse) response() StockMasterResponse {

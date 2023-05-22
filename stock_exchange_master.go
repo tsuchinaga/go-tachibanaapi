@@ -1,6 +1,7 @@
 package tachibana
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -120,6 +121,27 @@ type stockExchangeMaster struct {
 	CreateDateTime              YmdHms        `json:"sCreateDate"`                      // 作成日時
 	UpdateDateTime              YmdHms        `json:"sUpdateDate"`                      // 更新日時
 	UpdateNumber                string        `json:"sUpdateNumber"`                    // 更新通番
+}
+
+func (r *stockExchangeMaster) UnmarshalJSON(b []byte) error {
+	replaced := b
+	replaces := map[string]string{
+		`"sNehabaMin":""`:      `"sNehabaMin":"0"`,
+		`"sNehabaMax":""`:      `"sNehabaMax":"0"`,
+		`"sZenzituOwarine":""`: `"sZenzituOwarine":"0"`,
+	}
+	for o, n := range replaces {
+		replaced = bytes.Replace(replaced, []byte(o), []byte(n), -1)
+	}
+
+	type alias stockExchangeMaster
+	ra := &struct {
+		*alias
+	}{
+		alias: (*alias)(r),
+	}
+
+	return json.Unmarshal(replaced, ra)
 }
 
 func (r *stockExchangeMaster) response() StockExchangeMaster {
