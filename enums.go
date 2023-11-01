@@ -15,7 +15,8 @@ type ApiVersion string
 const (
 	ApiVersionUnspecified ApiVersion = ""     // 未指定
 	ApiVersionV4R3        ApiVersion = "v4r3" // V4R3
-	ApiVersionLatest                 = ApiVersionV4R3
+	ApiVersionV4R4        ApiVersion = "v4r4" // V4R4
+	ApiVersionLatest                 = ApiVersionV4R4
 )
 
 // ResponseFormat - 応答データフォーマット指定
@@ -146,7 +147,6 @@ const (
 	ExchangeFukushou    Exchange = "05" // 福証
 	ExchangeSatsushou   Exchange = "07" // 札証
 	ExchangeOddLot      Exchange = "08" // 端株
-	ExchangeStopping    Exchange = "09" // 場外
 )
 
 // Side - 売買区分
