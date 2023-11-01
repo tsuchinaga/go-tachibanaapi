@@ -76,6 +76,8 @@ func (c *client) authURL(env Environment, ver ApiVersion) string {
 	switch ver {
 	case ApiVersionV4R3:
 		path += string(ver)
+	case ApiVersionV4R4:
+		path += string(ver)
 	default:
 		path += string(ApiVersionLatest) // latest
 	}
