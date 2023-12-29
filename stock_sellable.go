@@ -48,9 +48,10 @@ func (r *stockSellableResponse) UnmarshalJSON(b []byte) error {
 	// 文字列でないところに空文字を返されることがあるので、置換しておく
 	replaced := b
 	replaces := map[string]string{
-		`"sZanKabuSuryouUriKanouIppan":""`:   `"sZanKabuSuryouUriKanouIppan":"0"`,
-		`"sZanKabuSuryouUriKanouTokutei":""`: `"sZanKabuSuryouUriKanouTokutei":"0"`,
-		`"sZanKabuSuryouUriKanouNisa":""`:    `"sZanKabuSuryouUriKanouNisa":"0"`,
+		`"sZanKabuSuryouUriKanouIppan":""`:    `"sZanKabuSuryouUriKanouIppan":"0"`,
+		`"sZanKabuSuryouUriKanouTokutei":""`:  `"sZanKabuSuryouUriKanouTokutei":"0"`,
+		`"sZanKabuSuryouUriKanouNisa":""`:     `"sZanKabuSuryouUriKanouNisa":"0"`,
+		`"sZanKabuSuryouUriKanouNseityou":""`: `"sZanKabuSuryouUriKanouNseityou":"0"`,
 	}
 	for o, n := range replaces {
 		replaced = bytes.Replace(replaced, []byte(o), []byte(n), -1)

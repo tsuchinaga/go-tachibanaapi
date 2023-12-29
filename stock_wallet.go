@@ -35,24 +35,25 @@ type stockWalletRequest struct {
 
 type stockWalletResponse struct {
 	commonResponse
-	IssueCode      string     `json:"sIssueCode"`                          // 銘柄コード
-	Exchange       Exchange   `json:"sSizyouC"`                            // 市場
-	ResultCode     string     `json:"sResultCode"`                         // 結果コード
-	ResultText     string     `json:"sResultText"`                         // 結果テキスト
-	WarningCode    string     `json:"sWarningCode"`                        // 警告コード
-	WarningText    string     `json:"sWarningText"`                        // 警告テキスト
-	UpdateDateTime YmdHm      `json:"sSummaryUpdate"`                      // 更新日時
-	StockWallet    float64    `json:"sSummaryGenkabuKaituke,string"`       // 株式現物買付可能額
-	NisaWallet     float64    `json:"sSummaryNisaKaitukeKanougaku,string"` // NISA成長投資可能額
-	Shortage       NumberBool `json:"sHusokukinHasseiFlg"`                 // 不足金発生フラグ
+	IssueCode      string     `json:"sIssueCode"`                            // 銘柄コード
+	Exchange       Exchange   `json:"sSizyouC"`                              // 市場
+	ResultCode     string     `json:"sResultCode"`                           // 結果コード
+	ResultText     string     `json:"sResultText"`                           // 結果テキスト
+	WarningCode    string     `json:"sWarningCode"`                          // 警告コード
+	WarningText    string     `json:"sWarningText"`                          // 警告テキスト
+	UpdateDateTime YmdHm      `json:"sSummaryUpdate"`                        // 更新日時
+	StockWallet    float64    `json:"sSummaryGenkabuKaituke,string"`         // 株式現物買付可能額
+	NisaWallet     float64    `json:"sSummaryNseityouTousiKanougaku,string"` // NISA成長投資可能額
+	Shortage       NumberBool `json:"sHusokukinHasseiFlg"`                   // 不足金発生フラグ
 }
 
 func (r *stockWalletResponse) UnmarshalJSON(b []byte) error {
 	// 文字列でないところに空文字を返されることがあるので、置換しておく
 	replaced := b
 	replaces := map[string]string{
-		`"sSummaryGenkabuKaituke":""`:       `"sSummaryGenkabuKaituke":"0"`,
-		`"sSummaryNisaKaitukeKanougaku":""`: `"sSummaryNisaKaitukeKanougaku":"0"`,
+		`"sSummaryGenkabuKaituke":""`:         `"sSummaryGenkabuKaituke":"0"`,
+		`"sSummaryNisaKaitukeKanougaku":""`:   `"sSummaryNisaKaitukeKanougaku":"0"`,
+		`"sSummaryNseityouTousiKanougaku":""`: `"sSummaryNseityouTousiKanougaku":"0"`,
 	}
 	for o, n := range replaces {
 		replaced = bytes.Replace(replaced, []byte(o), []byte(n), -1)

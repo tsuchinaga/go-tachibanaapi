@@ -86,10 +86,12 @@ func (r *stockPositionListResponse) response() StockPositionListResponse {
 		SpecificAmount: r.SpecificAmount,
 		GeneralAmount:  r.GeneralAmount,
 		NisaAmount:     r.NisaAmount,
+		GrowthAmount:   r.GrowthAmount,
 		TotalAmount:    r.TotalAmount,
 		SpecificProfit: r.SpecificProfit,
 		GeneralProfit:  r.GeneralProfit,
 		NisaProfit:     r.NisaProfit,
+		GrowthProfit:   r.GrowthProfit,
 		TotalProfit:    r.TotalProfit,
 		Positions:      positions,
 	}
@@ -146,10 +148,12 @@ type StockPositionListResponse struct {
 	SpecificAmount float64         // 概算評価額合計(特定口座残高)
 	GeneralAmount  float64         // 概算評価額合計(一般口座残高)
 	NisaAmount     float64         // 概算評価額合計(NISA口座残高)
+	GrowthAmount   float64         // 概算評価額合計(N成長口座残高)
 	TotalAmount    float64         // 残高合計 概算評価額合計
 	SpecificProfit float64         // 概算評価損益合計(特定口座残高)
 	GeneralProfit  float64         // 概算評価損益合計(一般口座残高)
 	NisaProfit     float64         // 概算評価損益合計(NISA口座残高)
+	GrowthProfit   float64         // 概算評価損益合計(N成長口座残高)
 	TotalProfit    float64         // 概算評価損益合計(残高合計)
 	Positions      []StockPosition // 現物株リスト
 }
