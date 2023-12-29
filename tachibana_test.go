@@ -61,15 +61,19 @@ func Test_tachibana_authURL(t *testing.T) {
 		{name: "APIバージョンを指定しなければ最新バージョン",
 			arg1:  EnvironmentProduction,
 			arg2:  ApiVersionUnspecified,
-			want1: "https://kabuka.e-shiten.jp/e_api_v4r4/auth/"},
+			want1: "https://kabuka.e-shiten.jp/e_api_v4r5/auth/"},
 		{name: "最新のAPIバージョンを指定すれば最新バージョン",
 			arg1:  EnvironmentProduction,
 			arg2:  ApiVersionLatest,
-			want1: "https://kabuka.e-shiten.jp/e_api_v4r4/auth/"},
+			want1: "https://kabuka.e-shiten.jp/e_api_v4r5/auth/"},
 		{name: "バージョンV4R4を指定すればV4R4",
 			arg1:  EnvironmentProduction,
 			arg2:  ApiVersionV4R4,
 			want1: "https://kabuka.e-shiten.jp/e_api_v4r4/auth/"},
+		{name: "バージョンV4R4を指定すればV4R5",
+			arg1:  EnvironmentProduction,
+			arg2:  ApiVersionV4R5,
+			want1: "https://kabuka.e-shiten.jp/e_api_v4r5/auth/"},
 	}
 
 	for _, test := range tests {
@@ -166,7 +170,7 @@ func Test_NewClient(t *testing.T) {
 			}},
 		{name: "デモへのクライアントの生成",
 			arg1: EnvironmentDemo,
-			arg2: ApiVersionV4R4,
+			arg2: ApiVersionLatest,
 			want1: &client{
 				clock:     newClock(),
 				env:       EnvironmentDemo,

@@ -32,15 +32,16 @@ type stockSellableRequest struct {
 
 type stockSellableResponse struct {
 	commonResponse
-	IssueCode        string  `json:"sIssueCode"`                           // 銘柄コード
-	ResultCode       string  `json:"sResultCode"`                          // 結果コード
-	ResultText       string  `json:"sResultText"`                          // 結果テキスト
-	WarningCode      string  `json:"sWarningCode"`                         // 警告コード
-	WarningText      string  `json:"sWarningText"`                         // 警告テキスト
-	UpdateDateTime   YmdHm   `json:"sSummaryUpdate"`                       // 更新日時
-	GeneralQuantity  float64 `json:"sZanKabuSuryouUriKanouIppan,string"`   // 売付可能株数(一般)
-	SpecificQuantity float64 `json:"sZanKabuSuryouUriKanouTokutei,string"` // 売付可能株数(特定)
-	NisaQuantity     float64 `json:"sZanKabuSuryouUriKanouNisa,string"`    // 売付可能株数(NISA)
+	IssueCode        string  `json:"sIssueCode"`                            // 銘柄コード
+	ResultCode       string  `json:"sResultCode"`                           // 結果コード
+	ResultText       string  `json:"sResultText"`                           // 結果テキスト
+	WarningCode      string  `json:"sWarningCode"`                          // 警告コード
+	WarningText      string  `json:"sWarningText"`                          // 警告テキスト
+	UpdateDateTime   YmdHm   `json:"sSummaryUpdate"`                        // 更新日時
+	GeneralQuantity  float64 `json:"sZanKabuSuryouUriKanouIppan,string"`    // 売付可能株数(一般)
+	SpecificQuantity float64 `json:"sZanKabuSuryouUriKanouTokutei,string"`  // 売付可能株数(特定)
+	NisaQuantity     float64 `json:"sZanKabuSuryouUriKanouNisa,string"`     // 売付可能株数(NISA)
+	GrowthQuantity   float64 `json:"sZanKabuSuryouUriKanouNseityou,string"` // 売付可能株数(N成長)
 }
 
 func (r *stockSellableResponse) UnmarshalJSON(b []byte) error {
