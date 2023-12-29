@@ -32,20 +32,22 @@ type stockPositionListRequest struct {
 
 type stockPositionListResponse struct {
 	commonResponse
-	IssueCode      string          `json:"sIssueCode,omitempty"`                    // 銘柄コード
-	ResultCode     string          `json:"sResultCode"`                             // 結果コード
-	ResultText     string          `json:"sResultText"`                             // 結果テキスト
-	WarningCode    string          `json:"sWarningCode"`                            // 警告コード
-	WarningText    string          `json:"sWarningText"`                            // 警告テキスト
-	SpecificAmount float64         `json:"sTokuteiGaisanHyoukagakuGoukei,string"`   // 概算評価額合計(特定口座残高)
-	GeneralAmount  float64         `json:"sIppanGaisanHyoukagakuGoukei,string"`     // 概算評価額合計(一般口座残高)
-	NisaAmount     float64         `json:"sNisaGaisanHyoukagakuGoukei,string"`      // 概算評価額合計(NISA口座残高)
-	TotalAmount    float64         `json:"sTotalGaisanHyoukagakuGoukei,string"`     // 残高合計 概算評価額合計
-	SpecificProfit float64         `json:"sTokuteiGaisanHyoukaSonekiGoukei,string"` // 概算評価損益合計(特定口座残高)
-	GeneralProfit  float64         `json:"sIppanGaisanHyoukaSonekiGoukei,string"`   // 概算評価損益合計(一般口座残高)
-	NisaProfit     float64         `json:"sNisaGaisanHyoukaSonekiGoukei,string"`    // 概算評価損益合計(NISA口座残高)
-	TotalProfit    float64         `json:"sTotalGaisanHyoukaSonekiGoukei,string"`   // 概算評価損益合計(残高合計)
-	Positions      []stockPosition `json:"aGenbutuKabuList"`                        // 現物株リスト
+	IssueCode      string          `json:"sIssueCode,omitempty"`                     // 銘柄コード
+	ResultCode     string          `json:"sResultCode"`                              // 結果コード
+	ResultText     string          `json:"sResultText"`                              // 結果テキスト
+	WarningCode    string          `json:"sWarningCode"`                             // 警告コード
+	WarningText    string          `json:"sWarningText"`                             // 警告テキスト
+	SpecificAmount float64         `json:"sTokuteiGaisanHyoukagakuGoukei,string"`    // 概算評価額合計(特定口座残高)
+	GeneralAmount  float64         `json:"sIppanGaisanHyoukagakuGoukei,string"`      // 概算評価額合計(一般口座残高)
+	NisaAmount     float64         `json:"sNisaGaisanHyoukagakuGoukei,string"`       // 概算評価額合計(NISA口座残高)
+	GrowthAmount   float64         `json:"sNseityouGaisanHyoukagakuGoukei,string"`   // 概算評価額合計(N成長口座残高)
+	TotalAmount    float64         `json:"sTotalGaisanHyoukagakuGoukei,string"`      // 残高合計 概算評価額合計
+	SpecificProfit float64         `json:"sTokuteiGaisanHyoukaSonekiGoukei,string"`  // 概算評価損益合計(特定口座残高)
+	GeneralProfit  float64         `json:"sIppanGaisanHyoukaSonekiGoukei,string"`    // 概算評価損益合計(一般口座残高)
+	NisaProfit     float64         `json:"sNisaGaisanHyoukaSonekiGoukei,string"`     // 概算評価損益合計(NISA口座残高)
+	GrowthProfit   float64         `json:"sNseityouGaisanHyoukaSonekiGoukei,string"` // 概算評価損益合計(N成長口座残高)
+	TotalProfit    float64         `json:"sTotalGaisanHyoukaSonekiGoukei,string"`    // 概算評価損益合計(残高合計)
+	Positions      []stockPosition `json:"aGenbutuKabuList"`                         // 現物株リスト
 }
 
 func (r *stockPositionListResponse) UnmarshalJSON(b []byte) error {

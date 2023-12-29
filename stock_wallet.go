@@ -43,7 +43,7 @@ type stockWalletResponse struct {
 	WarningText    string     `json:"sWarningText"`                        // 警告テキスト
 	UpdateDateTime YmdHm      `json:"sSummaryUpdate"`                      // 更新日時
 	StockWallet    float64    `json:"sSummaryGenkabuKaituke,string"`       // 株式現物買付可能額
-	NisaWallet     float64    `json:"sSummaryNisaKaitukeKanougaku,string"` // NISA口座買付可能額
+	NisaWallet     float64    `json:"sSummaryNisaKaitukeKanougaku,string"` // NISA成長投資可能額
 	Shortage       NumberBool `json:"sHusokukinHasseiFlg"`                 // 不足金発生フラグ
 }
 

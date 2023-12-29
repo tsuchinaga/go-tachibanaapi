@@ -16,7 +16,8 @@ const (
 	ApiVersionUnspecified ApiVersion = ""     // 未指定
 	ApiVersionV4R3        ApiVersion = "v4r3" // V4R3
 	ApiVersionV4R4        ApiVersion = "v4r4" // V4R4
-	ApiVersionLatest                 = ApiVersionV4R4
+	ApiVersionV4R5        ApiVersion = "v4r5" // V4R5
+	ApiVersionLatest                 = ApiVersionV4R5
 )
 
 // ResponseFormat - 応答データフォーマット指定
@@ -95,6 +96,7 @@ const (
 	AccountTypeSpecific    AccountType = "1" // 特定
 	AccountTypeGeneral     AccountType = "3" // 一般
 	AccountTypeNISA        AccountType = "5" // NISA
+	AccountTypeGrowth      AccountType = "6" // N成長
 )
 
 // DeliveryAccountType - 口座種別
